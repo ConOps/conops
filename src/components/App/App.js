@@ -112,17 +112,7 @@ class App extends Component {
               exact
               path="/sponsors"
               component={Sponsors}
-            />
-            <ProtectedRoute
-              exact
-              path="/Details"
-              component={Sponsors}
-            />
-            <ProtectedRoute
-              exact
-              path="/sponsors"
-              component={Sponsors}
-            />   
+            /> 
             <ProtectedRoute
               exact
               path="/details"
