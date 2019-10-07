@@ -7,4 +7,4 @@ import axios from 'axios';
 
 
 
-export default TagsSaga;
+export default tagsSaga;

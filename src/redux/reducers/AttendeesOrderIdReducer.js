@@ -3,4 +3,4 @@
 
 
 
-export default AttendeesOrderIdReducer;
+export default attendeesOrderIdReducer;
