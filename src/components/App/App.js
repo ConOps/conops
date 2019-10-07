@@ -111,7 +111,16 @@ class App extends Component {
               path="/sponsors"
               component={Sponsors}
             />
-                      
+            <ProtectedRoute
+              exact
+              path="/Details"
+              component={Sponsors}
+            />
+            <ProtectedRoute
+              exact
+              path="/sponsors"
+              component={Sponsors}
+            />          
 
             
             {/* If none of the other routes matched, we will show a 404. */}
