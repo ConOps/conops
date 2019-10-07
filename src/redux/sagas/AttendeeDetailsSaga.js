@@ -5,4 +5,4 @@ import axios from 'axios';
 
 
 
-export default AttendeeDetailsSaga;
+export default attendeeDetailsSaga;

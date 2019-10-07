@@ -3,4 +3,4 @@
 
 
 
-export default AttendeeCheckInReducer;
+export default attendeeCheckInReducer;

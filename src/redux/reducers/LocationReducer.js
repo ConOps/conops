@@ -3,4 +3,4 @@
 
 
 
-export default LocationReducer;
+export default locationReducer;

@@ -2,6 +2,7 @@ import { combineReducers } from 'redux';
 import errors from './errorsReducer';
 import loginMode from './loginModeReducer';
 import user from './userReducer';
+
 // import AttendeeDetails from './AttendeeDetailsReducer';
 // import AttendeesCheckIn from './AttendeesCheckInReducer';
 // import AttendeesOrderId from './AttendeesOrderIdReducer';
@@ -10,6 +11,7 @@ import user from './userReducer';
 // import HomePage from './HomePageReducer';
 // import Tags from './TagsReducer';
 // import Location from './LocationReducer'
+
 
 
 // rootReducer is the primary reducer for our entire project

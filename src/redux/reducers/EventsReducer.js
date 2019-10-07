@@ -2,4 +2,4 @@
 
 
 
-export default EventsReducer;
+export default eventsReducer;
