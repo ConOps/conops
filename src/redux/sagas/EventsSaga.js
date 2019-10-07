@@ -4,4 +4,4 @@ import axios from 'axios';
 
 
 
-export default EventsSaga;
+export default eventsSaga;

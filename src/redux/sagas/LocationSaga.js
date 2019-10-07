@@ -5,4 +5,4 @@ import axios from 'axios';
 
 
 
-export default LocationSaga;
+export default locationSaga;

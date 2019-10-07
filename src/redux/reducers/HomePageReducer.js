@@ -3,4 +3,4 @@
 
 
 
-export default HomePageReducer;
+export default homePageReducer;

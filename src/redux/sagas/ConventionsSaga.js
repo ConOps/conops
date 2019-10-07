@@ -5,4 +5,4 @@ import axios from 'axios';
 
 
 
-export default ConventionsSaga;
+export default conventionsSaga;
