@@ -4,4 +4,4 @@ import axios from 'axios';
 
 
 
-export default AttendeesOrderIdSaga;
+export default attendeesOrderIdSaga;

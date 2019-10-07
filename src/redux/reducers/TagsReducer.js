@@ -2,4 +2,4 @@
 
 
 
-export default TagsReducer;
+export default tagsReducer;
