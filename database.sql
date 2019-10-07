@@ -197,13 +197,13 @@ VALUES (1,'OBannon','Chris','Ryan','123 fakestreet','apartment 2','Savage','M
 
 --Walkinin Attendee who has not checked in--
 INSERT INTO "Attendee" ("ConventionID", "LastName", "FirstName", "MiddleName", "AddressLineOne", "AddressLineTwo", "City", "StateProvince", "PostalCode", "CountryID", "EmailAddress", "PhoneNumber", "DateOfBirth", "BadgeName", "RegistrationDate", "BadgeTypeID", "BadgeNumber", "printed", "DiscordVerified", "PreRegSortNumber", "orderID")
-VALUES (3,'Marit','Zelinsky','??','123 fakestreet','apartment 2','Tonka','MN','55345','United States','Zlinksy@gmail.com','612-555-5555','06/21/1992','hockey is cool','08/23/2020',1,'2026',false,false,'5',null)
+VALUES (3,'Marit','Zelinsky','??','123 fakestreet','apartment 2','Tonka','MN','55345','United States','Zlinksy@gmail.com','612-555-5555','06/21/1992','hockey is cool','08/23/2020',1,'2026',false,false,'5',null);
 
 --pregistered attendees who have not yet checked in--
 
 
 INSERT INTO "Attendee" ("ConventionID", "LastName", "FirstName", "MiddleName", "AddressLineOne", "AddressLineTwo", "City", "StateProvince", "PostalCode", "CountryID", "EmailAddress", "PhoneNumber", "DateOfBirth", "BadgeName", "RegistrationDate", "PaymentDate", "BadgeTypeID", "BadgeNumber", "printed", "DiscordVerified", "PreRegSortNumber", "orderID")
-VALUES (3,'OBannnon','Chris','Ryan','123 fakestreet','apartment 2','Savage','MN','55378','United States','crobwan@gmail.com','612-750-6236','04/21/1990','pottytrained', '08/22/2019','08/22/2019',1,'2021',true,true,'3','1'),(3,'Smith','Alex', 'Smitty','456 notreal lane','apartment 2','Minnetonka','MN','55345','UNITED STATES','rodrigo321$gmail.com','555-555-555','10/13/1991','pottytrained','08/22/2019','08/22/2019',1,'2022',true,true,'3','1'),(3,'Dustin','Fedie','guy','4545 notrealave','basmenet','Saint Paul','MN','55401','United STates','dustinisgreat@gamil.com','555-555-55555','11/22/1986','verysmart','06/19/2020','06/19/2020',1,'2023',true,true,'3','2');   
+VALUES (3,'OBannnon','Chris','Ryan','123 fakestreet','apartment 2','Savage','MN','55378','United States','crobwan@gmail.com','612-750-6236','04/21/1990','pottytrained','08/22/2019','08/22/2019',1,'2021',true,true,'3','1'),(3,'Smith','Alex','Smitty','456 notreal lane','apartment 2','Minnetonka','MN','55345','UNITED STATES','rodrigo321$gmail.com','555-555-555','10/13/1991','pottytrained','08/22/2019','08/22/2019',1,'2022',true,true,'3','1'),(3,'Dustin','Fedie','guy','4545 notrealave','basmenet','Saint Paul','MN','55401','United STates','dustinisgreat@gamil.com','555-555-55555','11/22/1986','verysmart','06/19/2020','06/19/2020',1,'2023',true,true,'3','2');   
 
 --preregisterd attendees who have checked in--
 INSERT INTO "Attendee" ("ConventionID", "LastName", "FirstName", "MiddleName", "AddressLineOne", "AddressLineTwo", "City", "StateProvince", "PostalCode", "CountryID", "EmailAddress", "PhoneNumber", "DateOfBirth", "BadgeName", "RegistrationDate", "CheckInDate", "PaymentDate", "BadgeTypeID", "BadgeNumber", "printed", "DiscordVerified", "PreRegSortNumber", "orderID")
