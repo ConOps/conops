@@ -16,6 +16,7 @@ import ProtectedRoute from '../ProtectedRoute/ProtectedRoute'
 import AboutPage from '../AboutPage/AboutPage';
 import UserPage from '../UserPage/UserPage';
 import InfoPage from '../InfoPage/InfoPage';
+import AttendeeCheckIn from '../AttendeeCheckIn/AttendeeCheckIn';
 
 import './App.css';
 
@@ -56,6 +57,11 @@ class App extends Component {
               component={InfoPage}
             />
             {/* If none of the other routes matched, we will show a 404. */}
+            <ProtectedRoute
+              exact
+              path="/AttendeeCheckIn"
+              component={AttendeeCheckIn}
+            />
             <Route render={() => <h1>404</h1>} />
           </Switch>
           <Footer />
