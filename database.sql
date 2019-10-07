@@ -5,7 +5,7 @@
     "id" SERIAL PRIMARY KEY,
     "username" VARCHAR (80) UNIQUE NOT NULL,
     "password" VARCHAR (1000) NOT NULL,
-    "authorization" VARCHAR (255) NOT NULL
+    "authorization" VARCHAR (255)
 );
 
 CREATE TABLE "Attendee"
@@ -63,9 +63,9 @@ CREATE TABLE "Event"
     "LocationID" integer NOT NULL,
     "IsCancelled" BOOLEAN NOT NULL,
     "EventDescription" varchar(255) NOT NULL,
-    "SponsorID" integer NOT NULL,
+    "SponsorID" integer,
     "DateCreated" TIMESTAMP NOT NULL,
-    "DateLastModified" TIMESTAMP NOT NULL,
+    "DateLastModified" TIMESTAMP,
     "EventModifiedNotes" varchar(255) NOT NULL,
     CONSTRAINT "Event_pk" PRIMARY KEY ("EventID")
 )
@@ -133,7 +133,7 @@ CREATE TABLE "Sponsor"
     "SponsorName" varchar(255) NOT NULL,
     "AmountPaid" varchar(255) NOT NULL,
     "Website" varchar(255) NOT NULL,
-    "Notes" varchar(255) NOT NULL,
+    "Notes" varchar(255),
     CONSTRAINT "Sponsor_pk" PRIMARY KEY ("SponsorID")
 )
 WITH (
