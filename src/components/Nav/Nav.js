@@ -4,12 +4,17 @@ import { connect } from 'react-redux';
 import LogOutButton from '../LogOutButton/LogOutButton';
 import './Nav.css';
 
+import Button from '@material-ui/core/Button';
+import Menu from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
+
 const Nav = (props) => (
   <div className="nav">
     <Link to="/home">
-      <h2 className="nav-title">Prime Solo Project</h2>
+      <h2 className="nav-title">ConOps Logo</h2>
     </Link>
     <div className="nav-right">
+      
       <Link className="nav-link" to="/home">
         {/* Show this link if they are logged in or not,
         but call this link 'Home' if they are logged in,
@@ -19,19 +24,28 @@ const Nav = (props) => (
       {/* Show the link to the info page and the logout button if the user is logged in */}
       {props.user.id && (
         <>
-          <Link className="nav-link" to="/info">
-            Info Page
-          </Link>
-          <Link className="nav-link" to="/AttendeeCheckIn">
+          <Button
+            className="attendees"
+          >
+            Attendees
+                 </Button>
+          <Menu>
+          <MenuItem
+          className="check-in"
+          component={Link}
+          to="/AtteneeCheckIn">
+          Check-In
+          {/* <Link className="nav-link" to="/AttendeeCheckIn">
             Attendee Check-In
-          </Link>
+          </Link> */}
+          </MenuItem>
+          <MenuItem><Link className="nav-link" to="/info">
+            Info Page
+          </Link></MenuItem>
+          </Menu>
           <LogOutButton className="nav-link"/>
         </>
       )}
-      {/* Always show this link since the about page is not protected */}
-      <Link className="nav-link" to="/about">
-        About
-      </Link>
     </div>
   </div>
 );
