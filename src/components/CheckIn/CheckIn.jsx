@@ -1,17 +1,39 @@
 import React, { Component } from 'react';
 import MaterialTable from 'material-table';
 import { connect } from 'react-redux';
+import Button from '@material-ui/core/Button';
 
 class CheckIn extends Component {
     state = {
         columns: [
-            { title: 'Name', field: 'name' },
-            { title: 'Surname', field: 'surname' },
-            { title: 'Birth Year', field: 'birthYear', type: 'numeric' },
-            { title: 'Birth Place', field: 'birthCity', },
+            { title: 'AttendeeID', field: 'AttendeeID' },
+            { title: 'ConventionID', field: 'ConventionID' },
+            { title: 'First Name', field: 'FirstName' },
+            { title: 'Last Name', field: 'LastName' },
+            { title: 'Middle Name', field: 'MiddleName' },
+            { title: 'Address Line One', field: 'AddressLineOne' },
+            { title: 'Address Line Two', field: 'AddressLineTwo' },
+            { title: 'City', field: 'City' },
+            { title: 'State/Province', field: 'StateProvince' },
+            { title: 'Postal Code', field: 'PostalCode' },
+            { title: 'CountryID', field: 'CountryID' },
+            { title: 'Email Address', field: 'EmailAddress' },
+            { title: 'Phone Number', field: 'PhoneNumber' },
+            { title: 'Date Of Birth', field: 'DateOfBirth' },
+            { title: 'Badge Name', field: 'BadgeName' },
+            { title: 'Registration Date', field: 'RegistrationDate' },
+            { title: 'Check-In date', field: 'CheckInDate' },
+            { title: 'Payment Date', field: 'PaymentDate' },
+            { title: 'Badge Type ID', field: 'BadgeTypeID' },
+            { title: 'Badge Number', field: 'BadgeNumber' },
+            { title: 'Printed', field: 'Printed' },
+            { title: 'Discord Verified', field: 'DiscordVerified' },
+            { title: 'Pre Reg Sort Number', field: 'PreRegSortNumber' },
+            { title: 'OrderID', field: 'OrderID', render: rowData => (
+                <Button>View OrderID</Button>
+            )  },
         ],
-        data: [{ name: 'Mehmet', surname: 'Baran', birthYear: 1987, birthCity: 63 },
-        { name: 'Zerya Betül', surname: 'Baran', birthYear: 2017, birthCity: 34, }],
+        data: [{ AttendeeID: '', ConventionID: '', FirstName: '', LastName: '', MiddleName: '', AddressLineOne: '', AddressLineTwo: '', City: '', StateProvince: '', PostalCode: '', CountryID: '', EmailAddress: '', PhoneNumber: '', DateOfBirth: '', BadgeName: '', RegistrationDate: '', CheckInDate: '', PaymentDate: '', BadgeTypeID: '', BadgeNumber: '', Printed: '', DiscordVerified: '', PreRegSortNumber: '', OrderID: '' }],
     }
 
     
@@ -20,10 +42,49 @@ class CheckIn extends Component {
 
 
     render() {
+        // this.props.attendeescheckin.map((attendee) => {
+        //     return (
+        //         this.setState({
+        //             ...this.state.data,
+        //             AttendeeID: attendee.AttendeeID,
+        //             ConventionID: attendee.ConventionID,
+        //             FirstName: attendee.FirstName,
+        //             LastName: attendee.LastName,
+        //             MiddleName: attendee.MiddleName,
+        //             AddressLineOne: attendee.AddressLineOne,
+        //             AddressLineTwo: attendee.AddressLineTwo,
+        //             City: attendee.City,
+        //             StateProvince: attendee.StateProvince,
+        //             PostalCode: attendee.PostalCode,
+        //             CountryID: attendee.CountryID,
+        //             EmailAddress: attendee.EmailAddress,
+        //             PhoneNumber: attendee.PhoneNumber,
+        //             DateOfBirth: attendee.DateOfBirth,
+        //             BadgeName: attendee.BadgeName,
+        //             RegistrationDate: attendee.RegistrationDate,
+        //             CheckInDate: attendee.CheckInDate,
+        //             PaymentDate: attendee.PaymentDate,
+        //             BadgeTypeID: attendee.BadgeTypeID,
+        //             BadgeNumber: attendee.BadgeNumber,
+        //             Printed: attendee.Printed,
+        //             DiscordVerified: attendee.DiscordVerified,
+        //             PreRegSortNumber: attendee.PreRegSortNumber,
+        //             OrderID: attendee.OrderID
+        //         })
+
+        //     )
+        // })
         return (
            
             <div>
-                <h1 style={{ textAlign: 'center'}}>Convention: </h1>
+                <h1 style={{ textAlign: 'center' }}>Current Convention: 2DCON 2020</h1>
+                <p style={{ textAlign: 'center' }}>FILTER</p>
+                <div style={{textAlign: 'center'}}>
+                    <Button variant="contained" color="primary" style={{ paddingLeft: '6%', paddingRight: '6%', marginRight: '5%' }}>CHECKED-IN</Button>
+                    <Button variant="contained" color="primary" style={{ paddingLeft: '6%', paddingRight: '6%', marginRight: '5%'}}>PRE-REGISTERED</Button>
+                    <Button variant="contained" color="primary" style={{ paddingLeft: '6%', paddingRight: '6%', marginRight: '5%'}}>WALK-IN</Button>
+                    <Button variant="contained" color="primary" style={{ paddingLeft: '6%', paddingRight: '6%'}}>ALL</Button>
+                </div>
                 <MaterialTable
                     title="Editable Example"
                     columns={this.state.columns}
@@ -46,19 +107,7 @@ class CheckIn extends Component {
                         }
                     ]}
                     data={this.state.data}
-                    editable={{
-                        
-                        // onRowUpdate: (newData, oldData) =>
-                        //     new Promise(resolve => {
-                        //         setTimeout(() => {
-                        //             resolve();
-                        //             const data = [...this.state.data];
-                        //             data[data.indexOf(oldData)] = newData;
-                        //             this.setState({ ...this.state, data });
-                        //         }, 600);
-                        //     }),
-                        
-                    }}
+                    editable={{}}
                 />
 
             </div>
@@ -69,7 +118,7 @@ class CheckIn extends Component {
 
 const mapstatetoProps = (reduxStore) => {
     return {
-        input: reduxStore.columnReducer
+        attendeescheckin: reduxStore.AttendeesCheckInReducer
     }
 }
 export default connect(mapstatetoProps)(CheckIn);
