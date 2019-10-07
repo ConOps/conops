@@ -4,9 +4,9 @@ import { connect } from 'react-redux';
 import LogOutButton from '../LogOutButton/LogOutButton';
 import './Nav.css';
 
-import Button from '@material-ui/core/Button';
-import Menu from '@material-ui/core/Menu';
-import MenuItem from '@material-ui/core/MenuItem';
+import AttendessNav from './AttendessNav';
+import EventsNav from './EventsNav';
+import AdminNav from './AdminNav';
 
 const Nav = (props) => (
   <div className="nav">
@@ -24,25 +24,9 @@ const Nav = (props) => (
       {/* Show the link to the info page and the logout button if the user is logged in */}
       {props.user.id && (
         <>
-          <Button
-            className="attendees"
-          >
-            Attendees
-                 </Button>
-          <Menu>
-          <MenuItem
-          className="check-in"
-          component={Link}
-          to="/AtteneeCheckIn">
-          Check-In
-          {/* <Link className="nav-link" to="/AttendeeCheckIn">
-            Attendee Check-In
-          </Link> */}
-          </MenuItem>
-          <MenuItem><Link className="nav-link" to="/info">
-            Info Page
-          </Link></MenuItem>
-          </Menu>
+          <AttendessNav className="nav-link"/>
+          <EventsNav className="nav-link"/>
+          <AdminNav className="nav-link"/>
           <LogOutButton className="nav-link"/>
         </>
       )}

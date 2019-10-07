@@ -33,4 +33,5 @@
 
 .nav-right {
   float: right;
+  display: flex;
 }
