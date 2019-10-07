@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import MaterialTable from 'material-table';
 import { connect } from 'react-redux';
 
-class AttendeeCheckInTable extends Component {
+class CheckIn extends Component {
     state = {
         columns: [
             { title: 'Name', field: 'name' },
@@ -72,4 +72,4 @@ const mapstatetoProps = (reduxStore) => {
         input: reduxStore.columnReducer
     }
 }
-export default connect(mapstatetoProps)(AttendeeCheckInTable);
+export default connect(mapstatetoProps)(CheckIn);

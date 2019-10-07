@@ -13,10 +13,19 @@ import Footer from '../Footer/Footer';
 
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute'
 
-import AboutPage from '../AboutPage/AboutPage';
-import UserPage from '../UserPage/UserPage';
-import InfoPage from '../InfoPage/InfoPage';
-import AttendeeCheckIn from '../AttendeeCheckIn/AttendeeCheckIn';
+import Home from '../Home/Home';
+
+import CheckIn from '../CheckIn/CheckIn';
+import PreRegister from '../PreRegister/PreRegister';
+
+import Events from '../Events/Events';
+import Locations from '../Locations/Locations';
+
+import Tags from '../Tags/Tags';
+import Conventions from '../Conventions/Conventions';
+import GameLibrary from '../GameLibrary/GameLibrary';
+import News from  '../News/News';
+import Sponsors from '../Sponsors/Sponsors';
 
 import './App.css';
 
@@ -35,33 +44,77 @@ class App extends Component {
             <Redirect exact from="/" to="/home" />
             {/* Visiting localhost:3000/about will show the about page.
             This is a route anyone can see, no login necessary */}
-            <Route
+            {/* <Route
               exact
-              path="/about"
-              component={AboutPage}
-            />
+              path="/home"
+              component={Home}
+            /> */}
             {/* For protected routes, the view could show one of several things on the same route.
             Visiting localhost:3000/home will show the UserPage if the user is logged in.
             If the user is not logged in, the ProtectedRoute will show the 'Login' or 'Register' page.
             Even though it seems like they are different pages, the user is always on localhost:3000/home */}
+           
+           {/* Need to attach to logo */}
             <ProtectedRoute
               exact
               path="/home"
-              component={UserPage}
+              component={Home}
             />
-            {/* This works the same as the other protected route, except that if the user is logged in,
-            they will see the info page instead. */}
+
+            {/* Attendee Tab */}
             <ProtectedRoute
               exact
-              path="/info"
-              component={InfoPage}
+              path="/check-in"
+              component={CheckIn}
             />
+            <ProtectedRoute
+              exact
+              path="/preregister"
+              component={PreRegister}
+            />
+
+            {/* Events Tab */}
+            <ProtectedRoute
+              exact
+              path="/events"
+              component={Events}
+            />
+            <ProtectedRoute
+              exact
+              path="/locations"
+              component={Locations}
+            />
+
+            {/* Admin */}
+            <ProtectedRoute
+              exact
+              path="/tags"
+              component={Tags}
+            />
+            <ProtectedRoute
+              exact
+              path="/conventions"
+              component={Conventions}
+            />  
+            <ProtectedRoute
+              exact
+              path="/gamelibrary"
+              component={GameLibrary}
+            />
+            <ProtectedRoute
+              exact
+              path="/news"
+              component={News}
+            />
+            <ProtectedRoute
+              exact
+              path="/sponsors"
+              component={Sponsors}
+            />
+                      
+
+            
             {/* If none of the other routes matched, we will show a 404. */}
-            <ProtectedRoute
-              exact
-              path="/AttendeeCheckIn"
-              component={AttendeeCheckIn}
-            />
             <Route render={() => <h1>404</h1>} />
           </Switch>
           <Footer />
