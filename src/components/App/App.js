@@ -26,8 +26,8 @@ import Conventions from '../Conventions/Conventions';
 import GameLibrary from '../GameLibrary/GameLibrary';
 import News from  '../News/News';
 import Sponsors from '../Sponsors/Sponsors';
-import Details from '../Details';
-import OrderId from '../OrderId';
+import Details from '../Details/Details';
+import OrderId from '../OrderId/OrderId';
 
 import './App.css';
 
@@ -113,16 +113,6 @@ class App extends Component {
               path="/sponsors"
               component={Sponsors}
             />
-            <ProtectedRoute
-              exact
-              path="/Details"
-              component={Sponsors}
-            />
-            <ProtectedRoute
-              exact
-              path="/sponsors"
-              component={Sponsors}
-            />   
             <ProtectedRoute
               exact
               path="/details"
