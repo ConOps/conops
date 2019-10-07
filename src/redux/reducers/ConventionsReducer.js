@@ -3,4 +3,4 @@
 
 
 
-export default ConventionsReducer;
+export default conventionsReducer;

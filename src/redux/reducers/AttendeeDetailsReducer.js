@@ -4,4 +4,4 @@
 
 
 
-export default AttendeeDetailsReducer;
+export default attendeeDetailsReducer;
