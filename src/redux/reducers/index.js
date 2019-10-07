@@ -2,14 +2,16 @@ import { combineReducers } from 'redux';
 import errors from './errorsReducer';
 import loginMode from './loginModeReducer';
 import user from './userReducer';
-// import AttendeeDetails from './attendeeDetailsReducer';
-// import AttendeesCheckIn from './attendeesCheckInReducer';
-// import AttendeesOrderId from './attendeesOrderIdReducer';
-// import Conventions from './conventionsReducer';
-// import Events from './eventsReducer';
-// import HomePage from './homePageReducer';
-// import Tags from './tagsReducer';
-// import Location from './locationReducer';
+
+// import AttendeeDetails from './AttendeeDetailsReducer';
+// import AttendeesCheckIn from './AttendeesCheckInReducer';
+// import AttendeesOrderId from './AttendeesOrderIdReducer';
+// import Conventions from './ConventionsReducer';
+// import Events from './EventsReducer';
+// import HomePage from './HomePageReducer';
+// import Tags from './TagsReducer';
+// import Location from './LocationReducer'
+
 
 
 // rootReducer is the primary reducer for our entire project

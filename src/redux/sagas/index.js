@@ -2,14 +2,15 @@ import { all } from 'redux-saga/effects';
 import loginSaga from './loginSaga';
 import registrationSaga from './registrationSaga';
 import userSaga from './userSaga';
-// import AttendeeDetailsSaga from './attendeeDetailsSaga';
-// import AttendeesCheckInSaga from './attendeesCheckInSaga';
-// import AttendeesOrderIdSaga from './attendeesOrderIdSaga';
-// import ConventionSaga from './conventionSaga';
-// import EventsSaga from './eventsSaga';
-// import HomePageSaga from './homePageSaga';
-// import LocationSaga from './locationSaga';
-// import TagsSaga from './tagsSaga';
+// import AttendeeDetailsSaga from './AttendeeDetailsSaga';
+// import AttendeesCheckInSaga from './AttendeesCheckInSaga';
+// import AttendeesOrderIdSaga from './AttendeesOrderIdSaga';
+// import ConventionSaga from './ConventionSaga';
+// import EventsSaga from './EventsSaga';
+// import HomePageSaga from './HomePageSaga';
+// import LocationSaga from './LocationSaga';
+// import TagsSaga from './TagsSaga'
+
 // rootSaga is the primary saga.
 // It bundles up all of the other sagas so our project can use them.
 // This is imported in index.js as rootSaga
