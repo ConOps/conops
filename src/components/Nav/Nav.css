@@ -9,6 +9,8 @@
 .nav {
   overflow: hidden;
   background-color: #00acb0;
+    font-family: Dosis;
+
 }
 
 .nav-link {
@@ -25,6 +27,9 @@
   border:none;
   cursor: pointer;
   outline:0;
+    font-family: Dosis;
+    font-weight: bold;
+
 }
 
 .nav-link:hover {
@@ -34,4 +39,6 @@
 .nav-right {
   float: right;
   display: flex;
+    font-family: Dosis;
+
 }

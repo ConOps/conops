@@ -6,7 +6,7 @@ class Details extends Component {
     render(){
         return(
             <div>
-                <h1> Manage Attendee: </h1>
+                <h1 className = "test">  Manage Attendee: </h1>
                 <h1> 2D Con 2020: Remaster</h1>
 
                 <p>Find All Attendees with Order ID: </p>
