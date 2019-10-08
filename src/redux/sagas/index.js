@@ -2,7 +2,7 @@ import { all } from 'redux-saga/effects';
 import loginSaga from './loginSaga';
 import registrationSaga from './registrationSaga';
 import userSaga from './userSaga';
-// import AttendeeDetailsSaga from './AttendeeDetailsSaga';
+import AttendeeDetailsSaga from './AttendeeDetailsSaga';
 import AttendeesCheckInSaga from './AttendeesCheckInSaga';
 // import AttendeesOrderIdSaga from './AttendeesOrderIdSaga';
 // import ConventionSaga from './ConventionSaga';
@@ -23,7 +23,7 @@ export default function* rootSaga() {
     loginSaga(),
     registrationSaga(),
     userSaga(),
-    // AttendeeDetailsSaga(),
+    AttendeeDetailsSaga(),
     AttendeesCheckInSaga(),
     // AttendeesOrderIdSaga(),
     // ConventionSaga(),
