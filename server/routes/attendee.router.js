@@ -128,13 +128,32 @@ router.get('/details/:id', rejectUnauthenticated, (req, res) => {
     const queryText = `SELECT * FROM "Attendee" WHERE "AttendeeID" = $1;`;
     pool.query(queryText, [id])
         .then(result => {
-            console.log('attendee details:', result);
+            console.log('attendee details:', result.rows[0]);
             res.send(result.rows[0]);
         }).catch(err => {
             console.log('error in attendee detail get:', err);
             res.sendStatus(500);
         })
 });
+
+//GET route for an order ID. again, no need to check convention ID; only active convention on DOM.
+router.get('/order/:id', rejectUnauthenticated, (req, res) => {
+    //sending order ID as an object for this route
+    const id = req.params.id;
+    console.log('in order details specific GET for ID:', id);
+    //no need for async/await, just grabbing ID
+    const queryText = `SELECT * FROM "Attendee" WHERE "orderID" = $1;`;
+    pool.query(queryText, [id])
+        .then(result => {
+            console.log('attendee order details:', result.rows);
+            res.send(result.rows);
+        }).catch(err => {
+            console.log('error in attendee order get:', err);
+            res.sendStatus(500);
+        })
+});
+
+
 
 /**
  * POST route template
