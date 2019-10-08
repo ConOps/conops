@@ -115,7 +115,7 @@ class CheckIn extends Component {
           actions={[
               {
               icon: 'accessibility',
-              tooltip: 'get this humans details',
+              tooltip: 'Find this person`s personal info',
               onClick: (event, rowData) =>  {this.props.dispatch({
         type: 'FETCH_ATTENDEE_PERSONAL_INFO',
                   payload: rowData.AttendeeID
@@ -125,9 +125,17 @@ class CheckIn extends Component {
           },
           rowData => ({
               icon: 'group',
-              tooltip: 'find the other humans in this order',
-              onClick: (event,rowData) => alert('this human is in the the order number:' + rowData.orderID),
-            //   disabled: rowData.orderID = null
+              tooltip: 'Find all members of this group',
+              onClick: (event, rowData) => {
+                console.log(rowData.orderID);
+                this.props.dispatch({
+                  type: 'FETCH_ORDER_INFO',
+                  payload: rowData.orderID
+                })
+                this.props.history.push(`/OrderID`)
+
+              },
+              disabled: rowData.orderID == null
           })
         ]}
           editable={{}}
