@@ -1,9 +1,9 @@
-const attendeeCheckInReducer = (state = [], action ) => {
-    switch(action.type){
+const attendeeCheckInReducer = (state = [], action) => {
+    switch (action.type) {
         case 'SET_ATTENDEE_CHECK_IN_LIST':
             return action.payload
-            default:
-                return state;
+        default:
+            return state;
     }
 }
 
