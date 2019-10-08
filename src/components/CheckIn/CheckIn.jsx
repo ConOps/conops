@@ -122,6 +122,11 @@ class CheckIn extends Component {
         <div style={{ textAlign: "center" }}>
           <Button
             variant="contained"
+                    onClick={() => {
+                        this.props.dispatch({
+                            type: "FETCH_CHECKED_IN_ATTENDEES"
+                        });
+                    }}
             color="primary"
             style={{ paddingLeft: "6%", paddingRight: "6%", marginRight: "5%" }}
           >
@@ -129,6 +134,11 @@ class CheckIn extends Component {
           </Button>
           <Button
             variant="contained"
+                    onClick={() => {
+                        this.props.dispatch({
+                            type: "FETCH_PRE-REGISTERED_ATTENDEES"
+                        });
+                    }}
             color="primary"
             style={{ paddingLeft: "6%", paddingRight: "6%", marginRight: "5%" }}
           >
@@ -136,6 +146,11 @@ class CheckIn extends Component {
           </Button>
           <Button
             variant="contained"
+                    onClick={() => {
+                        this.props.dispatch({
+                            type: "FETCH_WALK_INS"
+                        });
+                    }}
             color="primary"
             style={{ paddingLeft: "6%", paddingRight: "6%", marginRight: "5%" }}
           >
@@ -169,15 +184,15 @@ class CheckIn extends Component {
           onSelectionChange={rows =>
             alert("You selected " + rows.length + " rows")
           }
-          actions={[
-            {
-              icon: "refresh",
-              tooltip: "Refresh Data",
-              isFreeAction: true,
-              onClick: () =>
-                this.tableRef.current && this.tableRef.current.onQueryChange()
-            }
-          ]}
+        //   actions={[
+        //     {
+        //       icon: "refresh",
+        //       tooltip: "Refresh Data",
+        //       isFreeAction: true,
+        //       onClick: () =>
+        //         this.tableRef.current && this.tableRef.current.onQueryChange()
+        //     }
+        //   ]}
           data={this.props.reduxStore.AttendeesCheckInReducer}
           editable={{}}
         />
