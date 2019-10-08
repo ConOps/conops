@@ -3,14 +3,14 @@ import errors from './errorsReducer';
 import loginMode from './loginModeReducer';
 import user from './userReducer';
 
-// import AttendeeDetails from './AttendeeDetailsReducer';
-// import AttendeesCheckIn from './AttendeesCheckInReducer';
-// import AttendeesOrderId from './AttendeesOrderIdReducer';
-// import Conventions from './ConventionsReducer';
-// import Events from './EventsReducer';
-// import HomePage from './HomePageReducer';
-// import Tags from './TagsReducer';
-// import Location from './LocationReducer'
+// import AttendeeDetailsReducer from './AttendeeDetailsReducer';
+import AttendeesCheckInReducer from './AttendeesCheckInReducer';
+// import AttendeesOrderIdReducer from './AttendeesOrderIdReducer';
+// import ConventionsReducer from './ConventionsReducer';
+// import EventsReducer from './EventsReducer';
+// import HomePageReducer from './HomePageReducer';
+// import TagsReducer from './TagsReducer';
+// import LocationReducer from './LocationReducer'
 
 
 
@@ -24,14 +24,14 @@ const rootReducer = combineReducers({
   errors, // contains registrationMessage and loginMessage
   loginMode, // will have a value of 'login' or 'registration' to control which screen is shown
   user, // will have an id and username if someone is logged in
-  // AttendeeDetails,
-  // AttendeesCheckIn,
-  // AttendeesOrderId,
-  // Conventions,
-  // Events,
-  // HomePage,
-  // Tags,
-  // Location
+  // AttendeeDetailsReducer,
+  AttendeesCheckInReducer,
+  // AttendeesOrderIdReducer,
+  // ConventionsReducer,
+  // EventsReducer,
+  // HomePageReducer,
+  // TagsReducer,
+  // LocationReducer,
 });
 
 export default rootReducer;

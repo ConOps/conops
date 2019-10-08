@@ -22,6 +22,7 @@ router.get('/', rejectUnauthenticated, async (req, res) => {
         //use top con ID to find our attendees for that convention
         const attendeeResult = await connection.query(queryText, [conventionId]);
         await connection.query('COMMIT');
+        console.log(attendeeResult.rows);
         res.send(attendeeResult.rows);
     } catch (error) {
         await connection.query('ROLLBACK');
