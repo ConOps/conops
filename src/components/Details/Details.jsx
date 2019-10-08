@@ -1,4 +1,6 @@
 import React, { Component }from 'react';
+import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom'; 
 import './Details.css';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
@@ -41,33 +43,33 @@ class Details extends Component {
         return(
             <div className="detailsPage">
                 <div>
-                <h1>  Manage Attendee: </h1>{/* needs to render the name of the attendee */}
+                <h1>  Manage Attendee: {this.props.info.FirstName}</h1>{/* needs to render the name of the attendee */}
                 <h1> 2D Con 2020: Remaster</h1>
                 </div>
                 <div>
-                    <p>Find All Attendees With Order ID: </p> 
+                    <p>Find All Attendees With Order ID: {this.props.info.orderID} </p> 
                         <Button>Find</Button>
-                        <Button> Check-In </Button>
+                        <Button>Check-In</Button>
                         <Button>Delete</Button> {/*will conditionaly render if there a admin or not */}
                 </div>
                 <hr></hr>
                 <div>
                 <h2>Personal Info</h2>
-                    <TextField label="First Name" className={this.props.classes.root}></TextField>
-                    <TextField label="Middle Name" className={this.props.classes.root}></TextField>
-                    <TextField label="Last Name" className={this.props.classes.root}></TextField>
-                    <TextField label="Street Name 1" className={this.props.classes.root}></TextField>
-                    <TextField label="Street Name 2" className={this.props.classes.root}></TextField>
-                    <TextField label="City" className={this.props.classes.root}></TextField>
-                    <TextField label="State/Province" className={this.props.classes.root}></TextField>
-                    <TextField label="Zip/Postal Code" className={this.props.classes.root}></TextField>
-                    <TextField label="United States" className={this.props.classes.root}></TextField>
+                    <TextField label="First Name" className={this.props.classes.root} value={this.props.info.FirstName}></TextField>
+                    <TextField label="Middle Name" className={this.props.classes.root} value={this.props.info.MiddleName}></TextField>
+                    <TextField label="Last Name" className={this.props.classes.root} value={this.props.info.LastName}></TextField>
+                    <TextField label="Street Name 1" className={this.props.classes.root} value={this.props.info.AddressLineOne}></TextField>
+                    <TextField label="Street Name 2" className={this.props.classes.root} value={this.props.info.AddressLineTwo}></TextField>
+                    <TextField label="City" className={this.props.classes.root} value={this.props.info.City}></TextField>
+                    <TextField label="State/Province" className={this.props.classes.root} value={this.props.info.StateProvince}></TextField>
+                    <TextField label="Zip/Postal Code" className={this.props.classes.root} value={this.props.info.PostalCode}></TextField>
+                    <TextField label="United States" className={this.props.classes.root} value={this.props.info.CountryID}></TextField>
                 </div>
                 <hr></hr>
                 <div>
                 <h2>Contact Info</h2>
-                    <TextField label="Email Address" className={this.props.classes.root}></TextField>
-                    <TextField label="Phone Number" className={this.props.classes.root}></TextField>
+                    <TextField label="Email Address" className={this.props.classes.root} value={this.props.info.EmailAddress}></TextField>
+                    <TextField label="Phone Number" className={this.props.classes.root} value={this.props.info.PhoneNumber}></TextField>
                 </div>
                 <hr></hr>
                 <div>
@@ -85,9 +87,9 @@ class Details extends Component {
                         <MenuItem value="Adult 14">Adult (14 - 20)</MenuItem>
                         <MenuItem value="Adult 21">Adult (Over 21)</MenuItem>
                 </Select>
-                    <TextField label="Badge Number" className={this.props.classes.root}></TextField>{/* no handle change or on change, CANT BE EDITED */}
-                    <TextField label="Date of Birth" className={this.props.classes.root}></TextField>
-                    <TextField label="Badge Name" className={this.props.classes.root}></TextField>
+                    <TextField label="Badge Number" className={this.props.classes.root} value={this.props.info.BadgeNumber}></TextField>{/* no handle change or on change, CANT BE EDITED */}
+                    <TextField label="Date of Birth" className={this.props.classes.root} value={this.props.info.DateOfBirth}></TextField>
+                    <TextField label="Badge Name" className={this.props.classes.root} value={this.props.info.BadgeName}></TextField>
                 </div>
                 <hr></hr>
                 <div>
@@ -95,7 +97,8 @@ class Details extends Component {
                     <h3>2D Con 2020: Remaster</h3>
                     <MuiPickersUtilsProvider utils={DateFnsUtils}>
                         <Grid container justify="space-around">
-                            <KeyboardDatePicker            
+                            <KeyboardDatePicker
+                                value={this.props.info.RegistrationDate}            
                                 margin="normal"
                                 id="date-picker-dialog"
                                 label="Registration Date"
@@ -105,6 +108,7 @@ class Details extends Component {
                                 }}
                             /> {/*No on change this field cannot be edited*/}
                             <KeyboardDatePicker
+                                value={this.props.info.CheckInDate}
                                 margin="normal"
                                 id="date-picker-dialog"
                                 label="Check-In Date"
@@ -114,6 +118,7 @@ class Details extends Component {
                                 }}
                             />
                             <KeyboardDatePicker
+                                value={this.props.info.PaymentDate}
                                 margin="normal"
                                 id="date-picker-dialog"
                                 label="Payment Date"
@@ -133,4 +138,11 @@ class Details extends Component {
     }
 }
 
-export default withStyles(styles)(Details);
+const mapStateToProps = reduxStore => {
+    return {
+        info: reduxStore.AttendeeDetailsReducer
+    };
+};
+
+
+export default withStyles(styles)(withRouter(connect(mapStateToProps)(Details)));
