@@ -37,6 +37,18 @@ class Details extends Component {
         })
     } 
 
+    handleBack = () => {
+        this.props.history.push('/check-in')
+    }
+
+    handleFind = (id) => {
+        this.props.dispatch({
+            type: 'FETCH_ORDER_INFO',
+            payload: id
+        })
+        this.props.history.push(`/OrderID`)
+    }
+
     
 
     render(){
@@ -48,7 +60,7 @@ class Details extends Component {
                 </div>
                 <div>
                     <p>Find All Attendees With Order ID: {this.props.info.orderID} </p> 
-                        <Button>Find</Button>
+                    <Button onClick={() => this.handleFind(this.props.info.orderID)}>Find</Button>
                         <Button>Check-In</Button>
                         <Button>Delete</Button> {/*will conditionaly render if there a admin or not */}
                 </div>
@@ -131,7 +143,7 @@ class Details extends Component {
                     </MuiPickersUtilsProvider>
                 </div>
                 <hr></hr>
-                <Button>Back</Button>
+                <Button onClick={this.handleBack}>Back</Button>
                 <Button>Save</Button>
             </div>
         )
