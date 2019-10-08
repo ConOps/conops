@@ -3,6 +3,7 @@ import MaterialTable from 'material-table';
 import { connect } from 'react-redux';
 import Button from '@material-ui/core/Button';
 
+
 class CheckIn extends Component {
   state = {
     columns: [
@@ -31,19 +32,15 @@ class CheckIn extends Component {
       { title: "Pre Reg Sort Number", field: "PreRegSortNumber", hidden:true },
       {
         title: "OrderID",
-        field: "OrderID",
-        render: rowData => <Button onClick={()=>{console.log('clicked orderID');
-        }}>View OrderID</Button>
+        field: "orderID",
       }
     ],
     data: [
     ]
   };
 
-  getAll() {
-    this.props.dispatch({
-      type: "FETCH_ALL_ATTENDEES"
-    });
+  humanClicker = (event, id) => {
+     
   }
 
   render() {
@@ -108,12 +105,31 @@ class CheckIn extends Component {
           options={{
             columnsButton: true,
             // headerStyle: { backgroundColor: 'blue', color: 'white' },
+            pageSize: 10,
             pageSizeOptions: [10, 20, 50],
             toolbarButtonAlignment: "right",
             searchFieldAlignment: "left",
             showTitle: false
           }}
           data={this.props.reduxStore.AttendeesCheckInReducer}
+          actions={[
+              {
+              icon: 'accessibility',
+              tooltip: 'get this humans details',
+              onClick: (event, rowData) =>  {this.props.dispatch({
+        type: 'FETCH_ATTENDEE_PERSONAL_INFO',
+                  payload: rowData.AttendeeID
+      })
+    this.props.history.push(`/details`);           
+    }   
+          },
+          rowData => ({
+              icon: 'group',
+              tooltip: 'find the other humans in this order',
+              onClick: (event,rowData) => alert('this human is in the the order number:' + rowData.orderID),
+            //   disabled: rowData.orderID = null
+          })
+        ]}
           editable={{}}
         />
       </div>
