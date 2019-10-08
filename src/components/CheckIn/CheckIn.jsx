@@ -32,42 +32,13 @@ class CheckIn extends Component {
       {
         title: "OrderID",
         field: "OrderID",
-        render: rowData => <Button>View OrderID</Button>
+        render: rowData => <Button onClick={()=>{console.log('clicked orderID');
+        }}>View OrderID</Button>
       }
     ],
     data: [
-    //   {
-    //     AttendeeID: "",
-    //     ConventionID: "",
-    //     FirstName: "",
-    //     LastName: "",
-    //     MiddleName: "",
-    //     AddressLineOne: "",
-    //     AddressLineTwo: "",
-    //     City: "",
-    //     StateProvince: "",
-    //     PostalCode: "",
-    //     CountryID: "",
-    //     EmailAddress: "",
-    //     PhoneNumber: "",
-    //     DateOfBirth: "",
-    //     BadgeName: "",
-    //     RegistrationDate: "",
-    //     CheckInDate: "",
-    //     PaymentDate: "",
-    //     BadgeTypeID: "",
-    //     BadgeNumber: "",
-    //     Printed: "",
-    //     DiscordVerified: "",
-    //     PreRegSortNumber: "",
-    //     OrderID: ""
-    //   }
     ]
   };
-
-  // componentDidMount(){
-  //     this.getAll();
-  // }
 
   getAll() {
     this.props.dispatch({
@@ -76,44 +47,6 @@ class CheckIn extends Component {
   }
 
   render() {
-
-    // this.props.reduxStore.AttendeesCheckInReducer.map((attendee) => {
-    //     return (
-    //         this.setState({
-    //             ...this.state.data,
-    //             AttendeeID: attendee.AttendeeID,
-    //             ConventionID: attendee.ConventionID,
-    //             FirstName: attendee.FirstName,
-    //             LastName: attendee.LastName,
-    //             MiddleName: attendee.MiddleName,
-    //             AddressLineOne: attendee.AddressLineOne,
-    //             AddressLineTwo: attendee.AddressLineTwo,
-    //             City: attendee.City,
-    //             StateProvince: attendee.StateProvince,
-    //             PostalCode: attendee.PostalCode,
-    //             CountryID: attendee.CountryID,
-    //             EmailAddress: attendee.EmailAddress,
-    //             PhoneNumber: attendee.PhoneNumber,
-    //             DateOfBirth: attendee.DateOfBirth,
-    //             BadgeName: attendee.BadgeName,
-    //             RegistrationDate: attendee.RegistrationDate,
-    //             CheckInDate: attendee.CheckInDate,
-    //             PaymentDate: attendee.PaymentDate,
-    //             BadgeTypeID: attendee.BadgeTypeID,
-    //             BadgeNumber: attendee.BadgeNumber,
-    //             Printed: attendee.Printed,
-    //             DiscordVerified: attendee.DiscordVerified,
-    //             PreRegSortNumber: attendee.PreRegSortNumber,
-    //             OrderID: attendee.OrderID
-    //         })
-
-    //     )
-    // })
-    //  {
-    //    this.setState({
-    //      data: this.props.reduxStore.AttendeesCheckInReducer
-    //    });
-    //  }
     return (
       <div>
        
@@ -173,7 +106,6 @@ class CheckIn extends Component {
           title="Editable Example"
           columns={this.state.columns}
           options={{
-            selection: true,
             columnsButton: true,
             // headerStyle: { backgroundColor: 'blue', color: 'white' },
             pageSizeOptions: [10, 20, 50],
@@ -181,18 +113,6 @@ class CheckIn extends Component {
             searchFieldAlignment: "left",
             showTitle: false
           }}
-          onSelectionChange={rows =>
-            alert("You selected " + rows.length + " rows")
-          }
-        //   actions={[
-        //     {
-        //       icon: "refresh",
-        //       tooltip: "Refresh Data",
-        //       isFreeAction: true,
-        //       onClick: () =>
-        //         this.tableRef.current && this.tableRef.current.onQueryChange()
-        //     }
-        //   ]}
           data={this.props.reduxStore.AttendeesCheckInReducer}
           editable={{}}
         />
