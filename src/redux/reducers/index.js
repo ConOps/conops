@@ -5,7 +5,7 @@ import user from './userReducer';
 
 import AttendeeDetailsReducer from './AttendeeDetailsReducer';
 import AttendeesCheckInReducer from './AttendeesCheckInReducer';
-// import AttendeesOrderIdReducer from './AttendeesOrderIdReducer';
+import AttendeesOrderIdReducer from './AttendeesOrderIdReducer';
 // import ConventionsReducer from './ConventionsReducer';
 // import EventsReducer from './EventsReducer';
 // import HomePageReducer from './HomePageReducer';
@@ -26,7 +26,7 @@ const rootReducer = combineReducers({
   user, // will have an id and username if someone is logged in
   AttendeeDetailsReducer,
   AttendeesCheckInReducer,
-  // AttendeesOrderIdReducer,
+  AttendeesOrderIdReducer,
   // ConventionsReducer,
   // EventsReducer,
   // HomePageReducer,
