@@ -1,3 +1,4 @@
+@import url(https://fonts.googleapis.com/css?family=Dosis:200,300,regular,500,600,700,800);
 .nav-title {
     font-size: 24px;
     font-weight: 700;
@@ -9,6 +10,7 @@
 .nav {
   overflow: hidden;
   background-color: #00acb0;
+  font-family: Dosis;
 }
 
 .nav-link {
@@ -25,6 +27,8 @@
   border:none;
   cursor: pointer;
   outline:0;
+  font-family: Dosis;
+  font-weight: bold;
 }
 
 .nav-link:hover {
@@ -34,4 +38,5 @@
 .nav-right {
   float: right;
   display: flex;
+  font-family: Dosis;
 }
