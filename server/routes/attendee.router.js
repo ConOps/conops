@@ -137,9 +137,9 @@ router.get('/details/:id', rejectUnauthenticated, (req, res) => {
 });
 
 //GET route for an order ID. again, no need to check convention ID; only active convention on DOM.
-router.get('/order', rejectUnauthenticated, (req, res) => {
+router.get('/order/:id', rejectUnauthenticated, (req, res) => {
     //sending order ID as an object for this route
-    const id = req.body.orderID;
+    const id = req.params.id;
     console.log('in order details specific GET for ID:', id);
     //no need for async/await, just grabbing ID
     const queryText = `SELECT * FROM "Attendee" WHERE "orderID" = $1;`;
