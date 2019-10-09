@@ -9,7 +9,7 @@ import AttendeesOrderIdReducer from './AttendeesOrderIdReducer';
 // import ConventionsReducer from './ConventionsReducer';
 import EventsReducer from './EventsReducer';
 // import HomePageReducer from './HomePageReducer';
-// import TagsReducer from './TagsReducer';
+import TagsReducer from './TagsReducer';
 // import LocationReducer from './LocationReducer'
 
 
@@ -30,7 +30,7 @@ const rootReducer = combineReducers({
   // ConventionsReducer,
   EventsReducer,
   // HomePageReducer,
-  // TagsReducer,
+  TagsReducer,
   // LocationReducer,
 });
 
