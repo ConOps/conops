@@ -49,6 +49,14 @@ class Details extends Component {
         this.props.history.push(`/OrderID`)
     }
 
+    handleSave = () => {
+        alert('Info has been updated')
+        this.props.dispatch({
+            type: 'UPDATE_ATTENDEE_INFO',
+            payload: this.props.info
+        })
+    }
+
     
 
     render(){
@@ -67,21 +75,87 @@ class Details extends Component {
                 <hr></hr>
                 <div>
                 <h2>Personal Info</h2>
-                    <TextField label="First Name" className={this.props.classes.root} value={this.props.info.FirstName}></TextField>
-                    <TextField label="Middle Name" className={this.props.classes.root} value={this.props.info.MiddleName}></TextField>
-                    <TextField label="Last Name" className={this.props.classes.root} value={this.props.info.LastName}></TextField>
-                    <TextField label="Street Name 1" className={this.props.classes.root} value={this.props.info.AddressLineOne}></TextField>
-                    <TextField label="Street Name 2" className={this.props.classes.root} value={this.props.info.AddressLineTwo}></TextField>
-                    <TextField label="City" className={this.props.classes.root} value={this.props.info.City}></TextField>
-                    <TextField label="State/Province" className={this.props.classes.root} value={this.props.info.StateProvince}></TextField>
-                    <TextField label="Zip/Postal Code" className={this.props.classes.root} value={this.props.info.PostalCode}></TextField>
-                    <TextField label="United States" className={this.props.classes.root} value={this.props.info.CountryID}></TextField>
+                    <TextField label="First Name" className={this.props.classes.root} value={this.props.info.FirstName}
+                        onChange={(event)=> 
+                        this.props.dispatch({
+                                type: 'EDIT_DETAIL_FIRST_NAME',
+                                payload: event.target.value
+                            })}
+                            ></TextField>
+                    <TextField label="Middle Name" className={this.props.classes.root} value={this.props.info.MiddleName}
+                        onChange={(event) =>
+                            this.props.dispatch({
+                                type: 'EDIT_DETAIL_MIDDLE_NAME',
+                                payload: event.target.value
+                            })}
+                            ></TextField>
+                    <TextField label="Last Name" className={this.props.classes.root} value={this.props.info.LastName}
+                        onChange={(event) =>
+                            this.props.dispatch({
+                                type: 'EDIT_DETAIL_LAST_NAME',
+                                payload: event.target.value
+                            })}
+                            ></TextField>
+                    <TextField label="Street Name 1" className={this.props.classes.root} value={this.props.info.AddressLineOne}
+                        onChange={(event) =>
+                            this.props.dispatch({
+                                type: 'EDIT_DETAIL_ADDRESS_ONE',
+                                payload: event.target.value
+                            })}
+                            ></TextField>
+                    <TextField label="Street Name 2" className={this.props.classes.root} value={this.props.info.AddressLineTwo}
+                        onChange={(event) =>
+                            this.props.dispatch({
+                                type: 'EDIT_DETAIL_ADDRESS_TWO',
+                                payload: event.target.value
+                            })}
+                            ></TextField>
+                    <TextField label="City" className={this.props.classes.root} value={this.props.info.City}
+                        onChange={(event) =>
+                            this.props.dispatch({
+                                type: 'EDIT_DETAIL_CITY',
+                                payload: event.target.value
+                            })}
+                            ></TextField>
+                    <TextField label="State/Province" className={this.props.classes.root} value={this.props.info.StateProvince}
+                        onChange={(event) =>
+                            this.props.dispatch({
+                                type: 'EDIT_DETAIL_STATE_PROVINCE',
+                                payload: event.target.value
+                            })}
+                            ></TextField>
+                    <TextField label="Zip/Postal Code" className={this.props.classes.root} value={this.props.info.PostalCode}
+                        onChange={(event) =>
+                            this.props.dispatch({
+                                type: 'EDIT_DETAIL_POSTAL_CODE',
+                                payload: event.target.value
+                            })}
+                            ></TextField>
+                    <TextField label="Country" className={this.props.classes.root} value={this.props.info.CountryID}
+                        onChange={(event) =>
+                            this.props.dispatch({
+                                type: 'EDIT_DETAIL_COUNTRY_ID',
+                                payload: event.target.value
+                            })}
+                            ></TextField>
                 </div>
                 <hr></hr>
                 <div>
                 <h2>Contact Info</h2>
-                    <TextField label="Email Address" className={this.props.classes.root} value={this.props.info.EmailAddress}></TextField>
-                    <TextField label="Phone Number" className={this.props.classes.root} value={this.props.info.PhoneNumber}></TextField>
+                    <TextField label="Email Address" className={this.props.classes.root} value={this.props.info.EmailAddress}
+                        onChange={(event) =>
+                            this.props.dispatch({
+                                type: 'EDIT_DETAIL_EMAIL_ADDRESS',
+                                payload: event.target.value
+                            })}
+                            ></TextField>
+                    <TextField label="Phone Number" className={this.props.classes.root} value={this.props.info.PhoneNumber}
+                        onChange={(event) =>
+                            this.props.dispatch({
+                                type: 'EDIT_DETAIL_PHONE_NUMBER',
+                                payload: event.target.value
+                            })}
+                            ></TextField>
                 </div>
                 <hr></hr>
                 <div>
@@ -100,8 +174,20 @@ class Details extends Component {
                         <MenuItem value="Adult 21">Adult (Over 21)</MenuItem>
                 </Select>
                     <TextField label="Badge Number" className={this.props.classes.root} value={this.props.info.BadgeNumber}></TextField>{/* no handle change or on change, CANT BE EDITED */}
-                    <TextField label="Date of Birth" className={this.props.classes.root} value={this.props.info.DateOfBirth}></TextField>
-                    <TextField label="Badge Name" className={this.props.classes.root} value={this.props.info.BadgeName}></TextField>
+                    <TextField label="Date of Birth" className={this.props.classes.root} value={this.props.info.DateOfBirth}
+                        onChange={(event) =>
+                            this.props.dispatch({
+                                type: 'EDIT_DETAIL_DATE_OF_BIRTH',
+                                payload: event.target.value
+                            })}
+                            ></TextField>
+                    <TextField label="Badge Name" className={this.props.classes.root} value={this.props.info.BadgeName} 
+                        onChange={(event) =>
+                            this.props.dispatch({
+                                type: 'EDIT_DETAIL_BADGE_NAME',
+                                payload: event.target.value
+                            })}
+                            ></TextField>
                 </div>
                 <hr></hr>
                 <div>
@@ -127,7 +213,12 @@ class Details extends Component {
                                 format="MM/dd/yyyy"
                                 KeyboardButtonProps={{
                                     'aria-label': 'change date',
-                                }}
+                                }} 
+                                onChange={(event) =>
+                                    this.props.dispatch({
+                                        type: 'EDIT_DETAIL_CHECK_IN_DATE',
+                                        payload: event.target.value
+                                    })}
                             />
                             <KeyboardDatePicker
                                 value={this.props.info.PaymentDate}
@@ -137,14 +228,19 @@ class Details extends Component {
                                 format="MM/dd/yyyy"
                                 KeyboardButtonProps={{
                                     'aria-label': 'change time',
-                                }}
+                                }} 
+                                onChange={(event) =>
+                                    this.props.dispatch({
+                                        type: 'EDIT_DETAIL_PAYMENT_DATE',
+                                        payload: event.target.value
+                                    })}
                             />
                         </Grid>
                     </MuiPickersUtilsProvider>
                 </div>
                 <hr></hr>
                 <Button onClick={this.handleBack}>Back</Button>
-                <Button>Save</Button>
+                <Button onClick={this.handleSave}>Save</Button>
             </div>
         )
     }

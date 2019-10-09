@@ -20,9 +20,27 @@ function* fetchAttendeePersonalInfo(action) {
     }
 }
 
+function* updateAttendeePersonalInfo(action) {
+    try{
+        const config = {
+            headers: { 'Content-Type': 'application/json' },
+            withCredentials: true,
+        };
+        yield console.log('in updateAttendee', action.payload);
+        yield axios.put(`/api/attendee/details`, action.payload, config);
+        yield put ({
+            type: 'SET_ATTENDEE_DETAILS',
+        })
+        
+    }catch(err) {
+        console.log('error in update details');
+        
+    }
+}
 
 function* attendeeDetailsSaga() {
     yield takeLatest('FETCH_ATTENDEE_PERSONAL_INFO', fetchAttendeePersonalInfo)
+    yield takeLatest('UPDATE_ATTENDEE_INFO', updateAttendeePersonalInfo)
 }
 
 export default attendeeDetailsSaga;
