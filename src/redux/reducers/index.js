@@ -7,7 +7,7 @@ import AttendeeDetailsReducer from './AttendeeDetailsReducer';
 import AttendeesCheckInReducer from './AttendeesCheckInReducer';
 import AttendeesOrderIdReducer from './AttendeesOrderIdReducer';
 // import ConventionsReducer from './ConventionsReducer';
-// import EventsReducer from './EventsReducer';
+import EventsReducer from './EventsReducer';
 // import HomePageReducer from './HomePageReducer';
 // import TagsReducer from './TagsReducer';
 // import LocationReducer from './LocationReducer'
@@ -28,7 +28,7 @@ const rootReducer = combineReducers({
   AttendeesCheckInReducer,
   AttendeesOrderIdReducer,
   // ConventionsReducer,
-  // EventsReducer,
+  EventsReducer,
   // HomePageReducer,
   // TagsReducer,
   // LocationReducer,

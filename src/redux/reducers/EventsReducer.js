@@ -1,5 +1,12 @@
+const EventsReducer = (state = { tags: [] }, action) => {
+    switch (action.type) {
+        case 'SET_EVENT_LIST':
+            return action.payload;
+        default:
+            return state;
+    }
+}
 
 
 
-
-export default eventsReducer;
+export default EventsReducer;
