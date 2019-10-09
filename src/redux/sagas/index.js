@@ -7,6 +7,7 @@ import AttendeesCheckInSaga from './AttendeesCheckInSaga';
 import AttendeesOrderIdSaga from './AttendeesOrderIdSaga';
 // import ConventionSaga from './ConventionSaga';
 import EventsSaga from './EventsSaga';
+import eventDetailsSaga from './eventDetailsSaga';
 // import HomePageSaga from './HomePageSaga';
 // import LocationSaga from './LocationSaga';
 import TagsSaga from './TagsSaga';
@@ -28,6 +29,7 @@ export default function* rootSaga() {
     AttendeesOrderIdSaga(),
     // ConventionSaga(),
     EventsSaga(),
+    eventDetailsSaga(),
     // HomePageSaga(),
     // LocationSaga(),
     TagsSaga()

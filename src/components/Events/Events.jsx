@@ -45,7 +45,13 @@ class Events extends Component {
                     {
                     icon: "event",
                     tooltip: "Edit Event",
-                    // need on click here to navigate to details page
+                    onClick: (event, rowData) => {
+                        this.props.dispatch({
+                            type: "FETCH_EVENT_DETAILS",
+                            payload: rowData.EventID
+                        });
+                        this.props.history.push('/eventdetails')
+                    }
                     }
                 ]}
                     editable={{}}
