@@ -215,7 +215,37 @@ router.put('/checkIn', rejectUnauthenticated, async (req, res) => {
     } finally {
         connection.release();
     }
-})
+});
+
+//PUT route for a single walkin attendee AND a payment. basically same as above, also sets payment date.
+router.put('/checkInAndPay', rejectUnauthenticated, async (req, res) => {
+    console.log('in attendee checkInAndPay PUT route');
+    const connection = await pool.connect();
+    try {
+        await connection.query('BEGIN');
+        //assign the array we get to a variable
+        const attendee = req.body.attendeeToCheckIn;
+        console.log(attendee);
+
+        const queryText = `UPDATE "Attendee"
+                            SET "CheckInDate" = NOW(), "PaymentDate" = NOW()
+                            WHERE "AttendeeID" = $1;`;
+
+        
+        await connection.query(queryText, [attendee])
+
+        await connection.query('COMMIT');
+        res.sendStatus(200);
+    } catch (err) {
+        await connection.query('ROLLBACK');
+        console.log('error in attendee checkInAndPay PUT route', err);
+        res.sendStatus(500);
+    } finally {
+        connection.release();
+    }
+});
+
+
 
 /**
  * POST route template
