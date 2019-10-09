@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component }from 'react';
 import PropTypes from 'prop-types';
 import Button from '@material-ui/core/Button';
 import ClickAwayListener from '@material-ui/core/ClickAwayListener';
@@ -9,17 +9,21 @@ import MenuItem from '@material-ui/core/MenuItem';
 import MenuList from '@material-ui/core/MenuList';
 import { withStyles } from '@material-ui/core/styles';
 import { withRouter } from 'react-router';
+import { connect } from 'react-redux';
 
 const styles = theme => ({
     root: {
-        display: 'flex',
+        margin: '30px',
+        color: 'white',
+        font: 'Dosis',
+        fontSize: '20px'
     },
     paper: {
         marginRight: theme.spacing.unit * 2,
     },
 });
 
-class AdminNav extends React.Component {
+class AdminNav extends Component {
     state = {
         open: false,
     };
@@ -58,10 +62,11 @@ class AdminNav extends React.Component {
         const { classes } = this.props;
         const { open } = this.state;
         return (
-            <div className={classes.root}>
+            <div >
 
                 <div>
                     <Button
+                        className={classes.root}
                         buttonRef={node => {
                             this.anchorEl = node;
                         }}
@@ -102,4 +107,4 @@ AdminNav.propTypes = {
     classes: PropTypes.object.isRequired,
 };
 
-export default withRouter(withStyles(styles)(AdminNav));
+export default withRouter(withStyles(styles)(connect()(AdminNav)));
