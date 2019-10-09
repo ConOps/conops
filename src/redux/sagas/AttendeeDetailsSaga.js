@@ -26,8 +26,10 @@ function* updateAttendeePersonalInfo(action) {
             headers: { 'Content-Type': 'application/json' },
             withCredentials: true,
         };
+        console.log(action.payload.AttendeeID);
+        
         yield console.log('in updateAttendee', action.payload);
-        yield axios.put(`/api/attendee/details`, action.payload, config);
+        yield axios.put(`/api/attendee/details/${action.payload.AttendeeID}`, action.payload, config);
         yield put ({
             type: 'SET_ATTENDEE_DETAILS',
         })
