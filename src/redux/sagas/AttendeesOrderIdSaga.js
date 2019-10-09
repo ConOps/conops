@@ -30,8 +30,25 @@ function * oneCheckInToRuleThemAll(action){
     }
 }
 
+function * checkInAndPay(action){
+    try {
+        const config = {
+            headers: { 'Content-Type': 'application/json' },
+            withCredentials: true,
+        };
+        yield axios.put('/api/attendee/checkInAndPay', {attendeesToCheckIn: action.payload}, config)
+        yield put ({
+            type: 'FETCH_ALL_ATTENDEES'
+        })
+}catch(error){
+console.log('error in checkInAndPay', error);
+}
+}
+
 function * attendeesOrderIdSaga(){
     yield takeLatest('FETCH_ORDER_INFO', fetchOrderInfo)
-    yield takeLatest('CHECK_IN_ALL_SELECTED', oneCheckInToRuleThemAll )
+    yield takeLatest('CHECK_IN_ALL_SELECTED', oneCheckInToRuleThemAll)
+    yield takeLatest('CHECK_IN_AND_PAY_ATTENDEE', checkInAndPay)
 }
+
 export default attendeesOrderIdSaga;
