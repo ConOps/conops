@@ -59,6 +59,8 @@ class Details extends Component {
 
     
 
+    
+
     render(){
         return(
             <div className="detailsPage">
@@ -174,13 +176,21 @@ class Details extends Component {
                         <MenuItem value="Adult 21">Adult (Over 21)</MenuItem>
                 </Select>
                     <TextField label="Badge Number" className={this.props.classes.root} value={this.props.info.BadgeNumber}></TextField>{/* no handle change or on change, CANT BE EDITED */}
-                    <TextField label="Date of Birth" className={this.props.classes.root} value={this.props.info.DateOfBirth}
-                        onChange={(event) =>
-                            this.props.dispatch({
+                    <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                    <KeyboardDatePicker margin="normal"
+                        id="date-picker-dialog" format="MM/dd/yyyy"
+                        KeyboardButtonProps={{
+                            'aria-label': 'change date',
+                        }} 
+                        label="Date of Birth" className={this.props.classes.root} value={this.props.info.DateOfBirth}
+                            onChange={(date) => 
+                                this.props.dispatch({
                                 type: 'EDIT_DETAIL_DATE_OF_BIRTH',
-                                payload: event.target.value
+                                payload: date
                             })}
-                            ></TextField>
+                            
+                            />
+                    </MuiPickersUtilsProvider>
                     <TextField label="Badge Name" className={this.props.classes.root} value={this.props.info.BadgeName} 
                         onChange={(event) =>
                             this.props.dispatch({
@@ -214,10 +224,10 @@ class Details extends Component {
                                 KeyboardButtonProps={{
                                     'aria-label': 'change date',
                                 }} 
-                                onChange={(event) =>
+                                onChange={(date) =>
                                     this.props.dispatch({
                                         type: 'EDIT_DETAIL_CHECK_IN_DATE',
-                                        payload: event.target.value
+                                        payload: date
                                     })}
                             />
                             <KeyboardDatePicker
@@ -229,10 +239,10 @@ class Details extends Component {
                                 KeyboardButtonProps={{
                                     'aria-label': 'change time',
                                 }} 
-                                onChange={(event) =>
+                                onChange={(date) =>
                                     this.props.dispatch({
                                         type: 'EDIT_DETAIL_PAYMENT_DATE',
-                                        payload: event.target.value
+                                        payload: date
                                     })}
                             />
                         </Grid>
