@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
-import MaterialTable from 'material-table';
-import { connect } from 'react-redux';
-import Button from '@material-ui/core/Button';
+import React, { Component } from "react";
+import MaterialTable from "material-table";
+import { connect } from "react-redux";
+import Button from "@material-ui/core/Button";
 
 class OrderID extends Component {
   state = {
@@ -31,59 +31,78 @@ class OrderID extends Component {
       { title: "Pre Reg Sort Number", field: "PreRegSortNumber", hidden: true },
       { title: "OrderID", field: "OrderID" }
     ],
-    data: [
-    ]
+    data: []
   };
-
-  // componentDidMount() {
-  //   getOrderId();
-  // }
-
-  // getOrderId = () => {
-  //   this.props.dispatch({
-  //     type: "FETCH_ORDER_INFO"
-  //   });
-  // }
 
   render() {
     return (
       <div>
-
         <h1 style={{ textAlign: "center" }}>Current Convention: 2DCON 2020</h1>
-       
-       
+
         <MaterialTable
           title="Editable Example"
           columns={this.state.columns}
           options={{
             columnsButton: true,
             selection: true,
+            selectionProps: rowData => ({
+              disabled: rowData.CheckInDate !== null
+            }),
             // headerStyle: { backgroundColor: 'blue', color: 'white' },
             pageSizeOptions: [10, 20, 50],
             toolbarButtonAlignment: "right",
             searchFieldAlignment: "left",
             showTitle: false
           }}
-          actions={[{
-            tooltip: 'Check-In All Selected Users',
-            icon: 'check_box',
-            onClick: (evt, rowData) => console.log(rowData.CheckInDate)
-          }]}
           // onSelectionChange={(rows) => alert('You selected ' + rows.length + ' rows')}
           data={this.props.reduxStore.AttendeesOrderIdReducer}
+          actions={[
+            {
+              icon: "check_circle",
+              tooltip: "Check in all of the selected attendees",
+              onClick: (event, data) => {
+                if (
+                  window.confirm(
+                    "Are you sure that you would like to check in all of the selected attendees?"
+                  )
+                ) {
+                  console.log(data);
+                  let attendeesToCheckIn = [];
+                  for (let i = 0; i < data.length; i++) {
+                    console.log("i am in the loop");
+                    attendeesToCheckIn.push(data[i].AttendeeID);
+                  }
+                  this.props.dispatch({
+                    type: "CHECK_IN_ALL_SELECTED",
+                    payload: attendeesToCheckIn
+                  });
+                  this.props.history.push(`/check-in`);
+                }
+                else{
+                  return false;
+                }
+              }
+            }
+          ]}
           editable={{}}
         />
-        
-        <Button variant="contained" color="secondary" style={{marginLeft: "3%", marginRight: "3%"}} onClick={() => this.props.history.push('/check-in')}>Back to Check In</Button>
-        <Button variant="contained" color="primary">Check in Selected Guests!</Button>
+
+        <Button
+          variant="contained"
+          color="secondary"
+          style={{ marginLeft: "3%", marginRight: "3%" }}
+          onClick={() => this.props.history.push("/check-in")}
+        >
+          Back to Check In
+        </Button>
       </div>
     );
   }
 }
 
-const mapStateToProps = (reduxStore) => {
+const mapStateToProps = reduxStore => {
   return {
     reduxStore
-  }
-}
+  };
+};
 export default connect(mapStateToProps)(OrderID);
