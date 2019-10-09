@@ -184,9 +184,38 @@ router.put('/details/:id', rejectUnauthenticated, async (req, res) => {
     } finally {
         connection.release();
     }
-    
 });
 
+//PUT route for check-in, SINGLE or MUTLI check-in. data will come as an array of IDs, even if it's 1 id (because of the table)
+router.put('/checkIn', rejectUnauthenticated, async (req, res) => {
+    console.log('in attendee checkIn PUT route');
+    const connection = await pool.connect();
+    try {
+        await connection.query('BEGIN');
+        //assign the array we get to a variable
+        const attendees = req.body.attendeesToCheckIn;
+        console.log(attendees);
+
+        const queryText = `UPDATE "Attendee"
+                            SET "CheckInDate" = NOW()
+                            WHERE "AttendeeID" = $1;`;
+
+        //loop over the array and update checkin where we have an ID = a value in that array
+        for (let i = 0; i < attendees.length; i++) {
+            console.log('in checkin PUT LOOOOOOP');
+            await connection.query(queryText, [attendees[i]])
+        }
+
+        await connection.query('COMMIT');
+        res.sendStatus(200);
+    } catch(err) {
+        await connection.query('ROLLBACK');
+        console.log('error in attendee checkIn PUT route', err);
+        res.sendStatus(500);
+    } finally {
+        connection.release();
+    }
+})
 
 /**
  * POST route template
