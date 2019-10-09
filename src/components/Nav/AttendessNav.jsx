@@ -9,10 +9,15 @@ import MenuItem from '@material-ui/core/MenuItem';
 import MenuList from '@material-ui/core/MenuList';
 import { withStyles } from '@material-ui/core/styles';
 import { withRouter } from 'react-router';
+import './Nav.css';
+
 
 const styles = theme => ({
     root: {
-        display: 'flex',
+        margin: '30px',
+        color: 'white',
+        font: 'Dosis',
+        fontSize: '20px'
     },
     paper: {
         marginRight: theme.spacing.unit * 2,
@@ -49,10 +54,11 @@ class AttendeesNav extends React.Component {
         const { classes } = this.props;
         const { open } = this.state;
         return (
-            <div className={classes.root}>
+            <div >
        
                 <div>
                     <Button
+                        className={classes.root}
                         buttonRef={node => {
                             this.anchorEl = node;
                         }}
