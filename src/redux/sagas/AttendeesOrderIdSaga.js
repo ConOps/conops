@@ -36,7 +36,7 @@ function * checkInAndPay(action){
             headers: { 'Content-Type': 'application/json' },
             withCredentials: true,
         };
-        yield axios.put('/api/attendee/checkInAndPay', {attendeesToCheckIn: action.payload}, config)
+        yield axios.put('/api/attendee/checkInAndPay', {attendeeToCheckIn: action.payload}, config)
         yield put ({
             type: 'FETCH_ALL_ATTENDEES'
         })

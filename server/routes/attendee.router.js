@@ -224,6 +224,8 @@ router.put('/checkInAndPay', rejectUnauthenticated, async (req, res) => {
     try {
         await connection.query('BEGIN');
         //assign the array we get to a variable
+        console.log(req.body);
+        
         const attendee = req.body.attendeeToCheckIn;
         console.log(attendee);
 
