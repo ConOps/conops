@@ -28,6 +28,7 @@ import News from  '../News/News';
 import Sponsors from '../Sponsors/Sponsors';
 import Details from '../Details/Details';
 import OrderId from '../OrderId/OrderId';
+import EventDetails from '../EventDetails/EventDetails';
 
 import './App.css';
 
@@ -122,7 +123,12 @@ class App extends Component {
               exact
               path="/orderId"
               component={OrderId}
-            />             
+            />      
+            <ProtectedRoute
+              exact
+              path="/eventdetails"
+              component={EventDetails}
+            />        
 
             
             {/* If none of the other routes matched, we will show a 404. */}
