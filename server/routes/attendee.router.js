@@ -153,6 +153,39 @@ router.get('/order/:id', rejectUnauthenticated, (req, res) => {
         })
 });
 
+//PUT ROUTES
+//PUT routes will need to check authorization
+
+//PUT route for attendee details edit
+router.put('/details/:id', rejectUnauthenticated, async (req, res) => {
+    console.log('in attendee PUT route');
+    const connection = await pool.connect();
+    try {
+        await connection.query('BEGIN');
+        //declare route id as a variable
+        const attendeeID = req.params.id;
+        const attendee = req.body;
+        console.log('here is attendee:', attendee);
+        
+        const queryText =   `UPDATE "Attendee"
+                            SET "LastName" = $1, "FirstName" = $2, "MiddleName" = $3, "AddressLineOne" = $4, "AddressLineTwo" = $5, 
+                                "City" = $6, "StateProvince" = $7, "PostalCode" = $8, "CountryID" = $9, "EmailAddress" = $10, 
+                                "PhoneNumber" = $11, "DateOfBirth" = $12, "BadgeName" = $13, "BadgeTypeID" = $14
+                            WHERE "Attendee"."AttendeeID" = $15;`;
+        await connection.query(queryText, [attendee.LastName, attendee.FirstName, attendee.MiddleName, attendee.AddressLineOne, attendee.AddressLineTwo, attendee.City, 
+                                attendee.StateProvince, attendee.PostalCode, attendee.CountryID, attendee.EmailAddress, attendee.PhoneNumber, attendee.DateOfBirth, 
+                                attendee.BadgeName, attendee.BadgeTypeID, attendeeID]);
+        await connection.query('COMMIT');
+        res.sendStatus(200);
+    } catch(error) {
+        await connection.query('ROLLBACK');
+        console.log('error in attendee PUT route', error);
+        res.sendStatus(500);
+    } finally {
+        connection.release();
+    }
+    
+});
 
 
 /**
@@ -161,5 +194,42 @@ router.get('/order/:id', rejectUnauthenticated, (req, res) => {
 router.post('/', (req, res) => {
 
 });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/**
+ * DELETE route template
+ */
+//Delete route for the Attendee Detail page
+router.delete('/details/:id', rejectUnauthenticated, (req, res) => {
+    const id = req.params.id
+    const queryText = 'DELETE FROM  "Attendee" WHERE "AttendeeID" = $1;';
+    console.log('in attendee specific detail delete id', id);
+    pool.query(queryText, [id])
+        .then((result) => {
+            console.log('in Delete router for specific attendee details', result);
+            res.sendStatus(200); 
+        })
+        .catch((error) => {
+            console.log('in Delete router for specific attendee details', error);
+            res.sendStatus(500);
+        })
+    
+})
+
+
 
 module.exports = router;
