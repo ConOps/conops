@@ -162,4 +162,41 @@ router.post('/', (req, res) => {
 
 });
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/**
+ * DELETE route template
+ */
+//Delete route for the Attendee Detail page
+router.delete('/details/:id', rejectUnauthenticated, (req, res) => {
+    const id = req.params.id
+    const queryText = 'DELETE FROM  "Attendee" WHERE "AttendeeID" = $1;';
+    console.log('in attendee specific detail delete id', id);
+    pool.query(queryText, [id])
+        .then((result) => {
+            console.log('in Delete router for specific attendee details', result);
+            res.sendStatus(200); 
+        })
+        .catch((error) => {
+            console.log('in Delete router for specific attendee details', error);
+            res.sendStatus(500);
+        })
+    
+})
+
+
+
 module.exports = router;
