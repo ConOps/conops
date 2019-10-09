@@ -3,6 +3,7 @@ import MaterialTable from 'material-table';
 import { connect } from 'react-redux';
 import Button from '@material-ui/core/Button';
 
+
 class OrderID extends Component {
   state = {
     columns: [
@@ -35,15 +36,7 @@ class OrderID extends Component {
     ]
   };
 
-  // componentDidMount() {
-  //   getOrderId();
-  // }
 
-  // getOrderId = () => {
-  //   this.props.dispatch({
-  //     type: "FETCH_ORDER_INFO"
-  //   });
-  // }
 
   render() {
     return (
@@ -58,24 +51,39 @@ class OrderID extends Component {
           options={{
             columnsButton: true,
             selection: true,
+            selectionProps: rowData => ({
+              disabled: rowData.CheckInDate !== null,
+            }),
             // headerStyle: { backgroundColor: 'blue', color: 'white' },
             pageSizeOptions: [10, 20, 50],
             toolbarButtonAlignment: "right",
             searchFieldAlignment: "left",
             showTitle: false
           }}
-          actions={[{
-            tooltip: 'Check-In All Selected Users',
-            icon: 'check_box',
-            onClick: (evt, rowData) => console.log(rowData.CheckInDate)
-          }]}
           // onSelectionChange={(rows) => alert('You selected ' + rows.length + ' rows')}
           data={this.props.reduxStore.AttendeesOrderIdReducer}
+          actions={[
+            {
+              icon: "check_circle",
+              tooltip: "Check in all of the selected attendees",
+              onClick: (event, data) => {
+                console.log(data);
+                let attendeesToCheckIn = []
+                for (let i = 0; i < data.length; i++){
+                  console.log('i am in the loop');
+                  attendeesToCheckIn.push(data[i].AttendeeID)
+                }
+                this.props.dispatch({
+                  type: "CHECK_IN_ALL_SELECTED",
+                  payload: attendeesToCheckIn
+                });
+              }
+            }
+          ]}
           editable={{}}
         />
         
         <Button variant="contained" color="secondary" style={{marginLeft: "3%", marginRight: "3%"}} onClick={() => this.props.history.push('/check-in')}>Back to Check In</Button>
-        <Button variant="contained" color="primary">Check in Selected Guests!</Button>
       </div>
     );
   }
