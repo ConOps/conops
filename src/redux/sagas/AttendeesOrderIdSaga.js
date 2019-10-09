@@ -14,7 +14,24 @@ function * fetchOrderInfo(action){  // find all the personal information of all 
     }
 }
 
+function * oneCheckInToRuleThemAll(action){
+    try{
+        const config = {
+            headers: { 'Content-Type': 'application/json' },
+            withCredentials: true,
+        };
+        console.log(action.payload);
+         yield axios.put('/api/attendee/checkIn', {attendeesToCheckIn: action.payload}, config)
+         yield put ({
+             type: 'FETCH_ALL_ATTENDEES',
+         })
+    }catch(error){
+        console.log('error in onCheckInToRuleThemAll', error);     
+    }
+}
+
 function * attendeesOrderIdSaga(){
     yield takeLatest('FETCH_ORDER_INFO', fetchOrderInfo)
+    yield takeLatest('CHECK_IN_ALL_SELECTED', oneCheckInToRuleThemAll )
 }
 export default attendeesOrderIdSaga;
