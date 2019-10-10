@@ -9,19 +9,23 @@ body {
     margin: 50px;
 }
 
-form {
-    background-color: #dbd5d5;
-    width: 30%;
-    height: 250px;
-    margin: 20px auto;
-    padding: 25px;
-    border-radius: 2px;
+.main{
+    text-align: center;
+    background-image: url(https://raw.githubusercontent.com/ConOps/conops/master/LogoBlackedOut.png);
+    background-size: 900px;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: center bottom;
 }
 
-input {
-    margin: 5px;
-    margin-bottom: 10px;
+.form {
+    padding-top: 130px;
+    padding-bottom: 340px;
+    text-align: center;
+    position: center;
 }
+
+
 
 .log-in, .log-out, .register {
     font-family: Dosis;
