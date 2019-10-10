@@ -49,8 +49,8 @@ router.get('/eventdetails/:id', rejectUnauthenticated, (req, res) => {
                             ORDER BY "Event"."EventStartTime";`;
     pool.query(queryText, [id])
         .then(result => {
-            console.log('event details:', result.rows);
-            res.send(result.rows);
+            console.log('event details:', result.rows[0]);
+            res.send(result.rows[0]);
         }).catch(error => {
             console.log('error in event details router:', error)
             res.sendStatus(500);

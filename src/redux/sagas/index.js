@@ -9,7 +9,7 @@ import AttendeesOrderIdSaga from './AttendeesOrderIdSaga';
 import EventsSaga from './EventsSaga';
 import eventDetailsSaga from './eventDetailsSaga';
 // import HomePageSaga from './HomePageSaga';
-// import LocationSaga from './LocationSaga';
+import LocationSaga from './LocationSaga';
 // import TagsSaga from './TagsSaga'
 
 // rootSaga is the primary saga.
@@ -31,7 +31,7 @@ export default function* rootSaga() {
     EventsSaga(),
     eventDetailsSaga(),
     // HomePageSaga(),
-    // LocationSaga(),
+    LocationSaga(),
     // TagsSaga()
   ]);
 }
