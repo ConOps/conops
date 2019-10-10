@@ -78,6 +78,29 @@ class Details extends Component {
       }
     }
   };
+
+handleCheckOut =(id, order) => {
+    if(order==null){
+        if(window.confirm('Are you sure that you want to check this person OUT?')){
+            this.props.dispatch({
+                type: 'CHECK_OUT_WALK_IN',
+                action: id
+            })
+        }else{
+            return false;
+        }
+    }else{
+        if(window.confirm('Are you sure that you want to check this person OUT?')){
+            this.props.dispatch({
+                type: 'CHECK_OUT',
+                action: id
+            })
+        }else{  
+        return false
+        }
+    }
+}
+
   handleSave = () => {
     alert("Info has been updated");
     this.props.dispatch({
@@ -122,6 +145,10 @@ class Details extends Component {
             >
               Check-In
             </Button>
+          )}
+          {this.props.info.CheckInDate != null && (
+              <Button
+              onClick={()=>this.handleCheckOut(this.props.info.AttendeeID, this.props.info.orderID)}>Checkout!</Button>
           )}
 
           {this.props.info.orderID === 4 && (
