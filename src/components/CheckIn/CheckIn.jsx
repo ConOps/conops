@@ -121,7 +121,7 @@ class CheckIn extends Component {
                 });
                 this.props.history.push(`/details`);
               }
-            },
+            }, 
             rowData => ({
               icon: "group",
               tooltip: "Find all members of this group",
