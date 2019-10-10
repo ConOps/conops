@@ -247,8 +247,63 @@ router.put('/checkInAndPay', rejectUnauthenticated, async (req, res) => {
     }
 });
 
+router.put('/checkOutWalkIn', rejectUnauthenticated, async (req, res) => {
+    console.log('in attendee checkOutWalkIn PUT route');
+    const connection = await pool.connect();
+    try {
+        await connection.query('BEGIN');
+        //assign the array we get to a variable
+        console.log(req.body);
+
+        const attendee = req.body.attendeeToCheckOut;
+        console.log(attendee);
+
+        const queryText = `UPDATE "Attendee"
+                            SET "CheckInDate" = NULL, "PaymentDate" = NULL
+                            WHERE "AttendeeID" = $1;`;
 
 
+        await connection.query(queryText, [attendee])
+
+        await connection.query('COMMIT');
+        res.sendStatus(200);
+    } catch (err) {
+        await connection.query('ROLLBACK');
+        console.log('error in attendee checkOutWalkIn PUT route', err);
+        res.sendStatus(500);
+    } finally {
+        connection.release();
+    }
+});
+
+router.put('/checkOut', rejectUnauthenticated, async (req, res) => {
+    console.log('in attendee checkOut PUT route');
+    const connection = await pool.connect();
+    try {
+        await connection.query('BEGIN');
+        //assign the array we get to a variable
+        console.log(req.body);
+
+        const attendee = req.body.attendeeToCheckOut;
+        console.log(attendee);
+
+        const queryText = `UPDATE "Attendee"
+                            SET "CheckInDate" = NULL
+                            WHERE "AttendeeID" = $1;`;
+
+
+        await connection.query(queryText, [attendee])
+
+        await connection.query('COMMIT');
+        res.sendStatus(200);
+    } catch (err) {
+        await connection.query('ROLLBACK');
+        console.log('error in attendee checkOut PUT route', err);
+        res.sendStatus(500);
+    } finally {
+        connection.release();
+    }
+});
 /**
  * POST route template
  */

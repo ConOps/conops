@@ -84,7 +84,7 @@ handleCheckOut =(id, order) => {
         if(window.confirm('Are you sure that you want to check this person OUT?')){
             this.props.dispatch({
                 type: 'CHECK_OUT_WALK_IN',
-                action: id
+                payload: id
             })
         }else{
             return false;
@@ -93,7 +93,7 @@ handleCheckOut =(id, order) => {
         if(window.confirm('Are you sure that you want to check this person OUT?')){
             this.props.dispatch({
                 type: 'CHECK_OUT',
-                action: id
+                payload: id
             })
         }else{  
         return false
