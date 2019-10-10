@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import TextField from '@material-ui/core/TextField';
+import Button from '@material-ui/core/Button';
 
 class LoginPage extends Component {
   state = {
@@ -31,7 +33,7 @@ class LoginPage extends Component {
 
   render() {
     return (
-      <div>
+      <div  >
         {this.props.errors.loginMessage && (
           <h2
             className="alert"
@@ -40,48 +42,43 @@ class LoginPage extends Component {
             {this.props.errors.loginMessage}
           </h2>
         )}
-        <form onSubmit={this.login}>
-          <h1>Login</h1>
+        <div className="main">
+        <div className="form">
+          <h1 style={{textAlign: 'center', color: 'white', paddingTop: '20px', fontSize: '40px', }}>Login</h1>
           <div>
-            <label htmlFor="username">
-              Username:
-              <input
+           
+              <TextField
+              style={{ marginTop: '50px', backgroundColor: 'white', paddingLeft: '5px'}}
+              label="username"
                 type="text"
                 name="username"
                 value={this.state.username}
                 onChange={this.handleInputChangeFor('username')}
               />
-            </label>
+            
           </div>
           <div>
-            <label htmlFor="password">
-              Password:
-              <input
+           
+              <TextField
+              style={{ margin: '10px', backgroundColor: 'white', paddingLeft: '5px' }}
+                label="password"
                 type="password"
                 name="password"
                 value={this.state.password}
                 onChange={this.handleInputChangeFor('password')}
               />
-            </label>
+            
           </div>
           <div>
-            <input
-              className="log-in"
+            <Button
+                style={{ margin: '20px', color: 'white', backgroundColor: '#19375f'}}
               type="submit"
               name="submit"
-              value="Log In"
-            />
+              onClick={this.login}
+            >Log-In</Button>
           </div>
-        </form>
-        <center>
-          <button
-            type="button"
-            className="link-button"
-            onClick={() => {this.props.dispatch({type: 'SET_TO_REGISTER_MODE'})}}
-          >
-            Register
-          </button>
-        </center>
+        </div>
+        </div>
       </div>
     );
   }
