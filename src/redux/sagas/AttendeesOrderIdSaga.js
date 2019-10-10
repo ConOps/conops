@@ -59,6 +59,10 @@ function * checkInAndPay(action){
             withCredentials: true,
         };
         yield axios.put('/api/attendee/checkInAndPay', {attendeeToCheckIn: action.payload}, config)
+        yield put({
+            type: 'FETCH_ATTENDEE_PERSONAL_INFO',
+            payload: action.payload
+        })
         yield put ({
             type: 'FETCH_ALL_ATTENDEES'
         })
