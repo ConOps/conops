@@ -121,7 +121,7 @@ class CheckIn extends Component {
                 });
                 this.props.history.push(`/details`);
               }
-            },
+            }, 
             rowData => ({
               icon: "group",
               tooltip: "Find all members of this group",
@@ -145,11 +145,26 @@ let paymentPrompt = () => {
       "this person must submit payment to be checked into the convention"
     ) === true
   ) {
-    checkInPrompt();
+    paymentCheckInPrompt();
   } else {
     return false;
   }
 };
+
+let paymentCheckInPrompt = () => {
+  console.log(rowData.AttendeeID);
+  
+  if (window.confirm('are you sure that you would like to check this person in?!')){
+      this.props.dispatch({
+      type: "CHECK_IN_AND_PAY_ATTENDEE",
+      payload: rowData.AttendeeID
+    });
+  }else{
+    return false;
+  }
+  }
+
+
 let checkInPrompt = () => {
   if (
     window.confirm(
@@ -158,8 +173,8 @@ let checkInPrompt = () => {
   ) {
     console.log(rowData.AttendeeID);
     this.props.dispatch({
-      type: "CHECK_IN_ATTENDEE",
-      payload: rowData.orderID
+      type: "CHECK_IN_ALL_SELECTED",
+      payload: [rowData.AttendeeID]
     });
   } else {
     return false;
