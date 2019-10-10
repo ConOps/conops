@@ -58,6 +58,8 @@ function * checkInAndPay(action){
             headers: { 'Content-Type': 'application/json' },
             withCredentials: true,
         };
+        
+        
         yield axios.put('/api/attendee/checkInAndPay', {attendeeToCheckIn: action.payload}, config)
         yield put({
             type: 'FETCH_ATTENDEE_PERSONAL_INFO',
@@ -77,7 +79,8 @@ function * checkOutWalkIn(action){
             headers: { 'Content-Type': 'application/json' },
             withCredentials: true,
         };
-        yield axios.put('/api/attendee/checkOutWalkIn', { attendeeToCheckOut: action.payload }, config)
+        console.log('action.payload in checkoutwalkin is', action.payload);
+        yield axios.put('/api/attendee/checkOutWalkIn', {attendeeToCheckOut: action.payload}, config)
         yield put({
             type: 'FETCH_ATTENDEE_PERSONAL_INFO',
             payload: action.payload
