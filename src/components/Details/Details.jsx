@@ -44,19 +44,40 @@ class Details extends Component {
     this.props.history.push(`/OrderID`);
   };
 
-handleDelete = id => {
+  handleDelete = id => {
     this.props.dispatch({
       type: "DELETE_ATTENDEE_INFO",
       payload: id
     });
-}
+  };
 
-handleCheckIn = id => {
-    this.props.dispatch({
-      type: "CHECK_IN_FROM_DETAILS",
-      payload: [id]
-    });
-}
+  handleCheckIn = (id, payment) => {
+    if (payment == null) {
+      if (window.confirm("get their money!")) {
+        if (
+          window.confirm("Are you sure that you want to check this person in?")
+        ) {
+          this.props.dispatch({
+            type: "CHECK_IN_AND_PAY_ATTENDEE",
+            payload: id
+          });
+        } else {
+          return false;
+        }
+      } else {
+        return false;
+      }
+    } else {
+      if (
+        window.confirm("Are you sure that you want to check this person in?")
+      ) {
+        this.props.dispatch({
+          type: "CHECK_IN_FROM_DETAILS",
+          payload: [id]
+        });
+      }
+    }
+  };
   handleSave = () => {
     alert("Info has been updated");
     this.props.dispatch({
@@ -90,9 +111,18 @@ handleCheckIn = id => {
             </Button>
           )}
 
-          {this.props.info.CheckInDate === null && 
-          <Button onClick = {() => this.handleCheckIn(this.props.info.AttendeeID)}>Check-In</Button>
-          }
+          {this.props.info.CheckInDate === null && (
+            <Button
+              onClick={() =>
+                this.handleCheckIn(
+                  this.props.info.AttendeeID,
+                  this.props.info.PaymentDate
+                )
+              }
+            >
+              Check-In
+            </Button>
+          )}
 
           {this.props.info.orderID === 4 && (
             <Button onClick={() => this.handleDelete(this.props.info.orderID)}>
