@@ -10,8 +10,10 @@ import AttendeesOrderIdReducer from './AttendeesOrderIdReducer';
 import EventsReducer from './EventsReducer';
 import eventDetailsReducer from './eventDetailsReducer';
 // import HomePageReducer from './HomePageReducer';
+
 import TagsReducer from './TagsReducer';
-// import LocationReducer from './LocationReducer'
+import LocationReducer from './LocationReducer'
+
 
 
 
@@ -33,7 +35,7 @@ const rootReducer = combineReducers({
   eventDetailsReducer,
   // HomePageReducer,
   TagsReducer,
-  // LocationReducer,
+  LocationReducer,
 });
 
 export default rootReducer;
