@@ -1,5 +1,6 @@
 const express = require('express');
 const { rejectUnauthenticated } = require('../modules/authentication-middleware');
+const {rejectNonAdmin } = require('../modules/isAdminAuthentication-middleware');
 const pool = require('../modules/pool');
 const router = express.Router();
 
@@ -330,7 +331,7 @@ router.post('/', (req, res) => {
  * DELETE route template
  */
 //Delete route for the Attendee Detail page
-router.delete('/details/:id', rejectUnauthenticated, (req, res) => {
+router.delete('/delete/:id', rejectUnauthenticated, rejectNonAdmin, (req, res) => {
     const id = req.params.id
     const queryText = 'DELETE FROM  "Attendee" WHERE "AttendeeID" = $1;';
     console.log('in attendee specific detail delete id', id);
