@@ -6,14 +6,14 @@ import user from './userReducer';
 import AttendeeDetailsReducer from './AttendeeDetailsReducer';
 import AttendeesCheckInReducer from './AttendeesCheckInReducer';
 import AttendeesOrderIdReducer from './AttendeesOrderIdReducer';
-// import ConventionsReducer from './ConventionsReducer';
+import ConventionsReducer from './ConventionsReducer';
 import EventsReducer from './EventsReducer';
 import eventDetailsReducer from './eventDetailsReducer';
 // import HomePageReducer from './HomePageReducer';
-
 import TagsReducer from './TagsReducer';
 import TagDetailReducer from './TagDetailReducer';
 import LocationReducer from './LocationReducer'
+
 
 
 
@@ -31,7 +31,7 @@ const rootReducer = combineReducers({
   AttendeeDetailsReducer,
   AttendeesCheckInReducer,
   AttendeesOrderIdReducer,
-  // ConventionsReducer,
+  ConventionsReducer,
   EventsReducer,
   eventDetailsReducer,
   // HomePageReducer,
