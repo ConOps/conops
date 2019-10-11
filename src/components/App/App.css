@@ -11,18 +11,20 @@ body {
 
 .main{
     text-align: center;
+    padding-top: 0px;
     background-image: url(https://raw.githubusercontent.com/ConOps/conops/master/LogoBlackedOut.png);
-    background-size: 900px;
+    background-size: 700px;
     background-repeat: no-repeat;
     background-attachment: fixed;
-    background-position: center bottom;
+    background-position: center ;
 }
 
 .form {
-    padding-top: 130px;
-    padding-bottom: 340px;
+    padding-top: 100px;
+    padding-bottom: 200px;
     text-align: center;
-    position: center;
+    position: static;;
+    
 }
 
 
