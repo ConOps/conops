@@ -35,8 +35,7 @@ function* updateAttendeePersonalInfo(action) {
         })
         
     }catch(err) {
-        console.log('error in update details');
-        
+        console.log('error in update details', err);
     }
 }
 
