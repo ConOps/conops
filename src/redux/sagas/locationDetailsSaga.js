@@ -9,7 +9,7 @@ function* fetchDetails(action) {
         };
         //logging to make sure we're getting ID from click
         yield console.log('in fetchDetails:', action.payload);
-        const response = yield axios.get(`/api/location/locationdetails/${action.payload}`, config);
+        const response = yield axios.get(`/api/location/details/${action.payload}`, config);
         yield put({
             type: 'SET_LOCATION_DETAILS',
             payload: response.data
@@ -20,8 +20,25 @@ function* fetchDetails(action) {
     }
 }
 
-function* eventDetailsSaga() {
-    yield takeLatest('FETCH_LOCATION_DETAILS', fetchDetails)
+function* updateDetails (action) {
+    try {
+        const config = {
+            headers: { 'Content-Type': 'application/json' },
+            withCredentials: true,
+        };
+        console.log('in update location details saga:', action.payload.LocationID);
+        yield axios.put(`/api/location/details/${action.payload.LocationID}`, action.payload, config);
+        yield put ({
+            type: 'SET_LOCATION_DETAILS'
+        })
+    } catch(error) {
+        console.log('error in location details saga:', error)
+    }
 }
 
-export default eventDetailsSaga;
+function* locationDetailsSaga() {
+    yield takeLatest('FETCH_LOCATION_DETAILS', fetchDetails)
+    yield takeLatest('UPDATE_LOCATION_DETAILS', updateDetails)
+}
+
+export default locationDetailsSaga;

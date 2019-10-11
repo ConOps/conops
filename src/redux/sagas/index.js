@@ -10,7 +10,9 @@ import EventsSaga from './EventsSaga';
 import eventDetailsSaga from './eventDetailsSaga';
 // import HomePageSaga from './HomePageSaga';
 import LocationSaga from './LocationSaga';
-import TagsSaga from './TagsSaga'
+import locationDetailsSaga from './locationDetailsSaga';
+
+import TagsSaga from './TagsSaga';
 
 // rootSaga is the primary saga.
 // It bundles up all of the other sagas so our project can use them.
@@ -32,6 +34,7 @@ export default function* rootSaga() {
     eventDetailsSaga(),
     // HomePageSaga(),
     LocationSaga(),
+    locationDetailsSaga(),
     TagsSaga()
   ]);
 }
