@@ -23,12 +23,12 @@ class EditTag extends Component {
 
     edit = (event) => {
         event.preventDefault();
-        //replaces the state with the new imputs
+        //replaces the state with the new inputs
         let edit = {
-            TagID: this.props.reduxStore.TagDetailReducer.TagID,
-            TagName: this.props.reduxStore.TagDetailReducer.TagName,
+            TagID: this.props.info.TagID,
+            TagName: this.props.info.TagName,
         }
-        //send the editted state back to the saga
+        //send the edit state back to the saga
         console.log('edit', edit);
         this.props.dispatch({
             type: 'EDIT_TAG',
