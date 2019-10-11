@@ -31,7 +31,7 @@ class Tags extends Component {
                 <h1 style={{ textAlign: "center" }}>Current Convention: 2DCON 2020</h1>
                 <h2 style={{ textAlign: "center" }}>Tags</h2>
                 <div style={{ textAlign: "right", marginRight: "2%" }}>
-                    <Button variant="contained" color="primary" style={{}} onClick={() => this.props.history.push(`/createTag`)}>Create New Tag</Button>
+                    <Button variant="contained" color="primary"  onClick={() => this.props.history.push(`/createTag`)}>Create New Tag</Button>
                 </div>
                 <MaterialTable
                     title="Editable Example"
