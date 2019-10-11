@@ -68,9 +68,9 @@ class Details extends Component {
                 </div>
                 <div>
                     <p>Find All Attendees With Order ID: {this.props.info.orderID} </p> 
-                    <Button onClick={() => this.handleFind(this.props.info.orderID)}>Find</Button>
-                        <Button>Check-In</Button>
-                        <Button>Delete</Button> {/*will conditionaly render if there a admin or not */}
+                    <Button onClick={() => this.handleFind(this.props.info.orderID)} >Find</Button>
+                    <Button>Check-In</Button>
+                    <Button>Delete</Button> {/*will conditionaly render if there a admin or not */}
                 </div>
                 <hr></hr>
                 <div>
@@ -244,8 +244,8 @@ class Details extends Component {
                     </MuiPickersUtilsProvider>
                 </div>
                 <hr></hr>
-                <Button onClick={this.handleBack}>Back</Button>
-                <Button onClick={this.handleSave}>Save</Button>
+                <Button onClick={this.handleBack} >Back</Button>
+                <Button onClick={this.handleSave} >Save</Button>
             </div>
         )
     }
