@@ -48,11 +48,7 @@ class Events extends Component {
                             icon: "event",
                             tooltip: "Edit Event",
                             onClick: (event, rowData) => {
-                                this.props.dispatch({
-                                    type: "FETCH_EVENT_DETAILS",
-                                    payload: rowData.EventID
-                                });
-                                this.props.history.push('/eventdetails')
+                                this.props.history.push(`/eventdetails/${rowData.EventID}`)
                             }
                         }
                     ]}

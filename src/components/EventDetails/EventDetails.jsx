@@ -27,6 +27,17 @@ class EventDetails extends Component {
         this.props.dispatch({
             type: 'FETCH_TAG_LIST'
         });
+        this.fetchEventDetails();
+    }
+
+
+    fetchEventDetails = () => {
+        let id = this.props.match.params.id;
+        this.props.dispatch({
+            type: 'FETCH_EVENT_DETAILS',
+            payload: id
+        });
+
     }
 
     render() {
