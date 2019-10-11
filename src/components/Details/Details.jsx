@@ -79,27 +79,31 @@ class Details extends Component {
     }
   };
 
-handleCheckOut =(id, order) => {
-    if(order==null){
-        if(window.confirm('Are you sure that you want to check this person OUT?')){
-            this.props.dispatch({
-                type: 'CHECK_OUT_WALK_IN',
-                payload: id
-            })
-        }else{
-            return false;
-        }
-    }else{
-        if(window.confirm('Are you sure that you want to check this person OUT?')){
-            this.props.dispatch({
-                type: 'CHECK_OUT',
-                payload: id
-            })
-        }else{  
-        return false
-        }
+  handleCheckOut = (id, order) => {
+    if (order == null) {
+      if (
+        window.confirm("Are you sure that you want to check this person OUT?")
+      ) {
+        this.props.dispatch({
+          type: "CHECK_OUT_WALK_IN",
+          payload: id
+        });
+      } else {
+        return false;
+      }
+    } else {
+      if (
+        window.confirm("Are you sure that you want to check this person OUT?")
+      ) {
+        this.props.dispatch({
+          type: "CHECK_OUT",
+          payload: id
+        });
+      } else {
+        return false;
+      }
     }
-}
+  };
 
   handleSave = () => {
     alert("Info has been updated");
@@ -129,13 +133,18 @@ handleCheckOut =(id, order) => {
             </Button>
           )}
           {this.props.info.orderID != null && (
-            <Button onClick={() => this.handleFind(this.props.info.orderID)}>
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={() => this.handleFind(this.props.info.orderID)}
+            >
               Find
             </Button>
           )}
-
           {this.props.info.CheckInDate === null && (
             <Button
+              variant="contained"
+              color="primary"
               onClick={() =>
                 this.handleCheckIn(
                   this.props.info.AttendeeID,
@@ -147,12 +156,26 @@ handleCheckOut =(id, order) => {
             </Button>
           )}
           {this.props.info.CheckInDate != null && (
-              <Button
-              onClick={()=>this.handleCheckOut(this.props.info.AttendeeID, this.props.info.orderID)}>Checkout!</Button>
+            <Button
+              variant="contained"
+              color="secondary"
+              onClick={() =>
+                this.handleCheckOut(
+                  this.props.info.AttendeeID,
+                  this.props.info.orderID
+                )
+              }
+            >
+              Checkout!
+            </Button>
           )}
 
           {this.props.info.orderID === 4 && (
-            <Button onClick={() => this.handleDelete(this.props.info.orderID)}>
+            <Button
+              variant="contained"
+              color="secondary"
+              onClick={() => this.handleDelete(this.props.info.orderID)}
+            >
               Delete
             </Button>
           )}
@@ -392,8 +415,12 @@ handleCheckOut =(id, order) => {
           </MuiPickersUtilsProvider>
         </div>
         <hr></hr>
-        <Button onClick={this.handleBack}>Back</Button>
-        <Button onClick={this.handleSave}>Save</Button>
+        <Button variant="contained" color="primary" onClick={this.handleBack}>
+          Back
+        </Button>
+        <Button variant="contained" color="primary" onClick={this.handleSave}>
+          Save
+        </Button>
       </div>
     );
   }

@@ -5,43 +5,25 @@ import Button from "@material-ui/core/Button";
 
 class CheckIn extends Component {
   state = {
-    columns: [
-      { title: "AttendeeID", field: "AttendeeID", hidden: true },
-      { title: "ConventionID", field: "ConventionID", hidden: true },
+    columns: [ 
       { title: "First Name", field: "FirstName" },
       { title: "Last Name", field: "LastName" },
-      { title: "Middle Name", field: "MiddleName", hidden: true },
-      { title: "Address Line One", field: "AddressLineOne", hidden: true },
-      { title: "Address Line Two", field: "AddressLineTwo", hidden: true },
-      { title: "City", field: "City", hidden: true },
-      { title: "State/Province", field: "StateProvince", hidden: true },
-      { title: "Postal Code", field: "PostalCode", hidden: true },
-      { title: "CountryID", field: "CountryID", hidden: true },
+      { title: "Middle Name", field: "MiddleName"},
       { title: "Email Address", field: "EmailAddress" },
       { title: "Phone Number", field: "PhoneNumber" },
       { title: "Date Of Birth", field: "DateOfBirth" },
-      { title: "Badge Name", field: "BadgeName" },
       { title: "Registration Date", field: "RegistrationDate", hidden: true },
       { title: "Check-In date", field: "CheckInDate", hidden: true },
       { title: "Payment Date", field: "PaymentDate", hidden: true },
       { title: "Badge Type ID", field: "BadgeTypeID", hidden: true },
       { title: "Badge Number", field: "BadgeNumber" },
-      { title: "Printed", field: "Printed", hidden: true },
-      { title: "Discord Verified", field: "DiscordVerified", hidden: true },
-      { title: "Pre Reg Sort Number", field: "PreRegSortNumber", hidden: true },
       {
         title: "OrderID",
         field: "orderID"
       }
     ],
-    data: []
   };
-
-  humanClicker = (event, id) => {};
-
  
-  
-
   render() {
     return (
       <div>
@@ -107,7 +89,7 @@ class CheckIn extends Component {
             pageSizeOptions: [10, 20, 50],
             toolbarButtonAlignment: "right",
             searchFieldAlignment: "left",
-            showTitle: false
+            showTitle: false,  
           }}
           data={this.props.reduxStore.AttendeesCheckInReducer}
           actions={[
