@@ -23,6 +23,17 @@ class CheckIn extends Component {
       }
     ],
   };
+
+    componentDidMount() {
+        this.fetchAllAttendees();
+    }
+
+
+    fetchAllAttendees = () => {
+        this.props.dispatch({
+            type: "FETCH_ALL_ATTENDEES"
+        });
+    }
  
   render() {
     return (
@@ -97,11 +108,11 @@ class CheckIn extends Component {
               icon: "accessibility",
               tooltip: "Find this person`s personal info",
               onClick: (event, rowData) => {
-                this.props.dispatch({
-                  type: "FETCH_ATTENDEE_PERSONAL_INFO",
-                  payload: rowData.AttendeeID
-                });
-                this.props.history.push(`/details`);
+                // this.props.dispatch({
+                //   type: "FETCH_ATTENDEE_PERSONAL_INFO",
+                //   payload: rowData.AttendeeID
+                // });
+                this.props.history.push(`/details/${rowData.AttendeeID}`);
               }
             }, 
             rowData => ({
@@ -113,7 +124,7 @@ class CheckIn extends Component {
                   type: "FETCH_ORDER_INFO",
                   payload: rowData.orderID
                 });
-                this.props.history.push(`/OrderID`);
+                this.props.history.push(`/OrderID/${rowData.orderID}`);
               },
               disabled: rowData.orderID == null
             }),

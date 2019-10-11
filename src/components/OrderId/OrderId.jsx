@@ -34,6 +34,20 @@ class OrderID extends Component {
     data: []
   };
 
+  componentDidMount() {
+    this.fetchOrderInformation();
+  }
+
+
+  fetchOrderInformation = () => {
+    let id = this.props.match.params.id;
+    this.props.dispatch({
+      type: 'FETCH_ORDER_INFO',
+      payload: id
+    });
+
+  }
+
   render() {
     return (
       <div>

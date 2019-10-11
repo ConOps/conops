@@ -26,6 +26,20 @@ class Details extends Component {
     Badge: "None"
   };
 
+  componentDidMount() {
+    this.fetchAttendeeInformation();
+  }
+
+
+  fetchAttendeeInformation = () => {
+    let id = this.props.match.params.id;
+    this.props.dispatch({
+      type: 'FETCH_ATTENDEE_PERSONAL_INFO',
+      payload: id
+    });
+
+  }
+
   handleChange = event => {
     this.setState({
       Badge: event.target.value
@@ -37,11 +51,11 @@ class Details extends Component {
   };
 
   handleFind = id => {
-    this.props.dispatch({
-      type: "FETCH_ORDER_INFO",
-      payload: id
-    });
-    this.props.history.push(`/OrderID`);
+    // this.props.dispatch({
+    //   type: "FETCH_ORDER_INFO",
+    //   payload: id
+    // });
+    this.props.history.push(`/OrderID/${id}`);
   };
 
   handleDelete = id => {

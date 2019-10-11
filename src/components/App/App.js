@@ -129,12 +129,12 @@ class App extends Component {
             /> 
             <ProtectedRoute
               exact
-              path="/details"
+              path="/details/:id"
               component={Details}
             />      
             <ProtectedRoute
               exact
-              path="/orderId"
+              path="/orderId/:id"
               component={OrderId}
             />      
             <ProtectedRoute
