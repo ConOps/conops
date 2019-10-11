@@ -32,8 +32,8 @@ import Details from '../Details/Details';
 import OrderId from '../OrderId/OrderId';
 import EventDetails from '../EventDetails/EventDetails';
 import LocationDetails from '../LocationDetails/LocationDetails';
+import RegisterPage from '../RegisterPage/RegisterPage';
 import CreateLocation from '../Locations/CreateLocation';
-
 import './App.css';
 
 class App extends Component {
@@ -79,7 +79,10 @@ class App extends Component {
               path="/preregister"
               component={PreRegister}
             />
-
+              <Route
+              exact path ="/register"
+              component = {RegisterPage}
+              />
             {/* Events Tab */}
             <ProtectedRoute
               exact
