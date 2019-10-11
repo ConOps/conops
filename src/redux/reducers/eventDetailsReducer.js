@@ -1,4 +1,4 @@
-const eventDetailsReducer = (state = {}, action) => {
+const eventDetailsReducer = (state = {Tags: []}, action) => {
     switch (action.type) {
         case 'SET_EVENT_DETAILS':
             return action.payload;

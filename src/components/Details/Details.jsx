@@ -189,6 +189,7 @@ class Details extends Component {
             label="First Name"
             className={this.props.classes.root}
             value={this.props.info.FirstName}
+            InputLabelProps={{ shrink: this.props.info.FirstName }}
             onChange={event =>
               this.props.dispatch({
                 type: "EDIT_DETAIL_FIRST_NAME",
