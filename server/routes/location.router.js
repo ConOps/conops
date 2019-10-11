@@ -1,5 +1,6 @@
 const express = require('express');
 const { rejectUnauthenticated } = require('../modules/authentication-middleware');
+const { rejectNonAdmin } = require('../modules/isAdminAuthentication-middleware');
 const pool = require('../modules/pool');
 const router = express.Router();
 
@@ -36,7 +37,7 @@ router.post('/', (req, res) => {
 
 });
 
-router.put('/details/:id', rejectUnauthenticated, async (req, res) => {
+router.put('/details/:id', rejectUnauthenticated,  async (req, res) => {
     const connection = await pool.connect();
     try {
         await connection.query('BEGIN');
