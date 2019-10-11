@@ -4,8 +4,10 @@ import MaterialTable from "material-table";
 
 class Events extends Component {
     componentDidMount() {
-        this.props.dispatch({ type: 'FETCH_EVENT_LIST'})
-    }   
+        this.props.dispatch({ type: 'FETCH_EVENT_LIST' });
+        this.props.dispatch({ type: 'FETCH_LOCATIONS' });
+
+    }
 
     state = {
         columns: [
@@ -29,33 +31,33 @@ class Events extends Component {
     render() {
         return (
             <div>
-            <MaterialTable
-                title="Events"
-                columns={this.state.columns}
-                options={{
-                    columnsButton: true,
-                    pageSize: 10,
-                    pageSizeOptions: [10, 20, 50],
-                    toolbarButtonAlignment: "right",
-                    searchFieldAlignment: "left",
-                    showTitle: false
-                }}
-                data={this.props.reduxStore.EventsReducer}
-                actions={[
-                    {
-                    icon: "event",
-                    tooltip: "Edit Event",
-                    onClick: (event, rowData) => {
-                        this.props.dispatch({
-                            type: "FETCH_EVENT_DETAILS",
-                            payload: rowData.EventID
-                        });
-                        this.props.history.push('/eventdetails')
-                    }
-                    }
-                ]}
+                <MaterialTable
+                    title="Events"
+                    columns={this.state.columns}
+                    options={{
+                        columnsButton: true,
+                        pageSize: 10,
+                        pageSizeOptions: [10, 20, 50],
+                        toolbarButtonAlignment: "right",
+                        searchFieldAlignment: "left",
+                        showTitle: false
+                    }}
+                    data={this.props.reduxStore.EventsReducer}
+                    actions={[
+                        {
+                            icon: "event",
+                            tooltip: "Edit Event",
+                            onClick: (event, rowData) => {
+                                this.props.dispatch({
+                                    type: "FETCH_EVENT_DETAILS",
+                                    payload: rowData.EventID
+                                });
+                                this.props.history.push('/eventdetails')
+                            }
+                        }
+                    ]}
                     editable={{}}
-            />
+                />
             </div>
         )
     }

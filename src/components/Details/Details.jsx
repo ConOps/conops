@@ -204,7 +204,9 @@ class Details extends Component {
           <TextField
             label="First Name"
             className={this.props.classes.root}
+            InputLabelProps={{ shrink: this.props.info.FirstName}}
             value={this.props.info.FirstName}
+            InputLabelProps={{ shrink: this.props.info.FirstName }}
             onChange={event =>
               this.props.dispatch({
                 type: "EDIT_DETAIL_FIRST_NAME",
@@ -215,6 +217,7 @@ class Details extends Component {
           <TextField
             label="Middle Name"
             className={this.props.classes.root}
+            InputLabelProps={{ shrink: this.props.info.MiddleName }}
             value={this.props.info.MiddleName}
             onChange={event =>
               this.props.dispatch({
@@ -226,6 +229,7 @@ class Details extends Component {
           <TextField
             label="Last Name"
             className={this.props.classes.root}
+            InputLabelProps={{ shrink: this.props.info.LastName }}
             value={this.props.info.LastName}
             onChange={event =>
               this.props.dispatch({
@@ -237,6 +241,7 @@ class Details extends Component {
           <TextField
             label="Street Name 1"
             className={this.props.classes.root}
+            InputLabelProps={{ shrink: this.props.info.AddressLineOne }}
             value={this.props.info.AddressLineOne}
             onChange={event =>
               this.props.dispatch({
@@ -248,6 +253,7 @@ class Details extends Component {
           <TextField
             label="Street Name 2"
             className={this.props.classes.root}
+            InputLabelProps={{ shrink: this.props.info.AddressLineTwo }}
             value={this.props.info.AddressLineTwo}
             onChange={event =>
               this.props.dispatch({
@@ -259,6 +265,7 @@ class Details extends Component {
           <TextField
             label="City"
             className={this.props.classes.root}
+            InputLabelProps={{ shrink: this.props.info.City }}
             value={this.props.info.City}
             onChange={event =>
               this.props.dispatch({
@@ -270,6 +277,7 @@ class Details extends Component {
           <TextField
             label="State/Province"
             className={this.props.classes.root}
+            InputLabelProps={{ shrink: this.props.info.StateProvince}}
             value={this.props.info.StateProvince}
             onChange={event =>
               this.props.dispatch({
@@ -281,6 +289,7 @@ class Details extends Component {
           <TextField
             label="Zip/Postal Code"
             className={this.props.classes.root}
+            InputLabelProps={{ shrink: this.props.info.PostalCode}}
             value={this.props.info.PostalCode}
             onChange={event =>
               this.props.dispatch({
@@ -292,6 +301,7 @@ class Details extends Component {
           <TextField
             label="Country"
             className={this.props.classes.root}
+            InputLabelProps={{ shrink: this.props.info.CountryID }}
             value={this.props.info.CountryID}
             onChange={event =>
               this.props.dispatch({
@@ -307,6 +317,7 @@ class Details extends Component {
           <TextField
             label="Email Address"
             className={this.props.classes.root}
+            InputLabelProps={{ shrink: this.props.info.EmailAddress}}
             value={this.props.info.EmailAddress}
             onChange={event =>
               this.props.dispatch({
@@ -318,6 +329,7 @@ class Details extends Component {
           <TextField
             label="Phone Number"
             className={this.props.classes.root}
+            InputLabelProps={{ shrink: this.props.info.PhoneNumber }}
             value={this.props.info.PhoneNumber}
             onChange={event =>
               this.props.dispatch({
@@ -346,6 +358,7 @@ class Details extends Component {
           <TextField
             label="Badge Number"
             className={this.props.classes.root}
+            InputLabelProps={{ shrink: this.props.info.BadgeNumber }}
             value={this.props.info.BadgeNumber}
           ></TextField>
           {/* no handle change or on change, CANT BE EDITED */}
@@ -369,6 +382,7 @@ class Details extends Component {
           <TextField
             label="Badge Name"
             className={this.props.classes.root}
+            InputLabelProps={{ shrink: this.props.info.BadgeName}}
             value={this.props.info.BadgeName}
             onChange={event =>
               this.props.dispatch({
