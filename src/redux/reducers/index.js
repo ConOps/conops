@@ -12,12 +12,8 @@ import eventDetailsReducer from './eventDetailsReducer';
 // import HomePageReducer from './HomePageReducer';
 import TagsReducer from './TagsReducer';
 import TagDetailReducer from './TagDetailReducer';
-import LocationReducer from './LocationReducer';
+import LocationReducer from './LocationReducer'
 import locationDetailsReducer from './locationDetailsReducer';
-
-
-
-
 
 
 
@@ -44,7 +40,6 @@ const rootReducer = combineReducers({
   TagDetailReducer,
   LocationReducer,
   locationDetailsReducer,
-
 });
 
 export default rootReducer;
