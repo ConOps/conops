@@ -47,12 +47,12 @@ class EditTag extends Component {
 
 
                 <div style={{ textAlign: "center" }}>
-                    <h1>Edit Tag</h1>
+                    <h1>Rename your Tag!</h1>
                     <form >
-                        <p>Rename your Tag:</p>
                        
                         <TextField
                             label="Edit Tag"
+                            InputLabelProps={{shrink: this.props.info.TagName}}
                             value={this.props.info.TagName}
                             onChange={(event) => this.props.dispatch(
                                 {
