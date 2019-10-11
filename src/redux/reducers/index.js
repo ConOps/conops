@@ -10,9 +10,15 @@ import AttendeesOrderIdReducer from './AttendeesOrderIdReducer';
 import EventsReducer from './EventsReducer';
 import eventDetailsReducer from './eventDetailsReducer';
 // import HomePageReducer from './HomePageReducer';
+
 import TagsReducer from './TagsReducer';
+<<<<<<< HEAD
 import TagDetailReducer from './TagDetailReducer';
 // import LocationReducer from './LocationReducer'
+=======
+import LocationReducer from './LocationReducer'
+
+>>>>>>> 48aaeab298f15bbd26d46c3fbb3dbc89dadf19a9
 
 
 
@@ -34,8 +40,12 @@ const rootReducer = combineReducers({
   eventDetailsReducer,
   // HomePageReducer,
   TagsReducer,
+<<<<<<< HEAD
   TagDetailReducer,
   // LocationReducer,
+=======
+  LocationReducer,
+>>>>>>> 48aaeab298f15bbd26d46c3fbb3dbc89dadf19a9
 });
 
 export default rootReducer;
