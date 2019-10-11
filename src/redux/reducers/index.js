@@ -38,7 +38,6 @@ const rootReducer = combineReducers({
   TagsReducer,
   TagDetailReducer,
   LocationReducer,
-
 });
 
 export default rootReducer;

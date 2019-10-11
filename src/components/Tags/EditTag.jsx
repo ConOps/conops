@@ -34,7 +34,7 @@ class EditTag extends Component {
             type: 'EDIT_TAG',
             payload: edit
         })
-        //sends you back to admin
+        //sends you back to Tags component
         this.props.history.push(`/tags`)
 
     }
@@ -62,8 +62,8 @@ class EditTag extends Component {
                             )}
                         />
                         
-                        <div>
-                            <Button variant="contained" color="secondary" onClick={() => { this.props.history.push(`/tags`) }} >Cancel</Button>
+                        <div style={{marginTop:"3%"}}>
+                            <Button style={{marginRight:"3%"}} variant="contained" color="secondary" onClick={() => { this.props.history.push(`/tags`) }} >Cancel</Button>
                             <Button variant="contained" color="primary" onClick={this.edit} >Save Changes</Button>
                         </div>
                     </form>

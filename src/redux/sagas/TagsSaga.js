@@ -47,13 +47,13 @@ function * editTag(action){
 
 function * createTag(action){
     try {
-        console.log("in edit Tag", action.payload);
+        console.log("in create Tag", action.payload);
 
         const config = {
             headers: { 'Content-Type': 'application/json' },
             withCredentials: true,
         };
-yield axios.post(`api/tags/`, action.payload, config)
+yield axios.post(`api/tag/`, action.payload, config)
 yield put({
     type: 'FETCH_TAG_LIST',
 })
