@@ -1,5 +1,6 @@
 const express = require('express');
 const { rejectUnauthenticated } = require('../modules/authentication-middleware');
+const { rejectNonAdmin } = require('../modules/isAdminAuthentication-middleware');
 const pool = require('../modules/pool');
 const router = express.Router();
 
@@ -22,7 +23,7 @@ router.get('/', rejectUnauthenticated, (req, res) => {
 
 //PUT route
 //PUT route for editing current convention (name, dates, etc)
-router.put('/', rejectUnauthenticated, async (req, res) => {
+router.put('/', rejectUnauthenticated, rejectNonAdmin, async (req, res) => {
     console.log('in convention PUT route');
     const connection = await pool.connect();
     try {
@@ -47,7 +48,7 @@ router.put('/', rejectUnauthenticated, async (req, res) => {
 
 //POST route
 //POST route will create a new convention and then set that one to current!
-router.post('/', rejectUnauthenticated, async (req, res) => {
+router.post('/', rejectUnauthenticated, rejectNonAdmin, async (req, res) => {
     console.log('in convention POST route');
     const connection = await pool.connect();
     try {

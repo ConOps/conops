@@ -1,5 +1,7 @@
 const express = require('express');
 const { rejectUnauthenticated } = require('../modules/authentication-middleware');
+const { rejectNonAdmin } = require('../modules/isAdminAuthentication-middleware');
+const { rejectNonCheckIn } = require('../modules/isCheckInAuthentication-middleware');
 const pool = require('../modules/pool');
 const router = express.Router();
 
@@ -157,7 +159,7 @@ router.get('/order/:id', rejectUnauthenticated, (req, res) => {
 //PUT routes will need to check authorization
 
 //PUT route for attendee details edit
-router.put('/details/:id', rejectUnauthenticated, async (req, res) => {
+router.put('/details/:id', rejectUnauthenticated, rejectNonCheckIn, async (req, res) => {
     console.log('in attendee PUT route');
     const connection = await pool.connect();
     try {
@@ -187,7 +189,7 @@ router.put('/details/:id', rejectUnauthenticated, async (req, res) => {
 });
 
 //PUT route for check-in, SINGLE or MUTLI check-in. data will come as an array of IDs, even if it's 1 id (because of the table)
-router.put('/checkIn', rejectUnauthenticated, async (req, res) => {
+router.put('/checkIn', rejectUnauthenticated, rejectNonCheckIn, async (req, res) => {
     console.log('in attendee checkIn PUT route');
     const connection = await pool.connect();
     try {
@@ -218,7 +220,7 @@ router.put('/checkIn', rejectUnauthenticated, async (req, res) => {
 });
 
 //PUT route for a single walkin attendee AND a payment. basically same as above, also sets payment date.
-router.put('/checkInAndPay', rejectUnauthenticated, async (req, res) => {
+router.put('/checkInAndPay', rejectUnauthenticated, rejectNonCheckIn, async (req, res) => {
     console.log('in attendee checkInAndPay PUT route');
     const connection = await pool.connect();
     try {
@@ -247,7 +249,7 @@ router.put('/checkInAndPay', rejectUnauthenticated, async (req, res) => {
     }
 });
 
-router.put('/checkOutWalkIn', rejectUnauthenticated, async (req, res) => {
+router.put('/checkOutWalkIn', rejectUnauthenticated, rejectNonCheckIn, async (req, res) => {
     console.log('in attendee checkOutWalkIn PUT route');
     const connection = await pool.connect();
     try {
@@ -276,7 +278,7 @@ router.put('/checkOutWalkIn', rejectUnauthenticated, async (req, res) => {
     }
 });
 
-router.put('/checkOut', rejectUnauthenticated, async (req, res) => {
+router.put('/checkOut', rejectUnauthenticated, rejectNonCheckIn, async (req, res) => {
     console.log('in attendee checkOut PUT route');
     const connection = await pool.connect();
     try {
@@ -330,7 +332,7 @@ router.post('/', (req, res) => {
  * DELETE route template
  */
 //Delete route for the Attendee Detail page
-router.delete('/details/:id', rejectUnauthenticated, (req, res) => {
+router.delete('/delete/:id', rejectUnauthenticated, rejectNonAdmin, (req, res) => {
     const id = req.params.id
     const queryText = 'DELETE FROM  "Attendee" WHERE "AttendeeID" = $1;';
     console.log('in attendee specific detail delete id', id);
