@@ -19,7 +19,6 @@ class Locations extends Component {
     render() {
         return(
             <div>
-            <p>{JSON.stringify(this.props.reduxStore.LocationReducer)}</p>
             <MaterialTable
                 title="Locations"
                 columns={this.state.columns}
@@ -37,13 +36,13 @@ class Locations extends Component {
                         {
                             icon: "edit",
                             tooltip: "Edit Location",
-                            // onClick: (event, rowData) => {
-                            //     this.props.dispatch({
-                            //         type: "FETCH_EVENT_DETAILS",
-                            //         payload: rowData.EventID
-                            //     });
-                                // this.props.history.push('/eventdetails')
-                            // }
+                            onClick: (event, rowData) => {
+                                this.props.dispatch({
+                                    type: "FETCH_LOCATION_DETAILS",
+                                    payload: rowData.LocationID
+                                });
+                                this.props.history.push('/locationdetails')
+                            }
                         }
                     ]}
             />
