@@ -40,6 +40,10 @@ class EventDetails extends Component {
 
     }
 
+    handleChange = (type) => (event) => {
+        
+    }
+
     render() {
 
         let locationsInSelector = this.props.locations.map((location) => {
@@ -49,6 +53,9 @@ class EventDetails extends Component {
         });
 
         let eventTags = this.props.details.Tags.map((tag) => {
+            if (tag === null) {
+                return
+            } else {
             return (
                 <Grid item key={tag}>
                     <Chip
@@ -61,6 +68,7 @@ class EventDetails extends Component {
                     />
                 </Grid>
             )
+            }
         })
 
         let allTags = this.props.tags.map((tag) => {
@@ -128,6 +136,7 @@ class EventDetails extends Component {
                     <Select
                         value={this.props.details.LocationName}
                         className={this.props.classes.root}
+                        onChange={this.handleChange('location')}
                     >
                         {locationsInSelector}
                     </Select>
