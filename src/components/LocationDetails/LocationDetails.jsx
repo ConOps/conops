@@ -3,12 +3,16 @@ import { connect } from "react-redux";
 import { withRouter } from 'react-router-dom';
 import { withStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
-import Button from "@material-ui/core/Button";
+import Button from '@material-ui/core/Button';
 
 const styles = ({
     root: {
         margin: '15px',
     },
+    fab : {
+        margin: '15px',
+        marginRight: '15px',
+    }  
 });
 
 class LocationDetails extends Component {

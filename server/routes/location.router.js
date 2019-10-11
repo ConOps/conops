@@ -32,8 +32,18 @@ router.get('/details/:id', rejectUnauthenticated, (req, res) => {
 /**
  * POST route template
  */
-router.post('/', (req, res) => {
-
+router.post('/', rejectUnauthenticated, (req, res) => {
+    const location = req.body;
+    console.log('creates new location:', location);
+    let queryText = `INSERT INTO "Location" ("LocationName", "LocationDescription") VALUES ($1, $2);`;
+    pool.query(queryText, [location.LocationName, location.LocationDescription])
+    .then(result => {
+        res.sendStatus(201);
+    })
+    .catch(error => {
+        console.log('error in creating new location router:', error)
+        res.sendStatus(500);
+    })
 });
 
 router.put('/details/:id', rejectUnauthenticated, async (req, res) => {

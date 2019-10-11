@@ -1,10 +1,30 @@
 import React, { Component  } from 'react';
 import { connect } from "react-redux";
+import { withRouter } from 'react-router-dom';
+import { withStyles } from '@material-ui/core/styles';
 import MaterialTable from "material-table";
+import Fab from '@material-ui/core/Fab';
+import AddIcon from '@material-ui/icons/Add';
+
+const styles = ({
+    root: {
+        margin: '15px',
+    },
+    fab: {
+        margin: '15px',
+        marginRight: '0px',
+    }
+});
+
+
 
 class Locations extends Component {
     componentDidMount() {
         this.props.dispatch({ type: 'FETCH_LOCATIONS' })
+    }
+
+    handleClick = () => {
+        this.props.history.push('/locations/create')
     }
 
     state = {
@@ -19,6 +39,10 @@ class Locations extends Component {
     render() {
         return(
             <div>
+                <h1>Locations</h1>
+                <Fab color="primary" aria-label="add" className={this.props.classes.fab}>
+                    <AddIcon onClick={this.handleClick}/>
+                </Fab>
             <MaterialTable
                 title="Locations"
                 columns={this.state.columns}
@@ -56,4 +80,4 @@ const mapStateToProps = reduxStore => {
         reduxStore
     };
 };
-export default connect(mapStateToProps)(Locations);
+export default withStyles(styles)(withRouter(connect(mapStateToProps)(Locations)));
