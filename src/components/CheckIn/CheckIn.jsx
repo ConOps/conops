@@ -23,6 +23,17 @@ class CheckIn extends Component {
       }
     ],
   };
+
+    componentDidMount() {
+        this.fetchAllAttendees();
+    }
+
+
+    fetchAllAttendees = () => {
+        this.props.dispatch({
+            type: "FETCH_ALL_ATTENDEES"
+        });
+    }
  
   render() {
     return (
@@ -113,7 +124,7 @@ class CheckIn extends Component {
                   type: "FETCH_ORDER_INFO",
                   payload: rowData.orderID
                 });
-                this.props.history.push(`/OrderID`);
+                this.props.history.push(`/OrderID/${rowData.orderID}`);
               },
               disabled: rowData.orderID == null
             }),

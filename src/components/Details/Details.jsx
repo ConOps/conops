@@ -51,11 +51,11 @@ class Details extends Component {
   };
 
   handleFind = id => {
-    this.props.dispatch({
-      type: "FETCH_ORDER_INFO",
-      payload: id
-    });
-    this.props.history.push(`/OrderID`);
+    // this.props.dispatch({
+    //   type: "FETCH_ORDER_INFO",
+    //   payload: id
+    // });
+    this.props.history.push(`/OrderID/${id}`);
   };
 
   handleDelete = id => {
