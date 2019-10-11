@@ -4,6 +4,9 @@ import { withRouter } from 'react-router-dom';
 import { withStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
+import FormGroup from '@material-ui/core/FormGroup';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Switch from '@material-ui/core/Switch';
 
 const styles = ({
     root: {
@@ -14,6 +17,8 @@ const styles = ({
         marginRight: '15px',
     }  
 });
+
+
 
 class LocationDetails extends Component {
     handleBack = () => {
@@ -27,7 +32,6 @@ class LocationDetails extends Component {
             payload: this.props.details
         });
     };
-
 
     render() {
         return (
@@ -56,6 +60,16 @@ class LocationDetails extends Component {
                     })
                 }
             ></TextField>
+            <FormGroup>
+                <FormControlLabel
+                    control={
+                        <Switch 
+                            checked={this.props.details.LocationIsActive}
+                            />}
+                            label="Active"
+                            labelPlacement="start"
+                            />
+            </FormGroup>
             <hr></hr>
             <Button onClick={this.handleBack}>Back</Button>
             <Button onClick={this.handleSave}>Save</Button>
