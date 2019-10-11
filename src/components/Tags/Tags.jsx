@@ -31,7 +31,7 @@ class Tags extends Component {
                 <h1 style={{ textAlign: "center" }}>Current Convention: 2DCON 2020</h1>
                 <h2 style={{ textAlign: "center" }}>Tags</h2>
                 <div style={{ textAlign: "right", marginRight: "2%" }}>
-                    <Button variant="contained" color="primary" onClick={() => this.props.history.push(`/createTag`)}>Create New Tag</Button>
+                    <Button variant="contained" color="primary"  onClick={() => this.props.history.push(`/createTag`)}>Create New Tag</Button>
                 </div>
                 <MaterialTable
                     title="Editable Example"
@@ -45,7 +45,6 @@ class Tags extends Component {
                         searchFieldAlignment: "left",
                         showTitle: false
                     }}
-                    // onSelectionChange={(rows) => alert('You selected ' + rows.length + ' rows')}
                     data={this.props.reduxStore.TagsReducer}
 
                     editable={{}}
@@ -54,10 +53,6 @@ class Tags extends Component {
                             icon: "edit",
                             tooltip: "Edit",
                             onClick: (event, rowData) => {
-                                // this.props.dispatch({
-                                //     type: "FETCH_TAG_INFO",
-                                //     payload: rowData.TagID
-                                // });
                                 this.props.history.push(`/edittag/${rowData.TagID}`);
                             }
                         },
@@ -76,15 +71,7 @@ class Tags extends Component {
 
                     ]}
                 />
-            <div style={{textAlign: "right", marginRight: "2%"}}>
-                <Button
-                    variant="contained"
-                    color="secondary"
-                    onClick={() => this.props.history.push("/home")}
-                >
-                    Home
-                </Button>
-                </div>
+            
             </div>
         );
     }
