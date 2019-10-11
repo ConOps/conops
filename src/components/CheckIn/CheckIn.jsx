@@ -97,11 +97,11 @@ class CheckIn extends Component {
               icon: "accessibility",
               tooltip: "Find this person`s personal info",
               onClick: (event, rowData) => {
-                this.props.dispatch({
-                  type: "FETCH_ATTENDEE_PERSONAL_INFO",
-                  payload: rowData.AttendeeID
-                });
-                this.props.history.push(`/details`);
+                // this.props.dispatch({
+                //   type: "FETCH_ATTENDEE_PERSONAL_INFO",
+                //   payload: rowData.AttendeeID
+                // });
+                this.props.history.push(`/details/${rowData.AttendeeID}`);
               }
             }, 
             rowData => ({
