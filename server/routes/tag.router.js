@@ -35,6 +35,23 @@ router.get('/details/:id', rejectUnauthenticated, (req, res) => {
         })
 })
 
+router.put('/edit/:id', rejectUnauthenticated, (req, res) => {
+   
+   
+    console.log('in TAGS PUT route, req.body:', req.body);
+   
+  
+    const queryText = `UPDATE "Tags" SET "TagName" = $1 WHERE "TagID" = $2`
+    pool.query(queryText, [req.body.TagName, req.params.id])
+        .then(result => {
+            res.send(201);
+        })
+        .catch( error => {
+            console.log('error in Server side editTag', error);
+            res.sendStatus(500)
+        })
+})
+
 /**
  * POST route template
  */
