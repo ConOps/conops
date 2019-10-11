@@ -14,8 +14,23 @@ function* fetchLocations() {
     }
 }
 
+function* addLocation(action) {
+    try {
+        const config = {
+            headers: { 'Content-Type': 'application/json' },
+            withCredentials: true,
+        };
+        yield axios.post(`/api/location`, action.payload, config)
+        console.log('in addLocationSaga:', action.payload)
+        yield put({ type: 'FETCH_LOCATIONS' })
+    } catch (error) {
+        console.log('error in addLocation saga:', error)
+    }
+}
+
 function* locationSaga() {
     yield takeLatest('FETCH_LOCATIONS', fetchLocations)
+    yield takeLatest('ADD_LOCATION', addLocation)
 }
 
 export default locationSaga;

@@ -32,6 +32,7 @@ import Details from '../Details/Details';
 import OrderId from '../OrderId/OrderId';
 import EventDetails from '../EventDetails/EventDetails';
 import LocationDetails from '../LocationDetails/LocationDetails';
+import CreateLocation from '../Locations/CreateLocation';
 
 import './App.css';
 
@@ -146,7 +147,12 @@ class App extends Component {
               exact
               path="/locationdetails"
               component={LocationDetails}
-            />            
+            />      
+            <ProtectedRoute
+              exact
+              path="/locations/create"
+              component={CreateLocation}
+            />       
             {/* If none of the other routes matched, we will show a 404. */}
             <Route render={() => <h1>404</h1>} />
           </Switch>
