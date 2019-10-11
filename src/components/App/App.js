@@ -22,6 +22,7 @@ import Events from '../Events/Events';
 import Locations from '../Locations/Locations';
 
 import Tags from '../Tags/Tags';
+import EditTag from '../Tags/EditTag';
 import Conventions from '../Conventions/Conventions';
 import GameLibrary from '../GameLibrary/GameLibrary';
 import News from  '../News/News';
@@ -93,6 +94,11 @@ class App extends Component {
               exact
               path="/tags"
               component={Tags}
+            />
+            <ProtectedRoute
+              exact
+              path="/edittag/:id"
+              component={EditTag}
             />
             <ProtectedRoute
               exact

@@ -22,11 +22,33 @@ function * oneCheckInToRuleThemAll(action){
         };
         console.log(action.payload);
          yield axios.put('/api/attendee/checkIn', {attendeesToCheckIn: action.payload}, config)
+       
          yield put ({
              type: 'FETCH_ALL_ATTENDEES',
          })
     }catch(error){
         console.log('error in onCheckInToRuleThemAll', error);     
+    }
+}
+
+function * checkInFromDetails(action){
+
+    try {
+        const config = {
+            headers: { 'Content-Type': 'application/json' },
+            withCredentials: true,
+        };
+        console.log(action.payload);
+        yield axios.put('/api/attendee/checkIn', { attendeesToCheckIn: action.payload }, config)
+    yield put({
+        type: 'FETCH_ATTENDEE_PERSONAL_INFO',
+        payload: action.payload
+    })
+        yield put({
+            type: 'FETCH_ALL_ATTENDEES',
+        })
+    } catch (error) {
+        console.log('error in onCheckInToRuleThemAll', error);
     }
 }
 
@@ -36,7 +58,13 @@ function * checkInAndPay(action){
             headers: { 'Content-Type': 'application/json' },
             withCredentials: true,
         };
+        
+        
         yield axios.put('/api/attendee/checkInAndPay', {attendeeToCheckIn: action.payload}, config)
+        yield put({
+            type: 'FETCH_ATTENDEE_PERSONAL_INFO',
+            payload: action.payload
+        })
         yield put ({
             type: 'FETCH_ALL_ATTENDEES'
         })
@@ -45,10 +73,52 @@ console.log('error in checkInAndPay', error);
 }
 }
 
+function * checkOutWalkIn(action){
+    try {
+        const config = {
+            headers: { 'Content-Type': 'application/json' },
+            withCredentials: true,
+        };
+        console.log('action.payload in checkoutwalkin is', action.payload);
+        yield axios.put('/api/attendee/checkOutWalkIn', {attendeeToCheckOut: action.payload}, config)
+        yield put({
+            type: 'FETCH_ATTENDEE_PERSONAL_INFO',
+            payload: action.payload
+        })
+        yield put({
+            type: 'FETCH_ALL_ATTENDEES'
+        })
+    } catch (error) {
+        console.log('error in checkInAndPay', error);
+    }  
+}
+function * checkOut(action){
+    try {
+        const config = {
+            headers: { 'Content-Type': 'application/json' },
+            withCredentials: true,
+        };
+        yield axios.put('/api/attendee/checkOut', { attendeeToCheckOut: action.payload }, config)
+        yield put({
+            type: 'FETCH_ATTENDEE_PERSONAL_INFO',
+            payload: action.payload
+        })
+        yield put({
+            type: 'FETCH_ALL_ATTENDEES'
+        })
+    } catch (error) {
+        console.log('error in checkInAndPay', error);
+    }
+}
+
+
 function * attendeesOrderIdSaga(){
     yield takeLatest('FETCH_ORDER_INFO', fetchOrderInfo)
+    yield takeLatest('CHECK_IN_FROM_DETAILS', checkInFromDetails)
     yield takeLatest('CHECK_IN_ALL_SELECTED', oneCheckInToRuleThemAll)
     yield takeLatest('CHECK_IN_AND_PAY_ATTENDEE', checkInAndPay)
+    yield takeLatest('CHECK_OUT_WALK_IN', checkOutWalkIn)
+    yield takeLatest('CHECK_OUT', checkOut)
 }
 
 export default attendeesOrderIdSaga;

@@ -40,9 +40,27 @@ function* updateAttendeePersonalInfo(action) {
     }
 }
 
+function * deleteAttendeeInfo(action){
+    try{
+        const config = {
+            headers: { 'Content-Type': 'application/json' },
+            withCredentials: true,
+        };
+        yield axios.delete (`api/attendee/delete/${action.payload}`, config);
+        yield put ({
+            type: 'SET_ATTENDEE_DETAILS'
+        })  
+        
+     }catch(error){
+         console.log('error in deleteAttendeeInfo', error);
+         
+     }
+    }
+
 function* attendeeDetailsSaga() {
     yield takeLatest('FETCH_ATTENDEE_PERSONAL_INFO', fetchAttendeePersonalInfo)
     yield takeLatest('UPDATE_ATTENDEE_INFO', updateAttendeePersonalInfo)
+    yield takeLatest('DELETE_ATTENDEE_INFO', deleteAttendeeInfo)
 }
 
 export default attendeeDetailsSaga;
