@@ -54,25 +54,25 @@ class Tags extends Component {
                             icon: "edit",
                             tooltip: "Edit",
                             onClick: (event, rowData) => {
-                                this.props.dispatch({
-                                    type: "FETCH_TAG_INFO",
-                                    payload: rowData.TagID
-                                });
-                                this.props.history.push(`/edittags`);
+                                // this.props.dispatch({
+                                //     type: "FETCH_TAG_INFO",
+                                //     payload: rowData.TagID
+                                // });
+                                this.props.history.push(`/edittag/${rowData.TagID}`);
                             }
                         },
-                        {
-                            icon: "delete",
-                            tooltip: "Delete",
-                            onClick: (event, rowData) => {
-                                console.log(rowData.orderID);
-                                this.props.dispatch({
-                                    type: "DELETE_TAG_INFO",
-                                    payload: rowData.TagID
-                                });
-                            },
+                        // {
+                        //     icon: "delete",
+                        //     tooltip: "Delete",
+                        //     onClick: (event, rowData) => {
+                        //         console.log(rowData.orderID);
+                        //         this.props.dispatch({
+                        //             type: "DELETE_TAG_INFO",
+                        //             payload: rowData.TagID
+                        //         });
+                        //     },
 
-                        },
+                        // },
 
                     ]}
                 />
