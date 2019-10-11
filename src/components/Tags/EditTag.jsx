@@ -53,6 +53,7 @@ class EditTag extends Component {
                        
                         <TextField
                             label="Edit Tag"
+                            InputLabelProps={{shrink: this.props.info.TagName}}
                             value={this.props.info.TagName}
                             onChange={(event) => this.props.dispatch(
                                 {
