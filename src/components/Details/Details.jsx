@@ -45,11 +45,13 @@ class Details extends Component {
   };
 
   handleDelete = id => {
+    if(window.confirm('are you sure that you would like to delete this attendee??')){
     this.props.dispatch({
       type: "DELETE_ATTENDEE_INFO",
       payload: id
     });
-  };
+  this.props.history.push(`/check-in`)
+  }};
 
   handleCheckIn = (id, payment) => {
     if (payment == null) {
@@ -170,11 +172,11 @@ class Details extends Component {
             </Button>
           )}
 
-          {this.props.info.orderID === 4 && (
+          {this.props.user.authorization == 4 && (
             <Button
               variant="contained"
               color="secondary"
-              onClick={() => this.handleDelete(this.props.info.orderID)}
+              onClick={() => this.handleDelete(this.props.info.AttendeeID)}
             >
               Delete
             </Button>
@@ -429,7 +431,8 @@ class Details extends Component {
 
 const mapStateToProps = reduxStore => {
   return {
-    info: reduxStore.AttendeeDetailsReducer
+    info: reduxStore.AttendeeDetailsReducer,
+    user: reduxStore.user
   };
 };
 

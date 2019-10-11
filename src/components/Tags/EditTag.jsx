@@ -23,18 +23,18 @@ class EditTag extends Component {
 
     edit = (event) => {
         event.preventDefault();
-        //replaces the state with the new imputs
+        //replaces the state with the new inputs
         let edit = {
-            TagID: this.props.reduxStore.TagDetailReducer.TagID,
-            TagName: this.props.reduxStore.TagDetailReducer.TagName,
+            TagID: this.props.info.TagID,
+            TagName: this.props.info.TagName,
         }
-        //send the editted state back to the saga
+        //send the edit state back to the saga
         console.log('edit', edit);
         this.props.dispatch({
             type: 'EDIT_TAG',
             payload: edit
         })
-        //sends you back to admin
+        //sends you back to Tags component
         this.props.history.push(`/tags`)
 
     }
@@ -47,12 +47,12 @@ class EditTag extends Component {
 
 
                 <div style={{ textAlign: "center" }}>
-                    <h1>Edit Tag</h1>
+                    <h1>Rename your Tag!</h1>
                     <form >
-                        <p>Rename your Tag:</p>
                        
                         <TextField
                             label="Edit Tag"
+                            InputLabelProps={{shrink: this.props.info.TagName}}
                             value={this.props.info.TagName}
                             onChange={(event) => this.props.dispatch(
                                 {
@@ -62,8 +62,8 @@ class EditTag extends Component {
                             )}
                         />
                         
-                        <div>
-                            <Button variant="contained" color="secondary" onClick={() => { this.props.history.push(`/tags`) }} >Cancel</Button>
+                        <div style={{marginTop:"3%"}}>
+                            <Button style={{marginRight:"3%"}} variant="contained" color="secondary" onClick={() => { this.props.history.push(`/tags`) }} >Cancel</Button>
                             <Button variant="contained" color="primary" onClick={this.edit} >Save Changes</Button>
                         </div>
                     </form>

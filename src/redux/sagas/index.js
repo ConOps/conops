@@ -5,12 +5,14 @@ import userSaga from './userSaga';
 import AttendeeDetailsSaga from './AttendeeDetailsSaga';
 import AttendeesCheckInSaga from './AttendeesCheckInSaga';
 import AttendeesOrderIdSaga from './AttendeesOrderIdSaga';
-// import ConventionSaga from './ConventionSaga';
+import ConventionsSaga from './ConventionsSaga';
 import EventsSaga from './EventsSaga';
 import eventDetailsSaga from './eventDetailsSaga';
 // import HomePageSaga from './HomePageSaga';
 import LocationSaga from './LocationSaga';
-import TagsSaga from './TagsSaga'
+import locationDetailsSaga from './locationDetailsSaga';
+
+import TagsSaga from './TagsSaga';
 
 // rootSaga is the primary saga.
 // It bundles up all of the other sagas so our project can use them.
@@ -27,11 +29,12 @@ export default function* rootSaga() {
     AttendeeDetailsSaga(),
     AttendeesCheckInSaga(),
     AttendeesOrderIdSaga(),
-    // ConventionSaga(),
+    ConventionsSaga(),
     EventsSaga(),
     eventDetailsSaga(),
     // HomePageSaga(),
     LocationSaga(),
+    locationDetailsSaga(),
     TagsSaga()
   ]);
 }

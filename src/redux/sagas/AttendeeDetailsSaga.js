@@ -35,8 +35,7 @@ function* updateAttendeePersonalInfo(action) {
         })
         
     }catch(err) {
-        console.log('error in update details');
-        
+        console.log('error in update details', err);
     }
 }
 
@@ -46,9 +45,11 @@ function * deleteAttendeeInfo(action){
             headers: { 'Content-Type': 'application/json' },
             withCredentials: true,
         };
+        console.log('in delete attendee info, action.payload:', action.payload);
+        
         yield axios.delete (`api/attendee/delete/${action.payload}`, config);
         yield put ({
-            type: 'SET_ATTENDEE_DETAILS'
+            type: 'FETCH_ALL_ATTENDEES'
         })  
         
      }catch(error){
