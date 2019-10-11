@@ -9,4 +9,4 @@ next();
 }
 };
 
-module.exports = {rejectNonAdmin}
+module.exports = { ejectNonAdmin };

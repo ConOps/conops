@@ -1,5 +1,6 @@
 const express = require('express');
 const { rejectUnauthenticated } = require('../modules/authentication-middleware');
+const { rejectNonAdmin } = require('../modules/isAdminAuthentication-middleware');
 const pool = require('../modules/pool');
 const router = express.Router();
 
@@ -7,7 +8,7 @@ const router = express.Router();
  * GET route template
  */
 //Grabs all of the tags from the DB and sends them client side
-router.get('/', rejectUnauthenticated, (req, res) => {
+router.get('/', rejectUnauthenticated,  (req, res) => {
     let queryText = `SELECT * FROM "Tags";`;
     pool.query(queryText)
         .then((results) => {
@@ -35,12 +36,9 @@ router.get('/details/:id', rejectUnauthenticated, (req, res) => {
         })
 })
 
-router.put('/edit/:id', rejectUnauthenticated, (req, res) => {
-   
+router.put('/edit/:id', rejectUnauthenticated, rejectNonAdmin, (req, res) => {
    
     console.log('in TAGS PUT route, req.body:', req.body);
-   
-  
     const queryText = `UPDATE "Tags" SET "TagName" = $1 WHERE "TagID" = $2`
     pool.query(queryText, [req.body.TagName, req.params.id])
         .then(result => {
@@ -55,7 +53,7 @@ router.put('/edit/:id', rejectUnauthenticated, (req, res) => {
 /**
  * POST route template
  */
-router.post('/', rejectUnauthenticated, (req, res) => {
+router.post('/', rejectUnauthenticated, rejectNonAdmin, (req, res) => {
     const newTag = req.body;
     console.log('adding new tag', newTag);
     let queryText = `INSERT INTO "Tags" ("TagName") 
@@ -66,10 +64,8 @@ router.post('/', rejectUnauthenticated, (req, res) => {
     })
     .catch(error => {
         console.log('error in adding a new tag', error);
-        res.sendStatus(500);
-        
+        res.sendStatus(500);  
     })
-    
 });
 
 module.exports = router;
