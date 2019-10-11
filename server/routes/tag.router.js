@@ -38,8 +38,21 @@ router.get('/details/:id', rejectUnauthenticated, (req, res) => {
 /**
  * POST route template
  */
-router.post('/', (req, res) => {
-
+router.post('/', rejectUnauthenticated, (req, res) => {
+    const newTag = req.body;
+    console.log('adding new tag', newTag);
+    let queryText = `INSERT INTO "Tags" ("TagName") 
+                     VALUES ('$1');`;
+    pool.query(queryText, [newTag.TagName])
+    .then(results => {
+        res.sendStatus(201);
+    })
+    .catch(error => {
+        console.log('error in adding a new tag', error);
+        res.sendStatus(500);
+        
+    })
+    
 });
 
 module.exports = router;
