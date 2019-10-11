@@ -27,7 +27,40 @@ function* fetchTagDetails(action) {  //this will give the Tag reducer the detail
     }
 }
 
+function * editTag(action){
+    try {
+        console.log("in edit Tag", action.payload);
+        
+        const config = {
+            headers: { 'Content-Type': 'application/json' },
+            withCredentials: true,
+        };
+        yield axios.put(`api/tag/edit/${action.payload.TagID}`, action.payload, config )
+        yield put ({
+            type: 'FETCH_TAG_LIST',
+        })
+    }catch(error){
+        console.log('error in editTag', error);
+        
+    }
+}
 
+function * createTag(action){
+    try {
+        console.log("in edit Tag", action.payload);
+
+        const config = {
+            headers: { 'Content-Type': 'application/json' },
+            withCredentials: true,
+        };
+yield axios.post(`api/tags/`, action.payload, config)
+yield put({
+    type: 'FETCH_TAG_LIST',
+})
+    }catch(error){
+
+    }
+}
 // function* deleteTagInfo(action) {
 //     try {
 //         const config = {
@@ -45,14 +78,13 @@ function* fetchTagDetails(action) {  //this will give the Tag reducer the detail
 //     }
 // }
 
-function* TagsSaga() {
+function * TagsSaga() {
     yield takeLatest('FETCH_TAG_LIST', fetchTagsInfo)
     // yield takeLatest('DELETE_TAG_INFO', deleteTagInfo)
     yield takeLatest('FETCH_TAG_INFO', fetchTagDetails)
+    yield takeLatest('EDIT_TAG', editTag)
+    yield takeLatest('CREATE_TAG', createTag)
 }
-
-
-
 
 
 export default TagsSaga;
