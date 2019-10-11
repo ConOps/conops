@@ -48,7 +48,7 @@ class LoginPage extends Component {
           <div>
            
               <TextField
-              style={{ marginTop: '50px', backgroundColor: 'white', paddingLeft: '5px'}}
+              style={{ marginTop: '15px', backgroundColor: 'white', paddingLeft: '5px'}}
               label="username"
                 type="text"
                 name="username"
