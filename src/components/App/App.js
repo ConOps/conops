@@ -32,7 +32,12 @@ import Details from '../Details/Details';
 import OrderId from '../OrderId/OrderId';
 import EventDetails from '../EventDetails/EventDetails';
 import LocationDetails from '../LocationDetails/LocationDetails';
+<<<<<<< HEAD
 import RegisterPage from '../RegisterPage/RegisterPage';
+=======
+import CreateLocation from '../Locations/CreateLocation';
+
+>>>>>>> 609a3c089da8d90d0411c16d9454d81f632465e6
 import './App.css';
 
 class App extends Component {
@@ -132,12 +137,12 @@ class App extends Component {
             /> 
             <ProtectedRoute
               exact
-              path="/details"
+              path="/details/:id"
               component={Details}
             />      
             <ProtectedRoute
               exact
-              path="/orderId"
+              path="/orderId/:id"
               component={OrderId}
             />      
             <ProtectedRoute
@@ -149,7 +154,12 @@ class App extends Component {
               exact
               path="/locationdetails"
               component={LocationDetails}
-            />            
+            />      
+            <ProtectedRoute
+              exact
+              path="/locations/create"
+              component={CreateLocation}
+            />       
             {/* If none of the other routes matched, we will show a 404. */}
             <Route render={() => <h1>404</h1>} />
           </Switch>

@@ -3,8 +3,12 @@ const locationDetailsReducer = (state = {}, action) => {
         case 'SET_LOCATION_DETAILS':
             return action.payload;
         case 'EDIT_LOCATION_NAME':
-            return { ...state, LocationName: action.payload };
+            return {...state, LocationName: action.payload };
         case 'EDIT_LOCATION_DESCRIPTION':
+            return {...state, LocationDescription: action.payload };
+        case 'CREATE_LOCATION_NAME':
+            return { ...state, LocationName: action.payload };
+        case 'CREATE_LOCATION_DESCRIPTION':
             return { ...state, LocationDescription: action.payload };
         default:
             return state;
