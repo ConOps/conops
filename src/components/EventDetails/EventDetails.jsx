@@ -37,12 +37,11 @@ class EventDetails extends Component {
             type: 'FETCH_EVENT_DETAILS',
             payload: id
         });
-
     }
 
-    handleChange = (type) => (event) => {
-        
-    }
+    // handleChange = (type) => (event) => {
+
+    // }
 
     render() {
 
@@ -53,28 +52,24 @@ class EventDetails extends Component {
         });
 
         let eventTags = this.props.details.Tags.map((tag) => {
-            if (tag === null) {
-                return
-            } else {
-            return (
-                <Grid item key={tag}>
-                    <Chip
-                        key={tag}
-                        label={tag}
-                        onDelete={() => this.handleTagDelete(tag.id)}
-                        // onClick={() => this.handleTagClick(tag)}
-                        className={this.props.classes.chip}
-                        color="primary"
-                    />
-                </Grid>
-            )
-            }
+                return (
+                    <Grid item key={tag}>
+                        <Chip
+                            key={tag}
+                            label={tag}
+                            onDelete={() => this.handleTagDelete(tag.id)}
+                            // onClick={() => this.handleTagClick(tag)}
+                            className={this.props.classes.chip}
+                            color="primary"
+                        />
+                    </Grid>
+                )
         })
 
         let allTags = this.props.tags.map((tag) => {
-            return (
-                <MenuItem value={tag.TagName} key={tag.TagID}>{tag.TagName}</MenuItem>
-            )
+                return (
+                    <MenuItem value={tag.TagName} key={tag.TagID}>{tag.TagName}</MenuItem>
+                )
         })
 
         return (
@@ -136,7 +131,11 @@ class EventDetails extends Component {
                     <Select
                         value={this.props.details.LocationName}
                         className={this.props.classes.root}
-                        onChange={this.handleChange('location')}
+                        onChange={event =>
+                            this.props.dispatch({
+                                type: 'EDIT_EVENT_LOCATION',
+                                payload: event.target.value
+                            })}
                     >
                         {locationsInSelector}
                     </Select>
@@ -149,6 +148,7 @@ class EventDetails extends Component {
                 <FormControl>
                     <FormHelperText className={this.props.classes.helperText}>Add Tags</FormHelperText>
                     <Select
+                        multiple
                         value={this.props.details.Tags}
                         className={this.props.classes.root}
                         renderValue={selected => (
@@ -158,7 +158,11 @@ class EventDetails extends Component {
                                 ))}
                             </div>
                         )}
-                        // onChange={this.handleChange('tags')}
+                        onChange={event =>
+                            this.props.dispatch({
+                                type: 'EDIT_EVENT_TAGS',
+                                payload: event.target.value
+                            })}
                     >
                         {allTags}
                     </Select>
