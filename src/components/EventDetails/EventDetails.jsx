@@ -8,11 +8,17 @@ import FormControl from '@material-ui/core/FormControl';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import Grid from '@material-ui/core/Grid';
 import Chip from '@material-ui/core/Chip';
+import Button from '@material-ui/core/Button';
 
 
 const styles = ({
     root: {
         margin: '15px',
+    },
+    multiline: {
+        margin: '0px',
+        maxWidth: '80%'
+        // width: '300'
     },
     helperText: {
         marginLeft: '15px'
@@ -39,9 +45,11 @@ class EventDetails extends Component {
         });
     }
 
-    // handleChange = (type) => (event) => {
+    handleBack = () => {
+        this.props.history.push("/events");
+    };
 
-    // }
+    
 
     render() {
 
@@ -52,31 +60,30 @@ class EventDetails extends Component {
         });
 
         let eventTags = this.props.details.Tags.map((tag) => {
-                return (
-                    <Grid item key={tag}>
-                        <Chip
-                            key={tag}
-                            label={tag}
-                            onDelete={() => this.handleTagDelete(tag.id)}
-                            // onClick={() => this.handleTagClick(tag)}
-                            className={this.props.classes.chip}
-                            color="primary"
-                        />
-                    </Grid>
-                )
+            return (
+                <Grid item key={tag}>
+                    <Chip
+                        key={tag}
+                        label={tag}
+                        // onDelete={() => this.handleTagDelete(tag.id)}
+                        // onClick={() => this.handleTagClick(tag)}
+                        className={this.props.classes.chip}
+                        color="primary"
+                    />
+                </Grid>
+            )
         })
 
         let allTags = this.props.tags.map((tag) => {
-                return (
-                    <MenuItem value={tag.TagName} key={tag.TagID}>{tag.TagName}</MenuItem>
-                )
+            return (
+                <MenuItem value={tag.TagName} key={tag.TagID}>{tag.TagName}</MenuItem>
+            )
         })
 
         return (
             <div>
                 {JSON.stringify(this.props.details)}
                 <h1>2D Con 2020: Remaster</h1>
-                {JSON.stringify(this.props.locations)}
                 <h1> Manage Event: {this.props.details.EventName}</h1>
                 <hr></hr>
                 <h2>Event Details</h2>
@@ -115,7 +122,10 @@ class EventDetails extends Component {
                 />
                 <TextField
                     label="Description"
-                    className={this.props.classes.root}
+                    multiline
+                    fullWidth
+                    margin="normal"
+                    className={this.props.classes.multiline}
                     value={this.props.details.EventDescription}
                     InputLabelProps={{ shrink: this.props.details.EventDescription }}
                     onChange={event =>
@@ -142,7 +152,7 @@ class EventDetails extends Component {
                 </FormControl>
                 <hr></hr>
                 <h2>Tag Details</h2>
-                <Grid item container direction="column" spacing={2} justify="center">
+                <Grid item container direction="space-around" spacing={2} justify="left">
                     {eventTags}
                 </Grid>
                 <FormControl>
@@ -167,7 +177,14 @@ class EventDetails extends Component {
                         {allTags}
                     </Select>
                 </FormControl>
-
+                <div>
+                    <Button variant="contained" color="secondary" onClick={this.handleBack}>
+                        Back
+                    </Button>
+                    <Button variant="contained" color="primary" onClick={this.handleSave}>
+                        Save
+                    </Button>
+                </div>
             </div>
         )
     }
