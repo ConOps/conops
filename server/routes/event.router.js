@@ -59,6 +59,40 @@ router.get('/eventdetails/:id', rejectUnauthenticated, (req, res) => {
         })
 });
 
+//PUT routes
+//PUT route for event uncancel
+router.put('/event_uncancel', rejectUnauthenticated, (req, res) => {
+    const id = req.body.eventToUncancel
+    console.log('in event uncancel PUT');
+    const queryText = `UPDATE "Event"
+                        SET "IsCancelled" = FALSE
+                        WHERE "EventID" = $1;`;
+    pool.query(queryText, [id])
+        .then(result => {
+            res.sendStatus(200);
+        }).catch(error => {
+            console.log('error in event uncancel PUT', error);
+            res.sendStatus(500);
+        })
+})
+
+//PUT for event cancel
+router.put('/event_cancel', rejectUnauthenticated, (req, res) => {
+    const id = req.body.eventToUncancel
+    console.log('in event cancel PUT');
+    const queryText = `UPDATE "Event"
+                        SET "IsCancelled" = TRUE
+                        WHERE "EventID" = $1;`;
+    pool.query(queryText, [id])
+        .then(result => {
+            res.sendStatus(200);
+        }).catch(error => {
+            console.log('error in event cancel PUT', error);
+            res.sendStatus(500);
+        })
+})
+
+
 /**
  * POST route template
  */
