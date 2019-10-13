@@ -22,6 +22,10 @@ const styles = ({
     },
     helperText: {
         marginLeft: '15px'
+    },
+    cancelledText: {
+        fontWeight: 'bold',
+        color: 'red'
     }
 });
 
@@ -32,6 +36,9 @@ class EventDetails extends Component {
         });
         this.props.dispatch({
             type: 'FETCH_TAG_LIST'
+        });
+        this.props.dispatch({
+            type: 'FETCH_CONVENTION'
         });
         this.fetchEventDetails();
     }
@@ -82,9 +89,25 @@ class EventDetails extends Component {
 
         return (
             <div>
-                {JSON.stringify(this.props.details)}
-                <h1>2D Con 2020: Remaster</h1>
+                {/* {JSON.stringify(this.props.details)} */}
+                <h1>{this.props.convention.ConventionName}</h1>
+                {this.props.details.IsCancelled && <h3 className={this.props.classes.cancelledText}>Event is cancelled.</h3>}
                 <h1> Manage Event: {this.props.details.EventName}</h1>
+                {this.props.details.IsCancelled && <Button variant="contained" color="secondary" onClick={() => {
+                                                        this.props.dispatch({
+                                                            type: "UNCANCEL_EVENT",
+                                                            payload: this.props.details.EventID
+                                                    })}}>
+                                                    UnCancel
+                                                    </Button>}
+                {!this.props.details.IsCancelled && <Button variant="contained" color="secondary" onClick={() => {
+                                                        this.props.dispatch({
+                                                            type: "CANCEL_EVENT",
+                                                            payload: this.props.details.EventID
+                                                     })}}>
+                                                    Cancel
+                                                    </Button>}
+
                 <hr></hr>
                 <h2>Event Details</h2>
                 <TextField
@@ -152,7 +175,7 @@ class EventDetails extends Component {
                 </FormControl>
                 <hr></hr>
                 <h2>Tag Details</h2>
-                <Grid item container direction="space-around" spacing={2} justify="left">
+                <Grid item container direction="row" spacing={2} justify="flex-start">
                     {eventTags}
                 </Grid>
                 <FormControl>
@@ -194,7 +217,8 @@ const mapStateToProps = reduxStore => {
     return {
         details: reduxStore.eventDetailsReducer,
         locations: reduxStore.LocationReducer,
-        tags: reduxStore.TagsReducer
+        tags: reduxStore.TagsReducer,
+        convention: reduxStore.ConventionsReducer,
     };
 };
 
