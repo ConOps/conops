@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import { withStyles } from '@material-ui/core/styles';
 import MaterialTable from "material-table";
 import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
@@ -41,6 +42,11 @@ class Events extends Component {
         ],
         data: []
     }
+
+    handleClick = () => {
+        this.props.history.push('/locations/create')
+    }
+
     render() {
         return (
             <div>
@@ -82,4 +88,4 @@ const mapStateToProps = reduxStore => {
     };
 };
 
-export default connect(mapStateToProps)(Events);
+export default withStyles(styles)(connect(mapStateToProps)(Events));
