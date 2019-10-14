@@ -49,36 +49,63 @@ class Events extends Component {
 
     render() {
         return (
-            <div>
-                <h1>Events</h1>
-                <Fab color="primary" aria-label="add" className={this.props.classes.fab}>
-                    <AddIcon onClick={this.handleClick} />
-                </Fab>
-                <MaterialTable
-                    title="Events"
-                    columns={this.state.columns}
-                    options={{
-                        columnsButton: true,
-                        pageSize: 10,
-                        pageSizeOptions: [10, 20, 50],
-                        toolbarButtonAlignment: "right",
-                        searchFieldAlignment: "left",
-                        showTitle: false
-                    }}
-                    data={this.props.reduxStore.EventsReducer}
-                    actions={[
-                        {
-                            icon: "event",
-                            tooltip: "Edit Event",
-                            onClick: (event, rowData) => {
-                                this.props.history.push(`/eventdetails/${rowData.EventID}`)
-                            }
-                        }
-                    ]}
-                    editable={{}}
-                />
-            </div>
-        )
+          <div>
+            <h1>Events</h1>
+            {(this.props.reduxStore.user.authorization === 4 ||
+              this.props.reduxStore.user.authorization === 2) && (
+              <Fab
+                color="primary"
+                aria-label="add"
+                className={this.props.classes.fab}
+              >
+                <AddIcon onClick={this.handleClick} />
+              </Fab>
+            )}
+            {this.props.reduxStore.user.authorization === 4 ||
+            this.props.reduxStore.user.authorization === 2 ? (
+              <MaterialTable
+                title="Events"
+                columns={this.state.columns}
+                options={{
+                  columnsButton: true,
+                  pageSize: 10,
+                  pageSizeOptions: [10, 20, 50],
+                  toolbarButtonAlignment: "right",
+                  searchFieldAlignment: "left",
+                  showTitle: false
+                }}
+                data={this.props.reduxStore.EventsReducer}
+                actions={[
+                  {
+                    icon: "event",
+                    tooltip: "Edit Event",
+                    onClick: (event, rowData) => {
+                      this.props.history.push(
+                        `/eventdetails/${rowData.EventID}`
+                      );
+                    }
+                  }
+                ]}
+                editable={{}}
+              />
+            ) : (
+              <MaterialTable
+                title="Events"
+                columns={this.state.columns}
+                options={{
+                  columnsButton: true,
+                  pageSize: 10,
+                  pageSizeOptions: [10, 20, 50],
+                  toolbarButtonAlignment: "right",
+                  searchFieldAlignment: "left",
+                  showTitle: false
+                }}
+                data={this.props.reduxStore.EventsReducer}
+                editable={{}}
+              />
+            )}
+          </div>
+        );
     }
 }
 
