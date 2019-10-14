@@ -58,10 +58,31 @@ function* cancelEvent(action) {
     }
 }
 
+function* updateEventInfo(action) {
+    try {
+        const config = {
+            headers: { 'Content-Type': 'application/json' },
+            withCredentials: true,
+        };
+        yield axios.put(`/api/event/event_update`, action.payload, config);
+        yield put({
+            type: 'FETCH_EVENT_DETAILS',
+            payload: action.payload.EventID
+        })
+        yield put({
+            type: 'FETCH_EVENT_LIST'
+        })
+    } catch (err) {
+        console.log('error in update Event saga', err);
+        
+    }
+}
+
 function* eventDetailsSaga() {
     yield takeLatest('FETCH_EVENT_DETAILS', fetchDetails);
     yield takeLatest('UNCANCEL_EVENT', uncancelEvent);
     yield takeLatest('CANCEL_EVENT', cancelEvent);
+    yield takeLatest('UPDATE_EVENT_INFO', updateEventInfo)
 }
 
 export default eventDetailsSaga;
