@@ -61,7 +61,7 @@ router.get('/eventdetails/:id', rejectUnauthenticated, (req, res) => {
 
 //PUT routes
 //PUT route for event uncancel
-router.put('/event_uncancel', rejectUnauthenticated, (req, res) => {
+router.put('/event_uncancel', rejectUnauthenticated, rejectNonEventOrganizer, (req, res) => {
     const id = req.body.eventToUncancel
     console.log('in event uncancel PUT');
     const queryText = `UPDATE "Event"
@@ -77,7 +77,7 @@ router.put('/event_uncancel', rejectUnauthenticated, (req, res) => {
 })
 
 //PUT for event cancel
-router.put('/event_cancel', rejectUnauthenticated, (req, res) => {
+router.put('/event_cancel', rejectUnauthenticated, rejectNonEventOrganizer, (req, res) => {
     const id = req.body.eventToUncancel
     console.log('in event cancel PUT');
     const queryText = `UPDATE "Event"
@@ -93,7 +93,7 @@ router.put('/event_cancel', rejectUnauthenticated, (req, res) => {
 })
 
 //PUT for event update
-router.put('/event_update', rejectUnauthenticated, (req, res) => {
+router.put('/event_update', rejectUnauthenticated, rejectNonEventOrganizer, (req, res) => {
     console.log('event update data:', req.body);
     const eventUpdate = req.body;
     const queryText = `UPDATE "Event"
