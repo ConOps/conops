@@ -12,7 +12,8 @@ router.get('/', rejectUnauthenticated, (req, res) => {
                 res.send(result.rows);
             })
             .catch((error) => {
-                console.log('error in locations GET router', error);
+                console.log('error in locations GET router:', error);
+                res.sendStatus(500);
             })
 });
 
@@ -24,9 +25,10 @@ router.get('/details/:id', rejectUnauthenticated, (req, res) => {
         .then(result => {
             console.log('location details:', result.rows[0]);
             res.send(result.rows[0]);
-        }).catch(error => {
+        })
+        .catch(error => {
             console.log('error in location details router:', error)
-            res.sendStatus(500)
+            res.sendStatus(500);
         })
 });
 

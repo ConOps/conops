@@ -16,8 +16,14 @@ class Sponsors extends Component {
 
     state = {
         columns: [
-            { title: ""}
-        ]
+            { title: "SponsorID", field: "SponsorID", hidden: true },
+            { title: "Sponsor Name", field: "SponsorName", hidden: false },
+            { title: "Amount Paid", field: "AmountPaid", hidden: false }, 
+            { title: "Website", field: "Website", hidden: false },
+            { title: "Notes", field: "Notes", false: false },
+            { title: "Active Status", field: "SponsorIsActive", hidden: false }
+        ], 
+        data: []
     }
 
     render() {
