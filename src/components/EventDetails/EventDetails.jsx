@@ -9,6 +9,11 @@ import FormHelperText from '@material-ui/core/FormHelperText';
 import Grid from '@material-ui/core/Grid';
 import Chip from '@material-ui/core/Chip';
 import Button from '@material-ui/core/Button';
+import DateFnsUtils from "@date-io/date-fns";
+import {
+    MuiPickersUtilsProvider,
+    KeyboardDateTimePicker
+} from "@material-ui/pickers";
 
 
 const styles = ({
@@ -140,28 +145,40 @@ class EventDetails extends Component {
                             payload: event.target.value
                         })}
                 />
-                <TextField
-                    label="Start Time"
-                    className={this.props.classes.root}
-                    value={this.props.details.EventStartTime}
-                    InputLabelProps={{ shrink: this.props.details.EventStartTime }}
-                    onChange={event =>
-                        this.props.dispatch({
-                            type: "EDIT_EVENT_START_TIME",
-                            payload: event.target.value
-                        })}
-                />
-                <TextField
-                    label="End Time"
-                    className={this.props.classes.root}
-                    value={this.props.details.EventEndTime}
-                    InputLabelProps={{ shrink: this.props.details.EventEndTime }}
-                    onChange={event =>
-                        this.props.dispatch({
-                            type: "EDIT_EVENT_END_TIME",
-                            payload: event.target.value
-                        })}
-                />
+                <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                    <KeyboardDateTimePicker
+                        label="Start Time"
+                        className={this.props.classes.root}
+                        value={this.props.details.EventStartTime}
+                        InputLabelProps={{ shrink: this.props.details.EventName }}
+                        format="MM/dd/yyyy HH:mm"
+                        KeyboardButtonProps={{
+                            "aria-label": "change date"
+                        }}
+                        onChange={date =>
+                            this.props.dispatch({
+                                type: "EDIT_EVENT_START_TIME",
+                                payload: date
+                            })
+                        }
+                    />
+                    <KeyboardDateTimePicker
+                        label="End Time"
+                        className={this.props.classes.root}
+                        value={this.props.details.EventEndTime}
+                        InputLabelProps={{ shrink: this.props.details.EventName }}
+                        format="MM/dd/yyyy HH:mm"
+                        KeyboardButtonProps={{
+                            "aria-label": "change date"
+                        }}
+                        onChange={date =>
+                            this.props.dispatch({
+                                type: "EDIT_EVENT_END_TIME",
+                                payload: date
+                            })
+                        }
+                    />
+                </MuiPickersUtilsProvider>
                 <TextField
                     label="Description"
                     multiline
@@ -235,22 +252,6 @@ class EventDetails extends Component {
                         {locationsInSelector}
                     </Select>
                 </FormControl>
-                <div>
-                    <TextField
-                        label="Notes"
-                        multiline
-                        fullWidth
-                        margin="normal"
-                        className={this.props.classes.multiline}
-                        value={this.props.details.EventDescription}
-                        InputLabelProps={{ shrink: this.props.details.EventDescription }}
-                        onChange={event =>
-                            this.props.dispatch({
-                                type: "EDIT_EVENT_DESCRIPTION",
-                                payload: event.target.value
-                            })}
-                    />
-                </div>
                 <div>
                     <Button variant="contained" color="secondary" onClick={this.handleBack}>
                         Back
