@@ -35,7 +35,7 @@ router.get('/details/:id', rejectUnauthenticated, (req, res) => {
 /**
  * POST route template
  */
-router.post('/', rejectUnauthenticated, (req, res) => {
+router.post('/', rejectUnauthenticated, rejectNonAdmin, (req, res) => {
     const location = req.body;
     console.log('creates new location:', location);
     let queryText = `INSERT INTO "Location" ("LocationName", "LocationDescription") VALUES ($1, $2);`;
@@ -49,7 +49,7 @@ router.post('/', rejectUnauthenticated, (req, res) => {
     })
 });
 
-router.put('/details/:id', rejectUnauthenticated,  async (req, res) => {
+router.put('/details/:id', rejectUnauthenticated, rejectNonAdmin, async (req, res) => {
     const connection = await pool.connect();
     try {
         await connection.query('BEGIN');
