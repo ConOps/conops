@@ -2,13 +2,28 @@ import React, { Component } from "react";
 import MaterialTable from "material-table";
 import { connect } from "react-redux";
 import Button from "@material-ui/core/Button";
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import Paper from '@material-ui/core/Paper';
+import Draggable from 'react-draggable';
+
+function PaperComponent(props) {
+  return (
+    <Draggable>
+      <Paper {...props} />
+    </Draggable>
+  );
+}
 
 class CheckIn extends Component {
   state = {
-    columns: [ 
+    columns: [
       { title: "First Name", field: "FirstName" },
       { title: "Last Name", field: "LastName" },
-      { title: "Middle Name", field: "MiddleName"},
+      { title: "Middle Name", field: "MiddleName" },
       { title: "Email Address", field: "EmailAddress" },
       { title: "Phone Number", field: "PhoneNumber" },
       { title: "Date Of Birth", field: "DateOfBirth" },
@@ -22,22 +37,107 @@ class CheckIn extends Component {
         field: "orderID"
       }
     ],
+    open: false,
+    openPaid: false,
+    rowData: []
   };
 
-    componentDidMount() {
-        this.fetchAllAttendees();
-    }
+  componentDidMount() {
+    this.fetchAllAttendees();
+  }
 
 
-    fetchAllAttendees = () => {
-        this.props.dispatch({
-            type: "FETCH_ALL_ATTENDEES"
-        });
-    }
- 
+  fetchAllAttendees = () => {
+    this.props.dispatch({
+      type: "FETCH_ALL_ATTENDEES"
+    });
+  }
+
+  handleClickOpen = () => {
+    this.setState({ open: true });
+  };
+
+  handleClose = () => {
+    this.setState({ open: false });
+  };
+
+  handleClickOpenPaid = () => {
+    this.setState({ openPaid: true });
+  };
+
+  handleClosePaid = () => {
+    this.setState({ openPaid: false });
+  };
+
+  paymentCheckInPrompt = () => {
+    this.props.dispatch({
+      type: "CHECK_IN_AND_PAY_ATTENDEE",
+      payload: this.state.rowData
+      });
+      this.handleClose()
+  }
+
+  checkInPrompt = () => {
+    console.log('this is the check in only', this.state.rowData);
+    
+    this.props.dispatch({
+      type: "CHECK_IN_ALL_SELECTED",
+      payload: this.state.rowData
+      });
+      this.handleClosePaid()
+  }
+
   render() {
     return (
       <div>
+        <Dialog
+          open={this.state.open}
+          onClose={this.handleClose}
+          PaperComponent={PaperComponent}
+          aria-labelledby="draggable-dialog-title"
+        >
+          <DialogTitle style={{ cursor: 'move' }} id="draggable-dialog-title">
+            Payment Check
+        </DialogTitle>
+          <DialogContent>
+            <DialogContentText>
+              This person must submit payment to be checked into the convention!
+          </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={this.handleClose} color="primary">
+              Cancel
+          </Button>
+            <Button onClick={this.paymentCheckInPrompt} color="primary">
+              Confirm
+          </Button>
+          </DialogActions>
+        </Dialog>
+
+
+        <Dialog
+          open={this.state.openPaid}
+          onClose={this.handleClosePaid}
+          PaperComponent={PaperComponent}
+          aria-labelledby="draggable-dialog-title"
+        >
+          <DialogTitle style={{ cursor: 'move' }} id="draggable-dialog-title">
+            Check-In
+        </DialogTitle>
+          <DialogContent>
+            <DialogContentText>
+              Are you sure that you would like to check this person in?
+          </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={this.handleClosePaid} color="primary">
+              Cancel
+          </Button>
+            <Button onClick={this.checkInPrompt} color="primary">
+              Confirm
+          </Button>
+          </DialogActions>
+        </Dialog>
         <h1 style={{ textAlign: "center" }}>Current Convention: 2DCON 2020</h1>
         <p style={{ textAlign: "center" }}>FILTER</p>
         <div style={{ textAlign: "center" }}>
@@ -92,7 +192,7 @@ class CheckIn extends Component {
         </div>
         {(this.props.reduxStore.user.authorization == 4 ||
           this.props.reduxStore.user.authorization == 1)
-           && (
+          && (
             <MaterialTable
               title="Editable Example"
               columns={this.state.columns}
@@ -118,7 +218,7 @@ class CheckIn extends Component {
                   icon: "group",
                   tooltip: "Find all members of this group",
                   onClick: (event, rowData) => {
-                    console.log(rowData.orderID);               
+                    console.log(rowData.orderID);
                     this.props.history.push(`/OrderID/${rowData.orderID}`);
                   },
                   disabled: rowData.orderID == null
@@ -126,59 +226,21 @@ class CheckIn extends Component {
                 rowData => ({
                   icon: "check_circle",
                   tooltip: "check this Attendee in!",
-                  onClick: (event, rowData) => {
-                    let paymentPrompt = () => {
-                      if (
-                        window.confirm(
-                          "this person must submit payment to be checked into the convention"
-                        ) === true
-                      ) {
-                        paymentCheckInPrompt();
-                      } else {
-                        return false;
-                      }
-                    };
-
-                    let paymentCheckInPrompt = () => {
-                      console.log(rowData.AttendeeID);
-
-                      if (
-                        window.confirm(
-                          "are you sure that you would like to check this person in?!"
-                        )
-                      ) {
-                        this.props.dispatch({
-                          type: "CHECK_IN_AND_PAY_ATTENDEE",
-                          payload: rowData.AttendeeID
-                        });
-                      } else {
-                        return false;
-                      }
-                    };
-
-                    let checkInPrompt = () => {
-                      if (
-                        window.confirm(
-                          "are you sure that you would like to check this person in?!"
-                        ) === true
-                      ) {
-                        console.log(rowData.AttendeeID);
-                        this.props.dispatch({
-                          type: "CHECK_IN_ALL_SELECTED",
-                          payload: [rowData.AttendeeID]
-                        });
-                      } else {
-                        return false;
-                      }
-                    };
-                    if (rowData.PaymentDate === null) {
-                      paymentPrompt();
-                    } else {
-                      checkInPrompt();
-                    }
-                  },
-                  disabled: rowData.CheckInDate !== null
-                })
+                   onClick:  (event, rowData) => {
+                        if(rowData.PaymentDate) {
+                          this.setState({
+                            openPaid: !this.state.openPaid,
+                            ...this.state.rowData, rowData: [rowData.AttendeeID]
+                          })
+                        } else {
+                          this.setState({
+                            open: !this.state.open,
+                            ...this.state.rowData, rowData: rowData.AttendeeID
+                          })
+                        }
+                      },
+                   disabled: rowData.CheckInDate !== null
+                  })
               ]}
               editable={{}}
             />
