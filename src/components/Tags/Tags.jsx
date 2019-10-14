@@ -34,7 +34,7 @@ class Tags extends Component {
             <h2 style={{ textAlign: "center" }}>Tags</h2>
             <div style={{ textAlign: "right", marginRight: "2%" }}>
              
-            {this.props.reduxStore.user.authorization == 4 && (
+            {this.props.reduxStore.user.authorization === 4 && (
               <Button
                 variant="contained"
                 color="primary"
@@ -44,7 +44,7 @@ class Tags extends Component {
               </Button>
             )}           
             </div>
-            {this.props.reduxStore.user.authorization == 4 ? (
+            {this.props.reduxStore.user.authorization === 4 ? (
               <MaterialTable
                 title="Editable Example"
                 columns={this.state.columns}
