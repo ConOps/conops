@@ -120,7 +120,7 @@ WITH (
 
 CREATE TABLE "ConventionSponsor"
 (
-    "ConventionSponsorID" INTEGER NOT NULL,
+    "ConventionSponsorID" SERIAL NOT NULL,
     "Convention_ID" INTEGER NOT NULL,
     "SponsorID" INTEGER NOT NULL,
     CONSTRAINT "ConventionSponsor_pk" PRIMARY KEY ("ConventionSponsorID")
@@ -136,6 +136,7 @@ CREATE TABLE "Sponsor"
     "AmountPaid" VARCHAR(255) NOT NULL,
     "Website" VARCHAR(255) NOT NULL,
     "Notes" VARCHAR(255),
+    "SponsorIsActive" BOOLEAN NOT NULL,
     CONSTRAINT "Sponsor_pk" PRIMARY KEY ("SponsorID")
 )
 WITH (
@@ -226,6 +227,10 @@ VALUES ('1', 'Gamer Yoga', '08/23/2018 1:00 PM', '08/23/2018 2:00 PM', '2', 'FAL
 --SPONSORED EVENTS--
 INSERT INTO "Event" ("ConventionID", "EventName", "EventStartTime", "EventEndTime", "LocationID", "IsCancelled", "EventDescription", "SponsorID", "DateCreated")
 VALUES ('3', 'Counterstrike: GO', '08/26/2020 2:00 PM', '08/26/2020 6:00 PM', '6', 'FALSE', 'GO!', '6', '05/20/2020');
+
+--CONVENTIONS SPONSOR JUNCTION TABLE--
+INSERT INTO "ConventionSponsor" ("Convention_ID", "SponsorID")
+VALUES ('1', '2'), ('2', '3'), ('3', '4'), ('3', '5'), ('3', '6'), ('3', '7'), ('3', '8');
 
 --CANCELLED EVENTS--
 INSERT INTO "Event" ("ConventionID", "EventName", "EventStartTime", "EventEndTime", "LocationID", "IsCancelled", "EventDescription", "DateCreated")

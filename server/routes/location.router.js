@@ -12,7 +12,8 @@ router.get('/', rejectUnauthenticated, (req, res) => {
                 res.send(result.rows);
             })
             .catch((error) => {
-                console.log('error in locations GET router', error);
+                console.log('error in locations GET router:', error);
+                res.sendStatus(500);
             })
 });
 
@@ -24,16 +25,17 @@ router.get('/details/:id', rejectUnauthenticated, (req, res) => {
         .then(result => {
             console.log('location details:', result.rows[0]);
             res.send(result.rows[0]);
-        }).catch(error => {
+        })
+        .catch(error => {
             console.log('error in location details router:', error)
-            res.sendStatus(500)
+            res.sendStatus(500);
         })
 });
 
 /**
  * POST route template
  */
-router.post('/', rejectUnauthenticated, (req, res) => {
+router.post('/', rejectUnauthenticated, rejectNonAdmin, (req, res) => {
     const location = req.body;
     console.log('creates new location:', location);
     let queryText = `INSERT INTO "Location" ("LocationName", "LocationDescription") VALUES ($1, $2);`;
@@ -47,7 +49,7 @@ router.post('/', rejectUnauthenticated, (req, res) => {
     })
 });
 
-router.put('/details/:id', rejectUnauthenticated,  async (req, res) => {
+router.put('/details/:id', rejectUnauthenticated, rejectNonAdmin, async (req, res) => {
     const connection = await pool.connect();
     try {
         await connection.query('BEGIN');
