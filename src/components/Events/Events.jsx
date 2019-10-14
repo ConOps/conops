@@ -44,7 +44,7 @@ class Events extends Component {
     }
 
     handleClick = () => {
-        this.props.history.push('/locations/create')
+        this.props.history.push('/events/create')
     }
 
     render() {
