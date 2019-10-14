@@ -8,14 +8,24 @@ import FormControl from '@material-ui/core/FormControl';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import Grid from '@material-ui/core/Grid';
 import Chip from '@material-ui/core/Chip';
+import Button from '@material-ui/core/Button';
 
 
 const styles = ({
     root: {
         margin: '15px',
     },
+    multiline: {
+        margin: '0px',
+        maxWidth: '80%'
+        // width: '300'
+    },
     helperText: {
         marginLeft: '15px'
+    },
+    cancelledText: {
+        fontWeight: 'bold',
+        color: 'red'
     }
 });
 
@@ -27,7 +37,26 @@ class EventDetails extends Component {
         this.props.dispatch({
             type: 'FETCH_TAG_LIST'
         });
+        this.props.dispatch({
+            type: 'FETCH_CONVENTION'
+        });
+        this.fetchEventDetails();
     }
+
+
+    fetchEventDetails = () => {
+        let id = this.props.match.params.id;
+        this.props.dispatch({
+            type: 'FETCH_EVENT_DETAILS',
+            payload: id
+        });
+    }
+
+    handleBack = () => {
+        this.props.history.push("/events");
+    };
+
+    
 
     render() {
 
@@ -43,7 +72,7 @@ class EventDetails extends Component {
                     <Chip
                         key={tag}
                         label={tag}
-                        onDelete={() => this.handleTagDelete(tag.id)}
+                        // onDelete={() => this.handleTagDelete(tag.id)}
                         // onClick={() => this.handleTagClick(tag)}
                         className={this.props.classes.chip}
                         color="primary"
@@ -60,10 +89,25 @@ class EventDetails extends Component {
 
         return (
             <div>
-                {JSON.stringify(this.props.details)}
-                <h1>2D Con 2020: Remaster</h1>
-                {JSON.stringify(this.props.locations)}
+                {/* {JSON.stringify(this.props.details)} */}
+                <h1>{this.props.convention.ConventionName}</h1>
+                {this.props.details.IsCancelled && <h3 className={this.props.classes.cancelledText}>Event is cancelled.</h3>}
                 <h1> Manage Event: {this.props.details.EventName}</h1>
+                {this.props.details.IsCancelled && <Button variant="contained" color="secondary" onClick={() => {
+                                                        this.props.dispatch({
+                                                            type: "UNCANCEL_EVENT",
+                                                            payload: this.props.details.EventID
+                                                    })}}>
+                                                    UnCancel
+                                                    </Button>}
+                {!this.props.details.IsCancelled && <Button variant="contained" color="secondary" onClick={() => {
+                                                        this.props.dispatch({
+                                                            type: "CANCEL_EVENT",
+                                                            payload: this.props.details.EventID
+                                                     })}}>
+                                                    Cancel
+                                                    </Button>}
+
                 <hr></hr>
                 <h2>Event Details</h2>
                 <TextField
@@ -101,7 +145,10 @@ class EventDetails extends Component {
                 />
                 <TextField
                     label="Description"
-                    className={this.props.classes.root}
+                    multiline
+                    fullWidth
+                    margin="normal"
+                    className={this.props.classes.multiline}
                     value={this.props.details.EventDescription}
                     InputLabelProps={{ shrink: this.props.details.EventDescription }}
                     onChange={event =>
@@ -117,18 +164,24 @@ class EventDetails extends Component {
                     <Select
                         value={this.props.details.LocationName}
                         className={this.props.classes.root}
+                        onChange={event =>
+                            this.props.dispatch({
+                                type: 'EDIT_EVENT_LOCATION',
+                                payload: event.target.value
+                            })}
                     >
                         {locationsInSelector}
                     </Select>
                 </FormControl>
                 <hr></hr>
                 <h2>Tag Details</h2>
-                <Grid item container direction="column" spacing={2} justify="center">
+                <Grid item container direction="row" spacing={2} justify="flex-start">
                     {eventTags}
                 </Grid>
                 <FormControl>
                     <FormHelperText className={this.props.classes.helperText}>Add Tags</FormHelperText>
                     <Select
+                        multiple
                         value={this.props.details.Tags}
                         className={this.props.classes.root}
                         renderValue={selected => (
@@ -138,12 +191,23 @@ class EventDetails extends Component {
                                 ))}
                             </div>
                         )}
-                        // onChange={this.handleChange('tags')}
+                        onChange={event =>
+                            this.props.dispatch({
+                                type: 'EDIT_EVENT_TAGS',
+                                payload: event.target.value
+                            })}
                     >
                         {allTags}
                     </Select>
                 </FormControl>
-
+                <div>
+                    <Button variant="contained" color="secondary" onClick={this.handleBack}>
+                        Back
+                    </Button>
+                    <Button variant="contained" color="primary" onClick={this.handleSave}>
+                        Save
+                    </Button>
+                </div>
             </div>
         )
     }
@@ -153,7 +217,8 @@ const mapStateToProps = reduxStore => {
     return {
         details: reduxStore.eventDetailsReducer,
         locations: reduxStore.LocationReducer,
-        tags: reduxStore.TagsReducer
+        tags: reduxStore.TagsReducer,
+        convention: reduxStore.ConventionsReducer,
     };
 };
 

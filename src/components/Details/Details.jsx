@@ -353,9 +353,18 @@ class Details extends Component {
             <MenuItem value="None">
               <em>None</em>
             </MenuItem>
-            <MenuItem value="child">Child (6 and under)</MenuItem>
+            <MenuItem value="YoungChild">Child (6 and under)</MenuItem>
+            <MenuItem value="Child">Child (7 - 13)</MenuItem>
             <MenuItem value="Adult 14">Adult (14 - 20)</MenuItem>
             <MenuItem value="Adult 21">Adult (Over 21)</MenuItem>
+            <MenuItem value="Guest">Guest</MenuItem>
+            <MenuItem value="Independent Developer">Independent Developer</MenuItem>
+            <MenuItem value="Media">Media</MenuItem>
+            <MenuItem value="Sponsor">Sponsor</MenuItem>
+            <MenuItem value="Staff">Staff</MenuItem>
+            <MenuItem value="VIP">V.I.P.</MenuItem>
+            <MenuItem value="Vendor">Vendor</MenuItem>
+            <MenuItem value="Unidentified">Unidentified - identify DoB</MenuItem>
           </Select>
           <TextField
             label="Badge Number"
