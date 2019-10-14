@@ -1,6 +1,5 @@
 import React, { Component  } from 'react';
 import { connect } from "react-redux";
-import { withRouter } from 'react-router-dom';
 import { withStyles } from '@material-ui/core/styles';
 import MaterialTable from "material-table";
 import Fab from '@material-ui/core/Fab';
@@ -81,4 +80,4 @@ const mapStateToProps = reduxStore => {
         reduxStore
     };
 };
-export default withStyles(styles)(withRouter(connect(mapStateToProps)(Locations)));
+export default withStyles(styles)(connect(mapStateToProps)(Locations));
