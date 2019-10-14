@@ -29,7 +29,27 @@ class Sponsors extends Component {
     render() {
         return(
             <div>
-                <p>Sponsors</p>
+                <MaterialTable
+                    title="Sponsors"
+                    columns={this.state.columns}
+                    options={{
+                        columnsButton: true,
+                        pageSize: 10,
+                        pageSizeOptions: [10, 20, 50],
+                        toolbarButtonAlignment: "right",
+                        searchFieldAlignment: "left",
+                        showTitle: false
+                    }}
+                    data={this.props.reduxStore.sponsorReducer}
+                    editable={{}}
+                    actions={[
+                        {
+                            icon: "edit",
+                            tooltip: "Edit Location",
+                            
+                        }
+                    ]}
+                />
             </div>
         )
     }
