@@ -92,6 +92,11 @@ router.put('/event_cancel', rejectUnauthenticated, (req, res) => {
         })
 })
 
+//PUT for event update
+router.put('/event_update', rejectUnauthenticated, (req, res) => {
+    res.sendStatus(200);
+})
+
 
 /**
  * POST route template

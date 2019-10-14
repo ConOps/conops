@@ -1,6 +1,19 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import MaterialTable from "material-table";
+import Fab from '@material-ui/core/Fab';
+import AddIcon from '@material-ui/icons/Add';
+
+
+const styles = ({
+    root: {
+        margin: '15px',
+    },
+    fab: {
+        margin: '15px',
+        marginRight: '0px',
+    }
+});
 
 class Events extends Component {
     componentDidMount() {
@@ -31,6 +44,10 @@ class Events extends Component {
     render() {
         return (
             <div>
+                <h1>Events</h1>
+                <Fab color="primary" aria-label="add" className={this.props.classes.fab}>
+                    <AddIcon onClick={this.handleClick} />
+                </Fab>
                 <MaterialTable
                     title="Events"
                     columns={this.state.columns}
