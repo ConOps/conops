@@ -111,6 +111,7 @@ CREATE TABLE "Location"
     "LocationID" SERIAL NOT NULL,
     "LocationName" VARCHAR (255) NOT NULL,
     "LocationDescription" VARCHAR(255) NOT NULL,
+    "LocationIsActive" BOOLEAN NOT NULL,
     CONSTRAINT "Location_pk" PRIMARY KEY ("LocationID")
 )
 WITH (

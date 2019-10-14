@@ -54,8 +54,8 @@ router.put('/details/:id', rejectUnauthenticated,  async (req, res) => {
         const id = req.params.id;
         const location = req.body;
         console.log('in location put route:', location)
-        const queryText = `UPDATE "Location" SET "LocationName" = $1, "LocationDescription" = $2 WHERE "LocationID" = $3`
-        await connection.query(queryText, [location.LocationName, location.LocationDescription, id]);
+        const queryText = `UPDATE "Location" SET "LocationName" = $1, "LocationDescription" = $2, "LocationIsActive" = $3 WHERE "LocationID" = $4`
+        await connection.query(queryText, [location.LocationName, location.LocationDescription, location.LocationIsActive, id]);
         await connection.query('COMMIT');
     } catch {
         res.sendStatus(500);

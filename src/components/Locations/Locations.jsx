@@ -31,7 +31,8 @@ class Locations extends Component {
         columns:  [
             { title: "LocationID", field: "LocationID", hidden: true},
             { title: "Location Name", field: "LocationName", hidden: false },
-            { title: "Location Description", field: "LocationDescription", hidden: false}
+            { title: "Location Description", field: "LocationDescription", hidden: false},
+            { title: "Active Status", field: "LocationIsActive", hidden: false}
         ],
         data: []
     }
