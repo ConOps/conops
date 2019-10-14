@@ -52,55 +52,71 @@ class OrderID extends Component {
     return (
       <div>
         <h1 style={{ textAlign: "center" }}>Current Convention: 2DCON 2020</h1>
-
-        <MaterialTable
-          title="Editable Example"
-          columns={this.state.columns}
-          options={{
-            columnsButton: true,
-            selection: true,
-            selectionProps: rowData => ({
-              disabled: rowData.CheckInDate !== null
-            }),
-            // headerStyle: { backgroundColor: 'blue', color: 'white' },
-            pageSizeOptions: [10, 20, 50],
-            toolbarButtonAlignment: "right",
-            searchFieldAlignment: "left",
-            showTitle: false
-          }}
-          // onSelectionChange={(rows) => alert('You selected ' + rows.length + ' rows')}
-          data={this.props.reduxStore.AttendeesOrderIdReducer}
-          actions={[
-            {
-              icon: "check_circle",
-              tooltip: "Check in all of the selected attendees",
-              onClick: (event, data) => {
-                if (
-                  window.confirm(
-                    "Are you sure that you would like to check in all of the selected attendees?"
-                  )
-                ) {
-                  console.log(data);
-                  let attendeesToCheckIn = [];
-                  for (let i = 0; i < data.length; i++) {
-                    console.log("i am in the loop");
-                    attendeesToCheckIn.push(data[i].AttendeeID);
+        {this.props.reduxStore.user.authorization == 4 ||
+        this.props.reduxStore.user.authorization == 1 ? (
+          <MaterialTable
+            title="Editable Example"
+            columns={this.state.columns}
+            options={{
+              columnsButton: true,
+              selection: true,
+              selectionProps: rowData => ({
+                disabled: rowData.CheckInDate !== null
+              }),
+              // headerStyle: { backgroundColor: 'blue', color: 'white' },
+              pageSizeOptions: [10, 20, 50],
+              toolbarButtonAlignment: "right",
+              searchFieldAlignment: "left",
+              showTitle: false
+            }}
+            // onSelectionChange={(rows) => alert('You selected ' + rows.length + ' rows')}
+            data={this.props.reduxStore.AttendeesOrderIdReducer}
+            actions={[
+              {
+                icon: "check_circle",
+                tooltip: "Check in all of the selected attendees",
+                onClick: (event, data) => {
+                  if (
+                    window.confirm(
+                      "Are you sure that you would like to check in all of the selected attendees?"
+                    )
+                  ) {
+                    console.log(data);
+                    let attendeesToCheckIn = [];
+                    for (let i = 0; i < data.length; i++) {
+                      console.log("i am in the loop");
+                      attendeesToCheckIn.push(data[i].AttendeeID);
+                    }
+                    this.props.dispatch({
+                      type: "CHECK_IN_ALL_SELECTED",
+                      payload: attendeesToCheckIn
+                    });
+                    this.props.history.push(`/check-in`);
+                  } else {
+                    return false;
                   }
-                  this.props.dispatch({
-                    type: "CHECK_IN_ALL_SELECTED",
-                    payload: attendeesToCheckIn
-                  });
-                  this.props.history.push(`/check-in`);
-                }
-                else{
-                  return false;
                 }
               }
-            }
-          ]}
-          editable={{}}
-        />
-
+            ]}
+            editable={{}}
+          />
+        ) : (
+          <MaterialTable
+            title="Editable Example"
+            columns={this.state.columns}
+            options={{
+              columnsButton: true,
+              // headerStyle: { backgroundColor: 'blue', color: 'white' },
+              pageSizeOptions: [10, 20, 50],
+              toolbarButtonAlignment: "right",
+              searchFieldAlignment: "left",
+              showTitle: false
+            }}
+            // onSelectionChange={(rows) => alert('You selected ' + rows.length + ' rows')}
+            data={this.props.reduxStore.AttendeesOrderIdReducer}
+            editable={{}}
+          />
+        )}
         <Button
           variant="contained"
           color="secondary"
