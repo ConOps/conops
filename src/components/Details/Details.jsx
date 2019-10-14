@@ -14,6 +14,13 @@ import {
   KeyboardDatePicker
 } from "@material-ui/pickers";
 import { withStyles } from "@material-ui/core/styles";
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import Paper from '@material-ui/core/Paper';
+import Draggable from 'react-draggable';
 
 
 
@@ -27,15 +34,41 @@ const styles = {
   }
 };
 
+function PaperComponent(props) {
+  return (
+    <Draggable>
+      <Paper {...props} />
+    </Draggable>
+  );
+}
+
 class Details extends Component {
   state = {
-    Badge: "None"
+    Badge: "None",
+    openDelete: false,
+    id: {},
   };
 
   componentDidMount() {
     this.fetchAttendeeInformation();
   }
 
+  handleClickOpenDelete = () => {
+    this.setState({ openDelete: true });
+  };
+
+  handleCloseDelete = () => {
+    this.setState({ openDelete: false });
+  };
+
+
+  deleteAttendee = () => {
+    this.props.dispatch({
+      type: "DELETE_ATTENDEE_INFO",
+      payload: this.state.id
+    });
+    this.props.history.push(`/check-in`)
+  }
 
   fetchAttendeeInformation = () => {
     let id = this.props.match.params.id;
@@ -65,13 +98,14 @@ class Details extends Component {
   };
 
   handleDelete = id => {
-    if(window.confirm('are you sure that you would like to delete this attendee??')){
-    this.props.dispatch({
-      type: "DELETE_ATTENDEE_INFO",
-      payload: id
-    });
-  this.props.history.push(`/check-in`)
-  }};
+    this.setState({
+      openDelete: !this.state.openDelete,
+      ...this.state.id, id: id
+    })
+    // if(window.confirm('are you sure that you would like to delete this attendee??'))
+   
+  
+};
 
   handleCheckIn = (id, payment) => {
     if (payment == null) {
@@ -138,6 +172,29 @@ class Details extends Component {
   render() {
     return (
       <div className="detailsPage">
+        <Dialog
+          open={this.state.openDelete}
+          onClose={this.handleCloseDelete}
+          PaperComponent={PaperComponent}
+          aria-labelledby="draggable-dialog-title"
+        >
+          <DialogTitle style={{ cursor: 'move' }} id="draggable-dialog-title">
+            Delete Attendee?
+        </DialogTitle>
+          <DialogContent>
+            <DialogContentText>
+              Are you sure that you would like to delete this attendee?
+          </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={this.handleCloseDelete} color="primary">
+              Cancel
+          </Button>
+            <Button onClick={this.deleteAttendee} color="primary">
+              Confirm
+          </Button>
+          </DialogActions>
+        </Dialog>
         <div>
           <h1> Manage Attendee: {this.props.info.FirstName}</h1>
           {/* needs to render the name of the attendee */}
