@@ -9,6 +9,11 @@ import FormHelperText from '@material-ui/core/FormHelperText';
 import Grid from '@material-ui/core/Grid';
 import Chip from '@material-ui/core/Chip';
 import Button from '@material-ui/core/Button';
+import DateFnsUtils from "@date-io/date-fns";
+import {
+    MuiPickersUtilsProvider,
+    KeyboardDateTimePicker
+} from "@material-ui/pickers";
 
 
 const styles = ({
@@ -26,6 +31,9 @@ const styles = ({
     cancelledText: {
         fontWeight: 'bold',
         color: 'red'
+    },
+    topRight: {
+        marginRight: '0px'
     }
 });
 
@@ -40,6 +48,7 @@ class EventDetails extends Component {
         this.props.dispatch({
             type: 'FETCH_CONVENTION'
         });
+
         this.fetchEventDetails();
     }
 
@@ -56,7 +65,16 @@ class EventDetails extends Component {
         this.props.history.push("/events");
     };
 
-    
+    handleSave = () => {
+        console.log('clicked save!');
+
+        // alert("Event has been updated");
+        this.props.dispatch({
+            type: "UPDATE_EVENT_INFO",
+            payload: this.props.details
+        });
+    }
+
 
     render() {
 
@@ -94,20 +112,26 @@ class EventDetails extends Component {
                 {this.props.details.IsCancelled && <h3 className={this.props.classes.cancelledText}>Event is cancelled.</h3>}
                 <h1> Manage Event: {this.props.details.EventName}</h1>
                 {this.props.details.IsCancelled && <Button variant="contained" color="secondary" onClick={() => {
-                                                        this.props.dispatch({
-                                                            type: "UNCANCEL_EVENT",
-                                                            payload: this.props.details.EventID
-                                                    })}}>
-                                                    UnCancel
-                                                    </Button>}
+                    this.props.dispatch({
+                        type: "UNCANCEL_EVENT",
+                        payload: this.props.details.EventID
+                    })
+                }}>
+                    UnCancel
+                </Button>}
                 {!this.props.details.IsCancelled && <Button variant="contained" color="secondary" onClick={() => {
-                                                        this.props.dispatch({
-                                                            type: "CANCEL_EVENT",
-                                                            payload: this.props.details.EventID
-                                                     })}}>
-                                                    Cancel
-                                                    </Button>}
-
+                    this.props.dispatch({
+                        type: "CANCEL_EVENT",
+                        payload: this.props.details.EventID
+                    })
+                }}>
+                    Cancel
+                </Button>}
+                <div className={this.props.classes.topRight}>
+                    {this.props.details.DateLastModified && <h3 className={this.props.classes.cancelledText}>Event Has Been Modified!</h3>}
+                    {this.props.details.DateLastModified && <h4 className={this.props.classes.cancelledText}>{this.props.details.DateLastModified}</h4>}
+                    {this.props.details.EventModifiedNotes && <h4>{this.props.details.EventModifiedNotes}</h4>}
+                </div>
                 <hr></hr>
                 <h2>Event Details</h2>
                 <TextField
@@ -121,28 +145,40 @@ class EventDetails extends Component {
                             payload: event.target.value
                         })}
                 />
-                <TextField
-                    label="Start Time"
-                    className={this.props.classes.root}
-                    value={this.props.details.EventStartTime}
-                    InputLabelProps={{ shrink: this.props.details.EventStartTime }}
-                    onChange={event =>
-                        this.props.dispatch({
-                            type: "EDIT_EVENT_START_TIME",
-                            payload: event.target.value
-                        })}
-                />
-                <TextField
-                    label="End Time"
-                    className={this.props.classes.root}
-                    value={this.props.details.EventEndTime}
-                    InputLabelProps={{ shrink: this.props.details.EventEndTime }}
-                    onChange={event =>
-                        this.props.dispatch({
-                            type: "EDIT_EVENT_END_TIME",
-                            payload: event.target.value
-                        })}
-                />
+                <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                    <KeyboardDateTimePicker
+                        label="Start Time"
+                        className={this.props.classes.root}
+                        value={this.props.details.EventStartTime}
+                        InputLabelProps={{ shrink: this.props.details.EventName }}
+                        format="MM/dd/yyyy HH:mm"
+                        KeyboardButtonProps={{
+                            "aria-label": "change date"
+                        }}
+                        onChange={date =>
+                            this.props.dispatch({
+                                type: "EDIT_EVENT_START_TIME",
+                                payload: date
+                            })
+                        }
+                    />
+                    <KeyboardDateTimePicker
+                        label="End Time"
+                        className={this.props.classes.root}
+                        value={this.props.details.EventEndTime}
+                        InputLabelProps={{ shrink: this.props.details.EventName }}
+                        format="MM/dd/yyyy HH:mm"
+                        KeyboardButtonProps={{
+                            "aria-label": "change date"
+                        }}
+                        onChange={date =>
+                            this.props.dispatch({
+                                type: "EDIT_EVENT_END_TIME",
+                                payload: date
+                            })
+                        }
+                    />
+                </MuiPickersUtilsProvider>
                 <TextField
                     label="Description"
                     multiline
@@ -198,6 +234,22 @@ class EventDetails extends Component {
                             })}
                     >
                         {allTags}
+                    </Select>
+                </FormControl>
+                <hr></hr>
+                <h2>Sponsor Info</h2>
+                <FormControl>
+                    <FormHelperText className={this.props.classes.helperText}>Selected Sponsor</FormHelperText>
+                    <Select
+                        value={this.props.details.LocationName}
+                        className={this.props.classes.root}
+                        onChange={event =>
+                            this.props.dispatch({
+                                type: 'EDIT_EVENT_LOCATION',
+                                payload: event.target.value
+                            })}
+                    >
+                        {locationsInSelector}
                     </Select>
                 </FormControl>
                 <div>
