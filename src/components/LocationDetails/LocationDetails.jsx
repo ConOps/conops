@@ -18,9 +18,12 @@ const styles = ({
     }  
 });
 
-
-
 class LocationDetails extends Component {
+
+    state = {
+        LocationIsActive: true,
+    }
+
     handleBack = () => {
         this.props.history.push("/locations");
     };
@@ -32,6 +35,13 @@ class LocationDetails extends Component {
             payload: this.props.details
         });
     };
+
+    handleChange = () => {
+        this.props.dispatch({
+            type: "UPDATE_LOCATION_STATUS",
+            payload: !this.props.details.LocationIsActive
+        })
+    }
 
     render() {
         return (
@@ -68,6 +78,7 @@ class LocationDetails extends Component {
                             />}
                             label="Active"
                             labelPlacement="start"
+                            onChange={this.handleChange}
                             />
             </FormGroup>
             <hr></hr>
