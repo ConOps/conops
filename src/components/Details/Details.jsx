@@ -158,7 +158,7 @@ class Details extends Component {
             </Button>
           )}
 
-          {(this.props.user.authorization == 4 || this.props.user.authorization == 1 ) && (this.props.info.CheckInDate === null ? (
+          {(this.props.user.authorization === 4 || this.props.user.authorization === 1 ) && (this.props.info.CheckInDate === null ? (
             <Button
               variant="contained"
               color="primary"
@@ -188,7 +188,7 @@ class Details extends Component {
             </Button>
           ))}
 
-          {this.props.user.authorization == 4 && (
+          {this.props.user.authorization === 4 && (
             <Button
               variant="contained"
               color="secondary"
@@ -208,7 +208,6 @@ class Details extends Component {
             className={this.props.classes.root}
             InputLabelProps={{ shrink: this.props.info.FirstName}}
             value={this.props.info.FirstName}
-            InputLabelProps={{ shrink: this.props.info.FirstName }}
             onChange={event =>
               this.props.dispatch({
                 type: "EDIT_DETAIL_FIRST_NAME",
@@ -459,7 +458,7 @@ class Details extends Component {
         <Button variant="contained" color="primary" onClick={this.handleBack}>
           Back
         </Button>
-        {(this.props.user.authorization == 4 || this.props.user.authorization == 1)
+        {(this.props.user.authorization === 4 || this.props.user.authorization === 1)
         &&(
         <Button variant="contained" color="primary" onClick={this.handleSave}>
           Save
