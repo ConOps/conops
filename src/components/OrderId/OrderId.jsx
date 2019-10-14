@@ -52,8 +52,8 @@ class OrderID extends Component {
     return (
       <div>
         <h1 style={{ textAlign: "center" }}>Current Convention: 2DCON 2020</h1>
-        {this.props.reduxStore.user.authorization == 4 ||
-        this.props.reduxStore.user.authorization == 1 ? (
+        {this.props.reduxStore.user.authorization === 4 ||
+        this.props.reduxStore.user.authorization === 1 ? (
           <MaterialTable
             title="Editable Example"
             columns={this.state.columns}
