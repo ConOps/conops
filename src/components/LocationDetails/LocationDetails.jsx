@@ -38,7 +38,7 @@ class LocationDetails extends Component {
 
     handleChange = () => {
         this.props.dispatch({
-            type: "UPDATE_LOCATION_STATUS",
+            type: "EDIT_LOCATION_STATUS",
             payload: !this.props.details.LocationIsActive
         })
     }
