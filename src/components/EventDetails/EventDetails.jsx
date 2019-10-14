@@ -26,6 +26,9 @@ const styles = ({
     cancelledText: {
         fontWeight: 'bold',
         color: 'red'
+    },
+    topRight: {
+        marginRight: '0px'
     }
 });
 
@@ -40,6 +43,7 @@ class EventDetails extends Component {
         this.props.dispatch({
             type: 'FETCH_CONVENTION'
         });
+
         this.fetchEventDetails();
     }
 
@@ -56,7 +60,16 @@ class EventDetails extends Component {
         this.props.history.push("/events");
     };
 
-    
+    handleSave = () => {
+        console.log('clicked save!');
+
+        // alert("Event has been updated");
+        this.props.dispatch({
+            type: "UPDATE_EVENT_INFO",
+            payload: this.props.details
+        });
+    }
+
 
     render() {
 
@@ -94,20 +107,26 @@ class EventDetails extends Component {
                 {this.props.details.IsCancelled && <h3 className={this.props.classes.cancelledText}>Event is cancelled.</h3>}
                 <h1> Manage Event: {this.props.details.EventName}</h1>
                 {this.props.details.IsCancelled && <Button variant="contained" color="secondary" onClick={() => {
-                                                        this.props.dispatch({
-                                                            type: "UNCANCEL_EVENT",
-                                                            payload: this.props.details.EventID
-                                                    })}}>
-                                                    UnCancel
-                                                    </Button>}
+                    this.props.dispatch({
+                        type: "UNCANCEL_EVENT",
+                        payload: this.props.details.EventID
+                    })
+                }}>
+                    UnCancel
+                </Button>}
                 {!this.props.details.IsCancelled && <Button variant="contained" color="secondary" onClick={() => {
-                                                        this.props.dispatch({
-                                                            type: "CANCEL_EVENT",
-                                                            payload: this.props.details.EventID
-                                                     })}}>
-                                                    Cancel
-                                                    </Button>}
-
+                    this.props.dispatch({
+                        type: "CANCEL_EVENT",
+                        payload: this.props.details.EventID
+                    })
+                }}>
+                    Cancel
+                </Button>}
+                <div className={this.props.classes.topRight}>
+                    {this.props.details.DateLastModified && <h3 className={this.props.classes.cancelledText}>Event Has Been Modified!</h3>}
+                    {this.props.details.DateLastModified && <h4 className={this.props.classes.cancelledText}>{this.props.details.DateLastModified}</h4>}
+                    {this.props.details.EventModifiedNotes && <h4>{this.props.details.EventModifiedNotes}</h4>}
+                </div>
                 <hr></hr>
                 <h2>Event Details</h2>
                 <TextField
@@ -200,6 +219,38 @@ class EventDetails extends Component {
                         {allTags}
                     </Select>
                 </FormControl>
+                <hr></hr>
+                <h2>Sponsor Info</h2>
+                <FormControl>
+                    <FormHelperText className={this.props.classes.helperText}>Selected Sponsor</FormHelperText>
+                    <Select
+                        value={this.props.details.LocationName}
+                        className={this.props.classes.root}
+                        onChange={event =>
+                            this.props.dispatch({
+                                type: 'EDIT_EVENT_LOCATION',
+                                payload: event.target.value
+                            })}
+                    >
+                        {locationsInSelector}
+                    </Select>
+                </FormControl>
+                <div>
+                    <TextField
+                        label="Notes"
+                        multiline
+                        fullWidth
+                        margin="normal"
+                        className={this.props.classes.multiline}
+                        value={this.props.details.EventDescription}
+                        InputLabelProps={{ shrink: this.props.details.EventDescription }}
+                        onChange={event =>
+                            this.props.dispatch({
+                                type: "EDIT_EVENT_DESCRIPTION",
+                                payload: event.target.value
+                            })}
+                    />
+                </div>
                 <div>
                     <Button variant="contained" color="secondary" onClick={this.handleBack}>
                         Back

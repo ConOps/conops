@@ -34,6 +34,7 @@ import EventDetails from '../EventDetails/EventDetails';
 import LocationDetails from '../LocationDetails/LocationDetails';
 import RegisterPage from '../RegisterPage/RegisterPage';
 import CreateLocation from '../Locations/CreateLocation';
+import CreateEvent from '../Events/CreateEvent';
 import './App.css';
 
 class App extends Component {
@@ -155,7 +156,12 @@ class App extends Component {
               exact
               path="/locations/create"
               component={CreateLocation}
-            />       
+            />
+            <ProtectedRoute
+              exact
+              path="/events/create"
+              component={CreateEvent}
+            />          
             {/* If none of the other routes matched, we will show a 404. */}
             <Route render={() => <h1>404</h1>} />
           </Switch>
