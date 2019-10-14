@@ -1,3 +1,11 @@
+.onTop {
+    position: fixed;
+    z-index: 100000000 !important;
+}
+.under{
+    position: relative !important;
+}
+
 @import url(https://fonts.googleapis.com/css?family=Dosis:200,300,regular,500,600,700,800);
 body {
     font-family: Dosis;

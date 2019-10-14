@@ -62,43 +62,81 @@ class AdminNav extends Component {
         const { classes } = this.props;
         const { open } = this.state;
         return (
-            <div >
-
-                <div>
-                    <Button
-                        className={classes.root}
-                        buttonRef={node => {
-                            this.anchorEl = node;
-                        }}
-                        aria-owns={open ? 'menu-list-grow' : undefined}
-                        aria-haspopup="true"
-                        onClick={this.handleToggle}
-                    >
-                        Admin
-                     </Button>
-                    <Popper open={open} anchorEl={this.anchorEl} transition disablePortal>
-                        {({ TransitionProps, placement }) => (
-                            <Grow
-                                {...TransitionProps}
-                                id="menu-list-grow"
-                                style={{ transformOrigin: placement === 'bottom' ? 'center top' : 'center bottom' }}
-                            >
-                                <Paper>
-                                    <ClickAwayListener onClickAway={this.handleClose}>
-                                        <MenuList>
-                                            <MenuItem onClick={(event) => this.handleClick('tags', event)}>TAGS</MenuItem>
-                                            <MenuItem onClick={(event) => this.handleClick('conventions', event)}>CONVENTIONS</MenuItem>
-                                            <MenuItem onClick={(event) => this.handleClick('game-library', event)}>GAME LIBRARY</MenuItem>
-                                            <MenuItem onClick={(event) => this.handleClick('news', event)}>NEWS</MenuItem>
-                                            <MenuItem onClick={(event) => this.handleClick('sponsors', event)}>SPONSORS</MenuItem>
-                                        </MenuList>
-                                    </ClickAwayListener>
-                                </Paper>
-                            </Grow>
-                        )}
-                    </Popper>
-                </div>
+          <div>
+            <div>
+              <Button
+                className={classes.root}
+                buttonRef={node => {
+                  this.anchorEl = node;
+                }}
+                aria-owns={open ? "menu-list-grow" : undefined}
+                aria-haspopup="true"
+                onClick={this.handleToggle}
+              >
+                Admin
+              </Button>
+              <Popper
+                open={open}
+                anchorEl={this.anchorEl}
+                transition
+                disablePortal
+              >
+                {({ TransitionProps, placement }) => (
+                  <Grow
+                    {...TransitionProps}
+                    id="menu-list-grow"
+                    style={{
+                      transformOrigin:
+                        placement === "bottom" ? "center top" : "center bottom"
+                    }}
+                  >
+                    <Paper>
+                      <ClickAwayListener onClickAway={this.handleClose}>
+                        <MenuList className="onTop">
+                          <MenuItem
+                            className="onTop"
+                            onClick={event => this.handleClick("tags", event)}
+                          >
+                            TAGS
+                          </MenuItem>
+                          <MenuItem
+                            className="onTop"
+                            onClick={event =>
+                              this.handleClick("conventions", event)
+                            }
+                          >
+                            CONVENTIONS
+                          </MenuItem>
+                          <MenuItem
+                            className="onTop"
+                            onClick={event =>
+                              this.handleClick("game-library", event)
+                            }
+                          >
+                            GAME LIBRARY
+                          </MenuItem>
+                          <MenuItem
+                            className="onTop"
+                            onClick={event => this.handleClick("news", event)}
+                          >
+                            NEWS
+                          </MenuItem>
+                          <MenuItem
+                            className="onTop"
+                            onClick={event =>
+                              this.handleClick("sponsors", event)
+                            }
+                          >
+                            SPONSORS
+                          </MenuItem>
+                        </MenuList>
+                      </ClickAwayListener>
+                    </Paper>
+                  </Grow>
+                )}
+              </Popper>
             </div>
+          </div>
         );
     }
 }
