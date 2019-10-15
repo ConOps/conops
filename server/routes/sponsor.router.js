@@ -16,4 +16,36 @@ router.get('/', rejectUnauthenticated, (req, res) => {
         })
 })
 
+router.get('/details/:id', rejectUnauthenticated, (req, res) => {
+    const id = req.params.id
+    console.log('in sponsor details get id:', id);
+    const queryText = `SELECT * FROM "Sponsor" WHERE "SponsorID" = $1;`;
+    pool.query(queryText, [id])
+        .then(result => {
+            console.log('sponsor details:', result.rows[0]);
+            res.send(result.rows[0]);
+        })
+        .catch(error => {
+            console.log('error in sponsor details router:', error)
+            res.sendStatus(500);
+        })
+});
+
+router.put('/details/:id', rejectUnauthenticated, async (req, res) => {
+    const connection = await pool.connect();
+    try {
+        await connection.query('BEGIN');
+        const id = req.params.id;
+        const sponsor = req.body;
+        console.log('in sponsor put route:', sponsor)
+        const queryText = `UPDATE "Sponsor" SET "SponsorName" = $1, "AmountPaid" = $2, "Website" = $3, "Notes" = $4, "SponsorIsActive" = $5 WHERE "SponsorID" = $6`
+        await connection.query(queryText, [sponsor.SponsorName, sponsor.AmountPaid, sponsor.Website, sponsor.Notes, sponsor.SponsorIsActive,  id]);
+        await connection.query('COMMIT');
+    } catch {
+        res.sendStatus(500);
+    } finally {
+        connection.release
+    }
+})
+
 module.exports = router;

@@ -14,6 +14,7 @@ import locationDetailsSaga from './locationDetailsSaga';
 
 import TagsSaga from './TagsSaga';
 import sponsorSaga from './sponsorSaga';
+import sponsorDetailsSaga from './sponsorDetailsSaga';
 
 // rootSaga is the primary saga.
 // It bundles up all of the other sagas so our project can use them.
@@ -38,5 +39,6 @@ export default function* rootSaga() {
     locationDetailsSaga(),
     TagsSaga(),
     sponsorSaga(),
+    sponsorDetailsSaga(),
   ]);
 }
