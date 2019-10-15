@@ -49,6 +49,9 @@ class EventDetails extends Component {
         this.props.dispatch({
             type: 'FETCH_CONVENTION'
         });
+        this.props.dispatch({ 
+            type: 'FETCH_SPONSORS' 
+        });
 
         this.fetchEventDetails();
     }
@@ -82,18 +85,16 @@ class EventDetails extends Component {
 
         let locationsInSelector = this.props.locations.map((location) => {
             return (
-                <MenuItem value={location.LocationName} key={location.LocationID}>{location.LocationName}</MenuItem>
+                <MenuItem value={location.LocationID} key={location.LocationID}>{location.LocationName}</MenuItem>
             )
         });
 
-        let eventTags = this.props.details.Tags.map((tag) => {
+        let eventTags = this.props.details.TagIDs.map((tag) => {
             return (
                 <Grid item key={tag}>
                     <Chip
                         key={tag}
                         label={tag}
-                        // onDelete={() => this.handleTagDelete(tag.id)}
-                        // onClick={() => this.handleTagClick(tag)}
                         className={this.props.classes.chip}
                         color="primary"
                     />
@@ -103,7 +104,13 @@ class EventDetails extends Component {
 
         let allTags = this.props.tags.map((tag) => {
             return (
-                <MenuItem value={tag.TagName} key={tag.TagID}>{tag.TagName}</MenuItem>
+                <MenuItem value={tag.TagID} key={tag.TagID}>{tag.TagName}</MenuItem>
+            )
+        })
+
+        let sponsorSelector = this.props.sponsors.map((sponsor) => {
+            return (
+                <MenuItem value={sponsor.SponsorID} key={sponsor.SponsorID}>{sponsor.SponsorName}</MenuItem>
             )
         })
 
@@ -200,7 +207,7 @@ class EventDetails extends Component {
                 <FormControl>
                     <FormHelperText className={this.props.classes.helperText}>Location</FormHelperText>
                     <Select
-                        value={this.props.details.LocationName}
+                        value={this.props.details.LocationID}
                         className={this.props.classes.root}
                         onChange={event =>
                             this.props.dispatch({
@@ -243,15 +250,15 @@ class EventDetails extends Component {
                 <FormControl>
                     <FormHelperText className={this.props.classes.helperText}>Selected Sponsor</FormHelperText>
                     <Select
-                        value={this.props.details.LocationName}
+                        value={this.props.details.SponsorID}
                         className={this.props.classes.root}
                         onChange={event =>
                             this.props.dispatch({
-                                type: 'EDIT_EVENT_LOCATION',
+                                type: 'EDIT_EVENT_SPONSOR',
                                 payload: event.target.value
                             })}
                     >
-                        {locationsInSelector}
+                        {sponsorSelector}
                     </Select>
                 </FormControl>
                 <div>
@@ -272,7 +279,9 @@ const mapStateToProps = reduxStore => {
         details: reduxStore.eventDetailsReducer,
         locations: reduxStore.LocationReducer,
         tags: reduxStore.TagsReducer,
+        
         convention: reduxStore.ConventionsReducer,
+        sponsors: reduxStore.sponsorReducer
     };
 };
 
