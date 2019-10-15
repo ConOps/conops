@@ -4,6 +4,7 @@ import { withStyles } from '@material-ui/core/styles';
 import MaterialTable from "material-table";
 import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
+import moment from 'moment';
 
 
 const styles = ({
@@ -28,8 +29,8 @@ class Events extends Component {
             { title: "EventID", field: "EventID", hidden: true },
             { title: "ConventionID", field: "ConventionID", hidden: true },
             { title: "Event", field: "EventName", hidden: false },
-            { title: "Start Time", field: "EventStartTime", hidden: false },
-            { title: "End Time", field: "EventEndTime", hidden: false },
+            { title: "Start Time", field: "EventStartTime", hidden: false, render: (rowData) => <p>{moment(rowData.EventStartTime).format('llll')}</p> },
+            { title: "End Time", field: "EventEndTime", hidden: false, render: (rowData) => <p>{moment(rowData.EventEndTime).format('llll')}</p> },
             { title: "Description", field: "EventDescription", hidden: false },
             { title: "Location", field: "LocationName", hidden: false },
             { title: "Location Description", field: "LocationDescription", hidden: true },
@@ -49,6 +50,7 @@ class Events extends Component {
 
     render() {
         return (
+
           <div>
             <h1>Events</h1>
             {(this.props.reduxStore.user.authorization === 4 ||

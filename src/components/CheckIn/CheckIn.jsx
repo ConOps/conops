@@ -2,6 +2,9 @@ import React, { Component } from "react";
 import MaterialTable from "material-table";
 import { connect } from "react-redux";
 import Button from "@material-ui/core/Button";
+
+import moment from "moment";
+
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
@@ -26,7 +29,7 @@ class CheckIn extends Component {
       { title: "Middle Name", field: "MiddleName" },
       { title: "Email Address", field: "EmailAddress" },
       { title: "Phone Number", field: "PhoneNumber" },
-      { title: "Date Of Birth", field: "DateOfBirth" },
+      { title: "Date Of Birth", field: "DateOfBirth", render: (rowData) => <p>{moment(rowData.DateOfBirth).format('MM-DD-YYYY')}</p> },
       { title: "Registration Date", field: "RegistrationDate", hidden: true },
       { title: "Check-In date", field: "CheckInDate", hidden: true },
       { title: "Payment Date", field: "PaymentDate", hidden: true },
