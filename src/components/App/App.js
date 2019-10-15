@@ -21,7 +21,8 @@ import PreRegister from '../PreRegister/PreRegister';
 import Events from '../Events/Events';
 import Locations from '../Locations/Locations';
 
-import SponsorDetails from '../Sponsors/SponsorDetails'
+import SponsorDetails from '../Sponsors/SponsorDetails';
+import CreateSponsor from  '../Sponsors/CreateSponsor';
 
 import Tags from '../Tags/Tags';
 import EditTag from '../Tags/EditTag';
@@ -168,7 +169,12 @@ class App extends Component {
               exact
               path="/sponsor/details/:id"
               component={SponsorDetails}  
-            />      
+            />     
+            <ProtectedRoute
+              exact
+              path="/sponsors/create"
+              component={CreateSponsor}
+            /> 
             {/* If none of the other routes matched, we will show a 404. */}
             <Route render={() => <h1>404</h1>} />
           </Switch>

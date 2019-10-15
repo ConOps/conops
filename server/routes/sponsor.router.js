@@ -31,6 +31,20 @@ router.get('/details/:id', rejectUnauthenticated, (req, res) => {
         })
 });
 
+router.post('/', rejectUnauthenticated, (req, res) => {
+    const sponsor = req.body;
+    console.log('creates new sponsor:', sponsor);
+    let queryText = `INSERT INTO "Sponsor" ("SponsorName", "AmountPaid", "Website", "Notes") VALUES ($1, $2, $3, $4);`;
+    pool.query(queryText, [sponsor.SponsorName, sponsor.AmountPaid, sponsor.Website, sponsor.Notes])
+        .then(result => {
+            res.sendStatus(201);
+        })
+        .catch(error => {
+            console.log('error in creating new sponsor router:', error)
+            res.sendStatus(500);
+        })
+});
+
 router.put('/details/:id', rejectUnauthenticated, async (req, res) => {
     const connection = await pool.connect();
     try {
