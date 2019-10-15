@@ -2,7 +2,14 @@ import React, { Component } from "react";
 import MaterialTable from "material-table";
 import { connect } from "react-redux";
 import Button from "@material-ui/core/Button";
+import { createMuiTheme } from '@material-ui/core/styles';
+import { ThemeProvider } from '@material-ui/styles';
 
+const theme = createMuiTheme({
+  palette: {
+    primary: { main: "#19375f" }
+  }
+}); 
 
 
 class Tags extends Component {
@@ -35,6 +42,7 @@ class Tags extends Component {
             <div style={{ textAlign: "right", marginRight: "2%" }}>
              
             {this.props.reduxStore.user.authorization === 4 && (
+                <ThemeProvider theme={theme}>
               <Button
                 variant="contained"
                 color="primary"
@@ -42,6 +50,7 @@ class Tags extends Component {
               >
                 Create New Tag
               </Button>
+                </ThemeProvider>
             )}           
             </div>
             {this.props.reduxStore.user.authorization === 4 ? (
