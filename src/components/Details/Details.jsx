@@ -42,6 +42,8 @@ class Details extends Component {
     openDelete: false,
     openCheckIn: false,
     openPaid: false,
+    openCheckOutWalkIn: false,
+    openCheckOut: false,
     id: {},
   };
 
@@ -62,12 +64,17 @@ class Details extends Component {
   };
 
 
- 
-
   handleCloseCheckIn = () => {
     this.setState({ openCheckIn: false });
   };
 
+  handleCloseCheckOutWalkIn = () => {
+    this.setState({ openCheckOutWalkIn: false });
+  };
+
+  handleCloseCheckOut = () => {
+    this.setState({ openCheckOut: false });
+  };
 
   deleteAttendee = () => {
     this.props.dispatch({
@@ -91,6 +98,22 @@ class Details extends Component {
            payload: [this.state.id]
          });
     this.handleCloseCheckIn();
+  }
+
+  checkOutWalkIn = () => {
+    this.props.dispatch({
+      type: "CHECK_OUT_WALK_IN",
+      payload: this.state.id
+    });
+    this.handleCloseCheckOutWalkIn();
+  }
+
+  checkOut = () => {
+    this.props.dispatch({
+      type: "CHECK_OUT",
+      payload: this.state.id
+    });
+    this.handleCloseCheckOut();
   }
 
   fetchAttendeeInformation = () => {
@@ -172,29 +195,40 @@ class Details extends Component {
   };
 
   handleCheckOut = (id, order) => {
-    if (order == null) {
-      if (
-        window.confirm("Are you sure that you want to check this person OUT?")
-      ) {
-        this.props.dispatch({
-          type: "CHECK_OUT_WALK_IN",
-          payload: id
-        });
-      } else {
-        return false;
-      }
+    if(order == null){
+      this.setState({
+        openCheckOutWalkIn: !this.state.openCheckOutWalkIn,
+        ...this.state.id, id: id
+      })
     } else {
-      if (
-        window.confirm("Are you sure that you want to check this person OUT?")
-      ) {
-        this.props.dispatch({
-          type: "CHECK_OUT",
-          payload: id
-        });
-      } else {
-        return false;
-      }
+      this.setState({
+        openCheckOut: !this.state.openCheckOut,
+        ...this.state.id, id: id
+      })
     }
+    // if (order == null) {
+    //   if (
+    //     window.confirm("Are you sure that you want to check this person OUT?")
+    //   ) {
+    //     this.props.dispatch({
+    //       type: "CHECK_OUT_WALK_IN",
+    //       payload: id
+    //     });
+    //   } else {
+    //     return false;
+    //   }
+    // } else {
+    //   if (
+    //     window.confirm("Are you sure that you want to check this person OUT?")
+    //   ) {
+    //     this.props.dispatch({
+    //       type: "CHECK_OUT",
+    //       payload: id
+    //     });
+    //   } else {
+    //     return false;
+    //   }
+    // }
   };
 
   handleSave = () => {
@@ -279,6 +313,56 @@ class Details extends Component {
           </Button>
           </DialogActions>
         </Dialog>
+
+        <Dialog
+          open={this.state.openCheckOutWalkIn}
+          onClose={this.handleCloseCheckOutWalkIn}
+          PaperComponent={PaperComponent}
+          aria-labelledby="draggable-dialog-title"
+        >
+          <DialogTitle style={{ cursor: 'move' }} id="draggable-dialog-title">
+            Check-Out Attendee?
+        </DialogTitle>
+          <DialogContent>
+            <DialogContentText>
+              Are you sure that you want to check this person OUT?
+          </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={this.handleCloseCheckOutWalkIn} color="primary">
+              Cancel
+          </Button>
+            <Button onClick={this.checkOutWalkIn} color="primary">
+              Confirm
+          </Button>
+          </DialogActions>
+        </Dialog>
+
+
+        <Dialog
+          open={this.state.openCheckOut}
+          onClose={this.handleCloseCheckOut}
+          PaperComponent={PaperComponent}
+          aria-labelledby="draggable-dialog-title"
+        >
+          <DialogTitle style={{ cursor: 'move' }} id="draggable-dialog-title">
+            Check-Out Attendee?
+        </DialogTitle>
+          <DialogContent>
+            <DialogContentText>
+              Are you sure that you want to check this person OUT?
+          </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={this.handleCloseCheckOut} color="primary">
+              Cancel
+          </Button>
+            <Button onClick={this.checkOut} color="primary">
+              Confirm
+          </Button>
+          </DialogActions>
+        </Dialog>
+
         <div>
           <h1> Manage Attendee: {this.props.info.FirstName}</h1>
           {/* needs to render the name of the attendee */}
