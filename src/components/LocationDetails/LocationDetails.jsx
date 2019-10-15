@@ -19,9 +19,32 @@ const styles = ({
 });
 
 class LocationDetails extends Component {
+    componentDidMount() {
+      this.fetchLocationDetails();
+    }
+
+    fetchLocationDetails = () => {
+      let id = this.props.match.params.id;
+      this.props.dispatch({
+        type: 'FETCH_LOCATION_DETAILS',
+        payload: id
+      });
+    }
 
     state = {
         LocationIsActive: true,
+    }
+
+    componentDidMount () {
+      this.fetchLocationDetails();
+    }
+
+    fetchLocationDetails = () => {
+      let id = this.props.match.params.id;
+      this.props.dispatch({
+        type: "FETCH_LOCATION_DETAILS",
+        payload: id
+      });
     }
 
     handleBack = () => {
@@ -50,6 +73,7 @@ class LocationDetails extends Component {
             <h1>Manage Location: {this.props.details.LocationName}</h1>
             <TextField
               label="Name"
+              InputLabelProps={{ shrink: this.props.details.LocationName }}
               className={this.props.classes.root}
               value={this.props.details.LocationName}
               onChange={event =>
@@ -61,6 +85,7 @@ class LocationDetails extends Component {
             ></TextField>
             <TextField
               label="Description"
+              InputLabelProps={{ shrink: this.props.details.LocationDescription }}
               className={this.props.classes.root}
               value={this.props.details.LocationDescription}
               onChange={event =>

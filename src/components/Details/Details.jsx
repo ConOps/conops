@@ -22,6 +22,12 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import Paper from '@material-ui/core/Paper';
 import Draggable from 'react-draggable';
 
+
+
+
+
+
+
 const styles = {
   root: {
     margin: "15px"
@@ -44,6 +50,7 @@ class Details extends Component {
     openPaid: false,
     openCheckOutWalkIn: false,
     openCheckOut: false,
+    openSave: false,
     id: {},
   };
 
@@ -74,6 +81,10 @@ class Details extends Component {
 
   handleCloseCheckOut = () => {
     this.setState({ openCheckOut: false });
+  };
+
+  handleCloseSave = () => {
+    this.setState({ openSave: false });
   };
 
   deleteAttendee = () => {
@@ -114,6 +125,14 @@ class Details extends Component {
       payload: this.state.id
     });
     this.handleCloseCheckOut();
+  }
+
+  save = () => {
+    this.props.dispatch({
+      type: "UPDATE_ATTENDEE_INFO",
+      payload: this.props.info
+    });
+    this.handleCloseSave();
   }
 
   fetchAttendeeInformation = () => {
@@ -232,11 +251,15 @@ class Details extends Component {
   };
 
   handleSave = () => {
-    alert("Info has been updated");
-    this.props.dispatch({
-      type: "UPDATE_ATTENDEE_INFO",
-      payload: this.props.info
-    });
+    this.setState({
+      openSave: !this.state.openSave,
+      ...this.state.info, info: this.props.info
+    })
+    // alert("Info has been updated");
+    // this.props.dispatch({
+    //   type: "UPDATE_ATTENDEE_INFO",
+    //   payload: this.props.info
+    // });
   };
 
   render() {
@@ -248,19 +271,19 @@ class Details extends Component {
           PaperComponent={PaperComponent}
           aria-labelledby="draggable-dialog-title"
         >
-          <DialogTitle style={{ cursor: 'move' }} id="draggable-dialog-title">
+          <DialogTitle style={{ cursor: 'move', color: 'white' }} id="draggable-dialog-title" className="Dialog">
             Delete Attendee?
         </DialogTitle>
           <DialogContent>
-            <DialogContentText>
+            <DialogContentText style={{ color: 'black' }}>
               Are you sure that you would like to delete this attendee?
           </DialogContentText>
           </DialogContent>
           <DialogActions>
-            <Button onClick={this.handleCloseDelete} color="primary">
+            <Button onClick={this.handleCloseDelete} variant="contained" color="secondary">
               Cancel
           </Button>
-            <Button onClick={this.deleteAttendee} color="primary">
+            <Button onClick={this.deleteAttendee} variant="contained" color="inherit">
               Confirm
           </Button>
           </DialogActions>
@@ -272,19 +295,19 @@ class Details extends Component {
           PaperComponent={PaperComponent}
           aria-labelledby="draggable-dialog-title"
         >
-          <DialogTitle style={{ cursor: 'move' }} id="draggable-dialog-title">
+          <DialogTitle style={{ cursor: 'move', color: 'white' }} id="draggable-dialog-title" className="Dialog">
             Has Attendee Paid?
         </DialogTitle>
           <DialogContent>
-            <DialogContentText>
+            <DialogContentText style={{ color: 'black' }}>
               This person must submit payment to be checked into the convention!
           </DialogContentText>
           </DialogContent>
           <DialogActions>
-            <Button onClick={this.handleClosePaid} color="primary">
+            <Button onClick={this.handleClosePaid} variant="contained" color="secondary">
               Cancel
           </Button>
-            <Button onClick={this.handlePaid} color="primary">
+            <Button onClick={this.handlePaid} variant="contained" color="inherit">
               Confirm
           </Button>
           </DialogActions>
@@ -296,19 +319,19 @@ class Details extends Component {
           PaperComponent={PaperComponent}
           aria-labelledby="draggable-dialog-title"
         >
-          <DialogTitle style={{ cursor: 'move' }} id="draggable-dialog-title">
+          <DialogTitle style={{ cursor: 'move', color: 'white' }} id="draggable-dialog-title" className="Dialog">
             Check-In Attendee?
         </DialogTitle>
           <DialogContent>
-            <DialogContentText>
+            <DialogContentText style={{ color: 'black' }}>
               Are you sure that you would like to check-in this attendee?
           </DialogContentText>
           </DialogContent>
           <DialogActions>
-            <Button onClick={this.handleCloseCheckIn} color="primary">
+            <Button onClick={this.handleCloseCheckIn} variant="contained" color="secondary">
               Cancel
           </Button>
-            <Button onClick={this.checkIn} color="primary">
+            <Button onClick={this.checkIn} variant="contained" color="inherit">
               Confirm
           </Button>
           </DialogActions>
@@ -320,19 +343,19 @@ class Details extends Component {
           PaperComponent={PaperComponent}
           aria-labelledby="draggable-dialog-title"
         >
-          <DialogTitle style={{ cursor: 'move' }} id="draggable-dialog-title">
+          <DialogTitle style={{ cursor: 'move', color: 'white' }}  id="draggable-dialog-title" className="Dialog">
             Check-Out Attendee?
         </DialogTitle>
           <DialogContent>
-            <DialogContentText>
+            <DialogContentText style={{ color: 'black' }}>
               Are you sure that you want to check this person OUT?
           </DialogContentText>
           </DialogContent>
           <DialogActions>
-            <Button onClick={this.handleCloseCheckOutWalkIn} color="primary">
+            <Button onClick={this.handleCloseCheckOutWalkIn} variant="contained" color="secondary">
               Cancel
           </Button>
-            <Button onClick={this.checkOutWalkIn} color="primary">
+            <Button onClick={this.checkOutWalkIn} variant="contained" color="inherit">
               Confirm
           </Button>
           </DialogActions>
@@ -345,19 +368,43 @@ class Details extends Component {
           PaperComponent={PaperComponent}
           aria-labelledby="draggable-dialog-title"
         >
-          <DialogTitle style={{ cursor: 'move' }} id="draggable-dialog-title">
+          <DialogTitle style={{ cursor: 'move', color: 'white' }}  id="draggable-dialog-title" className="Dialog">
             Check-Out Attendee?
         </DialogTitle>
           <DialogContent>
-            <DialogContentText>
+            <DialogContentText style={{ color: 'black' }}>
               Are you sure that you want to check this person OUT?
           </DialogContentText>
           </DialogContent>
           <DialogActions>
-            <Button onClick={this.handleCloseCheckOut} color="primary">
+            <Button onClick={this.handleCloseCheckOut} variant="contained" color="secondary">
               Cancel
           </Button>
-            <Button onClick={this.checkOut} color="primary">
+            <Button onClick={this.checkOut} variant="contained" color="inherit">
+              Confirm
+          </Button>
+          </DialogActions>
+        </Dialog>
+
+        <Dialog
+          open={this.state.openSave}
+          onClose={this.handleCloseSave}
+          PaperComponent={PaperComponent}
+          aria-labelledby="draggable-dialog-title"
+        >
+          <DialogTitle style={{ cursor: 'move', color: 'white' }}  id="draggable-dialog-title" className="Dialog">
+            Edit Attendee?
+        </DialogTitle>
+          <DialogContent>
+            <DialogContentText style={{ color: 'black' }}>
+              Info has been updated?
+          </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={this.handleCloseSave} variant="contained" color="secondary">
+              Cancel
+          </Button>
+            <Button onClick={this.save} variant="contained" color="inherit">
               Confirm
           </Button>
           </DialogActions>

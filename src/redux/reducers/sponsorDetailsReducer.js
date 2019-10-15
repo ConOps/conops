@@ -12,6 +12,14 @@ const sponsorDetailsReducer = (state = { SponsorIsActive: true }, action) => {
             return { ...state, Notes: action.payload };
         case 'EDIT_SPONSOR_STATUS':
             return { ...state, SponsorIsActive: action.payload };
+        case 'CREATE_SPONSOR_NAME':
+            return { ...state, SponsorName: action.payload };
+        case 'CREATE_SPONSOR_AMOUNT_PAID':
+            return { ...state, AmountPaid: action.payload };
+        case 'CREATE_SPONSOR_WEBSITE':
+            return { ...state, Website: action.payload };
+        case 'CREATE_SPONSOR_NOTES':
+            return { ...state, Notes: action.payload };
         default:
             return state;
     }
