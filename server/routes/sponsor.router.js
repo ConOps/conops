@@ -34,7 +34,7 @@ router.get('/details/:id', rejectUnauthenticated, (req, res) => {
 router.post('/', rejectUnauthenticated, (req, res) => {
     const sponsor = req.body;
     console.log('creates new sponsor:', sponsor);
-    let queryText = `INSERT INTO "Sponsor" ("SponsorName", "AmountPaid", "Website", "Notes") VALUES ($1, $2, $3, $4);`;
+    let queryText = `INSERT INTO "Sponsor" ("SponsorName", "AmountPaid", "Website", "Notes", "SponsorIsActive") VALUES ($1, $2, $3, $4, 'TRUE');`;
     pool.query(queryText, [sponsor.SponsorName, sponsor.AmountPaid, sponsor.Website, sponsor.Notes])
         .then(result => {
             res.sendStatus(201);
