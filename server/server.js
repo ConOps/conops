@@ -37,7 +37,7 @@ app.use('/api/event', eventRouter);
 app.use('/api/location', locationRouter);
 app.use('/api/tag', tagRouter);
 app.use('/api/sponsor', sponsorRouter);
-app.user('/api/home', homeRouter);
+app.use('/api/home', homeRouter);
 
 // Serve static files
 app.use(express.static('build'));

@@ -1,4 +1,4 @@
-const homePageReducer = (state = [], action) => {
+const homePageReducer = (state = {}, action) => {
 
     switch (action.type) {
         case 'SET_NEWS':
