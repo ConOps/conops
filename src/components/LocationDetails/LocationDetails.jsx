@@ -52,17 +52,6 @@ class LocationDetails extends Component {
         details: {},
     }
 
-    componentDidMount () {
-      this.fetchLocationDetails();
-    }
-
-    fetchLocationDetails = () => {
-      let id = this.props.match.params.id;
-      this.props.dispatch({
-        type: "FETCH_LOCATION_DETAILS",
-        payload: id
-      });
-    }
 
   handleCloseSave = () => {
     this.setState({ openSave: false });
