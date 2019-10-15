@@ -85,11 +85,6 @@ class LocationDetails extends Component {
         openSave: !this.state.openSave,
         ...this.state.details, details: this.props.details
       })
-        // alert("Info has been updated");
-        // this.props.dispatch({
-        //     type: "UPDATE_LOCATION_DETAILS",
-        //     payload: this.props.details
-        // });
     };
 
     handleChange = () => {
