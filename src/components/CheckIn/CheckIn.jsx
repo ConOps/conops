@@ -96,19 +96,19 @@ class CheckIn extends Component {
           PaperComponent={PaperComponent}
           aria-labelledby="draggable-dialog-title"
         >
-          <DialogTitle style={{ cursor: 'move' }} id="draggable-dialog-title">
+          <DialogTitle style={{ cursor: 'move', color: 'white' }} id="draggable-dialog-title" className="Dialog">
             Payment Check
         </DialogTitle>
-          <DialogContent>
-            <DialogContentText>
+          <DialogContent >
+            <DialogContentText style={{color: 'black'}} >
               This person must submit payment to be checked into the convention!
           </DialogContentText>
           </DialogContent>
-          <DialogActions>
-            <Button onClick={this.handleClose} color="primary">
+          <DialogActions >
+            <Button onClick={this.handleClose} variant="contained" color="secondary">
               Cancel
           </Button>
-            <Button onClick={this.paymentCheckInPrompt} color="primary">
+            <Button onClick={this.paymentCheckInPrompt} variant="contained" color="inherit">
               Confirm
           </Button>
           </DialogActions>
@@ -121,19 +121,19 @@ class CheckIn extends Component {
           PaperComponent={PaperComponent}
           aria-labelledby="draggable-dialog-title"
         >
-          <DialogTitle style={{ cursor: 'move' }} id="draggable-dialog-title">
+          <DialogTitle style={{ cursor: 'move', color: 'white' }} id="draggable-dialog-title" className="Dialog">
             Check-In
         </DialogTitle>
           <DialogContent>
-            <DialogContentText>
+            <DialogContentText style={{ color: 'black' }}>
               Are you sure that you would like to check this person in?
           </DialogContentText>
           </DialogContent>
           <DialogActions>
-            <Button onClick={this.handleClosePaid} color="primary">
+            <Button onClick={this.handleClosePaid} variant="contained" color="secondary">
               Cancel
           </Button>
-            <Button onClick={this.checkInPrompt} color="primary">
+            <Button onClick={this.checkInPrompt} variant="contained" color="inherit">
               Confirm
           </Button>
           </DialogActions>
