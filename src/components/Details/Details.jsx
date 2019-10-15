@@ -43,6 +43,7 @@ class Details extends Component {
     openCheckIn: false,
     openPaid: false,
     openCheckOutWalkIn: false,
+    openCheckOut: false,
     id: {},
   };
 
@@ -69,6 +70,10 @@ class Details extends Component {
 
   handleCloseCheckOutWalkIn = () => {
     this.setState({ openCheckOutWalkIn: false });
+  };
+
+  handleCloseCheckOut = () => {
+    this.setState({ openCheckOut: false });
   };
 
   deleteAttendee = () => {
@@ -101,6 +106,14 @@ class Details extends Component {
       payload: this.state.id
     });
     this.handleCloseCheckOutWalkIn();
+  }
+
+  checkOut = () => {
+    this.props.dispatch({
+      type: "CHECK_OUT",
+      payload: this.state.id
+    });
+    this.handleCloseCheckOut();
   }
 
   fetchAttendeeInformation = () => {
@@ -185,6 +198,11 @@ class Details extends Component {
     if(order == null){
       this.setState({
         openCheckOutWalkIn: !this.state.openCheckOutWalkIn,
+        ...this.state.id, id: id
+      })
+    } else {
+      this.setState({
+        openCheckOut: !this.state.openCheckOut,
         ...this.state.id, id: id
       })
     }
@@ -315,6 +333,31 @@ class Details extends Component {
               Cancel
           </Button>
             <Button onClick={this.checkOutWalkIn} color="primary">
+              Confirm
+          </Button>
+          </DialogActions>
+        </Dialog>
+
+
+        <Dialog
+          open={this.state.openCheckOut}
+          onClose={this.handleCloseCheckOut}
+          PaperComponent={PaperComponent}
+          aria-labelledby="draggable-dialog-title"
+        >
+          <DialogTitle style={{ cursor: 'move' }} id="draggable-dialog-title">
+            Check-Out Attendee?
+        </DialogTitle>
+          <DialogContent>
+            <DialogContentText>
+              Are you sure that you want to check this person OUT?
+          </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={this.handleCloseCheckOut} color="primary">
+              Cancel
+          </Button>
+            <Button onClick={this.checkOut} color="primary">
               Confirm
           </Button>
           </DialogActions>
