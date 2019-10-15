@@ -38,7 +38,7 @@ router.get('/details/:id', rejectUnauthenticated, (req, res) => {
 router.post('/', rejectUnauthenticated, rejectNonAdmin, (req, res) => {
     const location = req.body;
     console.log('creates new location:', location);
-    let queryText = `INSERT INTO "Location" ("LocationName", "LocationDescription") VALUES ($1, $2);`;
+    let queryText = `INSERT INTO "Location" ("LocationName", "LocationDescription", "LocationIsActive") VALUES ($1, $2, 'TRUE');`;
     pool.query(queryText, [location.LocationName, location.LocationDescription])
     .then(result => {
         res.sendStatus(201);
