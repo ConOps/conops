@@ -9,6 +9,14 @@ import {
 } from "@material-ui/pickers";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
+import { createMuiTheme } from '@material-ui/core/styles';
+import { ThemeProvider } from '@material-ui/styles';
+
+const theme = createMuiTheme({
+  palette: {
+    primary: { main: "#19375f" }
+  }
+}); 
 
 class Conventions extends Component {
   state = {};
@@ -76,7 +84,7 @@ class Conventions extends Component {
 
   render() {
     return (
-      <div>
+      <div style={{ marginTop: '65px' }}>
         <h1>The Active Convention is: </h1>
         <hr></hr>
         <h3>Create New Convention:</h3>
@@ -119,7 +127,9 @@ class Conventions extends Component {
           </Grid>
         </MuiPickersUtilsProvider>
         {this.props.user.authorization === 4 && (
-          <Button onClick={this.newConvention}>Set New Convention</Button>
+          <ThemeProvider theme={theme}>
+          <Button onClick={this.newConvention} variant="contained" color="primary">Set New Convention</Button>
+          </ThemeProvider>
         )}
         <hr></hr>
         <h3>Edit Convention:</h3>
@@ -163,7 +173,7 @@ class Conventions extends Component {
           </Grid>
         </MuiPickersUtilsProvider>
         {this.props.user.authorization === 4 && (
-          <Button onClick={this.editConvention}>Edit This Convention</Button>
+          <Button onClick={this.editConvention} variant="contained" color="primary">Edit This Convention</Button>
         )}
       </div>
     );
