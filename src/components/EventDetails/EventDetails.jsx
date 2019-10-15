@@ -74,6 +74,7 @@ class EventDetails extends Component {
             type: "UPDATE_EVENT_INFO",
             payload: this.props.details
         });
+        this.props.history.push("/events");
     }
 
 
@@ -130,7 +131,7 @@ class EventDetails extends Component {
                 </Button>}
                 <div className={this.props.classes.topRight}>
                     {this.props.details.DateLastModified && <h3 className={this.props.classes.cancelledText}>Event Has Been Modified!</h3>}
-                    {this.props.details.DateLastModified && <h4 className={this.props.classes.cancelledText}>{this.props.details.DateLastModified}</h4>}
+                    {this.props.details.DateLastModified && <h4 className={this.props.classes.cancelledText}>{moment(this.props.details.DateLastModified).format('LLLL')}</h4>}
                     {this.props.details.EventModifiedNotes && <h4>{this.props.details.EventModifiedNotes}</h4>}
                 </div>  
                 <hr></hr>
@@ -152,7 +153,7 @@ class EventDetails extends Component {
                         className={this.props.classes.root}
                         value={this.props.details.EventStartTime}
                         InputLabelProps={{ shrink: this.props.details.EventName }}
-                        format="MM/dd/yyyy HH:mm"
+                        format="MM/dd/yyyy h:mm a"
                         KeyboardButtonProps={{
                             "aria-label": "change date"
                         }}
@@ -168,7 +169,7 @@ class EventDetails extends Component {
                         className={this.props.classes.root}
                         value={this.props.details.EventEndTime}
                         InputLabelProps={{ shrink: this.props.details.EventName }}
-                        format="MM/dd/yyyy HH:mm"
+                        format="MM/dd/yyyy h:mm a"
                         KeyboardButtonProps={{
                             "aria-label": "change date"
                         }}

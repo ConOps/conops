@@ -1,6 +1,7 @@
 const eventDetailsReducer = (state = {Tags: [], LocationName: '', EventName: '', EventStartTime: '', EventEndTime: '', }, action) => {
     switch (action.type) {
         case 'SET_EVENT_DETAILS':
+            
             return action.payload;
         case 'EDIT_EVENT_NAME':
             return { ...state, EventName: action.payload}
