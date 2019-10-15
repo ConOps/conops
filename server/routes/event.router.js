@@ -119,17 +119,7 @@ router.put('/event_update', rejectUnauthenticated, rejectNonEventOrganizer, asyn
     } finally {
         connection.release();
     }
-    // const eventUpdate = req.body;
-    // const queryText = `UPDATE "Event"
-    //                     SET "EventName" = $1, "EventDescription" = $2, "EventStartTime" = $3, "EventEndTime" = $4, "DateLastModified" = $5, "EventModifiedNotes" = $6
-    //                     WHERE "EventID" = $7;`;
-    // pool.query(queryText, [eventUpdate.EventName, eventUpdate.EventDescription, eventUpdate.EventStartTime, eventUpdate.EventEndTime, eventUpdate.EventModifiedNotes, eventUpdate.EventID])
-    //     .then(result => {
-    //         res.sendStatus(200);
-    //     }).catch(error => {
-    //         console.log('error in event update PUT', error);
-    //         res.sendStatus(500);
-    //     })
+    
 })
 
 

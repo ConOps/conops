@@ -49,6 +49,7 @@ class EventDetails extends Component {
         this.props.dispatch({
             type: 'FETCH_CONVENTION'
         });
+        this.props.dispatch({ type: 'FETCH_SPONSORS' })
 
         this.fetchEventDetails();
     }
@@ -92,8 +93,6 @@ class EventDetails extends Component {
                     <Chip
                         key={tag}
                         label={tag}
-                        // onDelete={() => this.handleTagDelete(tag.id)}
-                        // onClick={() => this.handleTagClick(tag)}
                         className={this.props.classes.chip}
                         color="primary"
                     />
@@ -104,6 +103,12 @@ class EventDetails extends Component {
         let allTags = this.props.tags.map((tag) => {
             return (
                 <MenuItem value={tag.TagName} key={tag.TagID}>{tag.TagName}</MenuItem>
+            )
+        })
+
+        let sponsorSelector = this.props.sponsors.map((sponsor) => {
+            return (
+                <MenuItem value={sponsor.SponsorName} key={sponsor.SponsorID}>{sponsor.SponsorName}</MenuItem>
             )
         })
 
@@ -243,15 +248,15 @@ class EventDetails extends Component {
                 <FormControl>
                     <FormHelperText className={this.props.classes.helperText}>Selected Sponsor</FormHelperText>
                     <Select
-                        value={this.props.details.LocationName}
+                        value={this.props.details.SponsorName}
                         className={this.props.classes.root}
                         onChange={event =>
                             this.props.dispatch({
-                                type: 'EDIT_EVENT_LOCATION',
+                                type: 'EDIT_EVENT_SPONSOR',
                                 payload: event.target.value
                             })}
                     >
-                        {locationsInSelector}
+                        {sponsorSelector}
                     </Select>
                 </FormControl>
                 <div>
@@ -273,6 +278,7 @@ const mapStateToProps = reduxStore => {
         locations: reduxStore.LocationReducer,
         tags: reduxStore.TagsReducer,
         convention: reduxStore.ConventionsReducer,
+        sponsors: reduxStore.sponsorReducer
     };
 };
 
