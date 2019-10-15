@@ -105,7 +105,7 @@ class CheckIn extends Component {
 
   render() {
     return (
-      <div>
+      <div style={{marginTop: '60px'}}>
         <Dialog
           open={this.state.open}
           onClose={this.handleClose}

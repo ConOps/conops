@@ -34,7 +34,7 @@ class Tags extends Component {
 
     render() {
         return (
-          <div>
+          <div style={{ marginTop: '60px' }}>
             <h1 style={{ textAlign: "center" }}>
               Current Convention: 2DCON 2020
             </h1>
