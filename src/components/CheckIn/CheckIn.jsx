@@ -47,7 +47,7 @@ class CheckIn extends Component {
     checkedIn: false,
     preRegistered: false,
     walkIn: false,
-    all: false
+    all: true
   };
 
   componentDidMount() {
@@ -149,6 +149,20 @@ class CheckIn extends Component {
         <h1 style={{ textAlign: "center" }}>Current Convention: 2DCON 2020</h1>
         <p style={{ textAlign: "center" }}>FILTER</p>
         <div style={{ textAlign: "center" }}>
+          {this.state.checkedIn ?
+          <Button
+            variant="contained"
+            onClick={() => {
+              this.props.dispatch({
+                type: "FETCH_CHECKED_IN_ATTENDEES"
+              });
+            }}
+            color="primary"
+            style={{ paddingLeft: "6%", paddingRight: "6%", marginRight: "5%" }}
+          >
+            CHECKED-IN
+          </Button>
+          :
           <Button
             variant="contained"
             onClick={() => {
@@ -167,64 +181,106 @@ class CheckIn extends Component {
             style={{ paddingLeft: "6%", paddingRight: "6%", marginRight: "5%" }}
           >
             CHECKED-IN
-          </Button>
+          </Button>}
+            {this.state.preRegistered ?
           <Button
             variant="contained"
             onClick={() => {
               this.props.dispatch({
                 type: "FETCH_PRE-REGISTERED_ATTENDEES"
               });
-              this.setState({
-                ...this.state,
-                checkedIn: false,
-                preRegistered: !this.state.preRegistered,
-                walkIn: false,
-                all: false
-              })
             }}
-            color="inherit"
+            color="primary"
             style={{ paddingLeft: "6%", paddingRight: "6%", marginRight: "5%" }}
           >
             PRE-REGISTERED
           </Button>
+          :
+            <Button
+              variant="contained"
+              onClick={() => {
+                this.props.dispatch({
+                  type: "FETCH_PRE-REGISTERED_ATTENDEES"
+                });
+                this.setState({
+                  ...this.state,
+                  checkedIn: false,
+                  preRegistered: !this.state.preRegistered,
+                  walkIn: false,
+                  all: false
+                })
+              }}
+              color="inherit"
+              style={{ paddingLeft: "6%", paddingRight: "6%", marginRight: "5%" }}
+            >
+              PRE-REGISTERED
+          </Button>}
+              {this.state.walkIn ?
           <Button
             variant="contained"
             onClick={() => {
               this.props.dispatch({
                 type: "FETCH_WALK_INS"
               });
-              this.setState({
-                ...this.state,
-                checkedIn: false,
-                preRegistered: false,
-                walkIn: !this.state.walkIn,
-                all: false
-              })
             }}
-            color="inherit"
+            color="primary"
             style={{ paddingLeft: "6%", paddingRight: "6%", marginRight: "5%" }}
           >
             WALK-IN
           </Button>
+          :
+            <Button
+              variant="contained"
+              onClick={() => {
+                this.props.dispatch({
+                  type: "FETCH_WALK_INS"
+                });
+                this.setState({
+                  ...this.state,
+                  checkedIn: false,
+                  preRegistered: false,
+                  walkIn: !this.state.walkIn,
+                  all: false
+                })
+              }}
+              color="inherit"
+              style={{ paddingLeft: "6%", paddingRight: "6%", marginRight: "5%" }}
+            >
+              WALK-IN
+          </Button>}
+              {this.state.all ?
           <Button
             onClick={() => {
               this.props.dispatch({
                 type: "FETCH_ALL_ATTENDEES"
               });
-              this.setState({
-                ...this.state,
-                checkedIn: false,
-                preRegistered: false,
-                walkIn: false,
-                all: !this.state.all
-              })
             }}
             variant="contained"
-            color= "inherit"
+            color= "primary"
             style={{ paddingLeft: "6%", paddingRight: "6%" }}
           >
             ALL
           </Button>
+          :
+            <Button
+              onClick={() => {
+                this.props.dispatch({
+                  type: "FETCH_ALL_ATTENDEES"
+                });
+                this.setState({
+                  ...this.state,
+                  checkedIn: false,
+                  preRegistered: false,
+                  walkIn: false,
+                  all: !this.state.all
+                })
+              }}
+              variant="contained"
+              color="inherit"
+              style={{ paddingLeft: "6%", paddingRight: "6%" }}
+            >
+              ALL
+          </Button>}
         </div>
         {(this.props.reduxStore.user.authorization == 4 ||
           this.props.reduxStore.user.authorization == 1)
