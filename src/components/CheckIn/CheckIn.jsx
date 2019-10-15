@@ -13,6 +13,14 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import Paper from '@material-ui/core/Paper';
 import Draggable from 'react-draggable';
 import { isFlowBaseAnnotation } from "@babel/types";
+import { createMuiTheme } from '@material-ui/core/styles';
+import { ThemeProvider } from '@material-ui/styles';
+
+const theme = createMuiTheme({
+  palette: {
+    primary: { main: "#19375f" }
+  }
+}); 
 
 function PaperComponent(props) {
   return (
@@ -150,6 +158,7 @@ class CheckIn extends Component {
         <p style={{ textAlign: "center" }}>FILTER</p>
         <div style={{ textAlign: "center" }}>
           {this.state.checkedIn ?
+            <ThemeProvider theme={theme}>
           <Button
             variant="contained"
             onClick={() => {
@@ -162,6 +171,7 @@ class CheckIn extends Component {
           >
             CHECKED-IN
           </Button>
+            </ThemeProvider>
           :
           <Button
             variant="contained"
@@ -183,6 +193,7 @@ class CheckIn extends Component {
             CHECKED-IN
           </Button>}
             {this.state.preRegistered ?
+            <ThemeProvider theme={theme}>
           <Button
             variant="contained"
             onClick={() => {
@@ -195,6 +206,7 @@ class CheckIn extends Component {
           >
             PRE-REGISTERED
           </Button>
+            </ThemeProvider>
           :
             <Button
               variant="contained"
@@ -216,6 +228,7 @@ class CheckIn extends Component {
               PRE-REGISTERED
           </Button>}
               {this.state.walkIn ?
+            <ThemeProvider theme={theme}>
           <Button
             variant="contained"
             onClick={() => {
@@ -228,6 +241,7 @@ class CheckIn extends Component {
           >
             WALK-IN
           </Button>
+            </ThemeProvider>
           :
             <Button
               variant="contained"
@@ -249,6 +263,7 @@ class CheckIn extends Component {
               WALK-IN
           </Button>}
               {this.state.all ?
+            <ThemeProvider theme={theme}>
           <Button
             onClick={() => {
               this.props.dispatch({
@@ -261,6 +276,7 @@ class CheckIn extends Component {
           >
             ALL
           </Button>
+            </ThemeProvider>
           :
             <Button
               onClick={() => {

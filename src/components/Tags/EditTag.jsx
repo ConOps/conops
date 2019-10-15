@@ -2,6 +2,15 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Button from '@material-ui/core/Button';
 import TextField from "@material-ui/core/TextField"
+import { createMuiTheme } from '@material-ui/core/styles';
+import { ThemeProvider } from '@material-ui/styles';
+
+const theme = createMuiTheme({
+  palette: {
+    primary: { main: "#19375f" }
+  }
+}); 
+
 class EditTag extends Component {
 
 
@@ -71,6 +80,7 @@ class EditTag extends Component {
                     Cancel
                   </Button>
                   {this.props.user.authorization === 4 && (
+                    <ThemeProvider theme={theme}>
                     <Button
                       variant="contained"
                       color="primary"
@@ -78,6 +88,7 @@ class EditTag extends Component {
                     >
                       Save Changes
                     </Button>
+                    </ThemeProvider>
                   )}
                 </div>
               </form>

@@ -4,6 +4,14 @@ import { withStyles } from '@material-ui/core/styles';
 import MaterialTable from "material-table";
 import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
+import { createMuiTheme } from '@material-ui/core/styles';
+import { ThemeProvider } from '@material-ui/styles';
+
+const theme = createMuiTheme({
+  palette: {
+    primary: { main: "#19375f" }
+  }
+}); 
 
 const styles = ({
     root: {
@@ -41,6 +49,7 @@ class Locations extends Component {
           <div>
             <h1>Locations</h1>
             {this.props.reduxStore.user.authorization === 4 && (
+              <ThemeProvider theme={theme}>
               <Fab
                 color="primary"
                 aria-label="add"
@@ -48,6 +57,7 @@ class Locations extends Component {
               >
                 <AddIcon onClick={this.handleClick} />
               </Fab>
+              </ThemeProvider>
             )}
             {this.props.reduxStore.user.authorization === 4 && (
               <MaterialTable
