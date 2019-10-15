@@ -20,6 +20,8 @@ const eventDetailsReducer = (state = {Tags: [], LocationName: '', EventName: '',
             return { ...state, EventDescription: action.payload}
         case 'CREATE_EVENT_LOCATION':
             return { ...state, LocationName: action.payload }
+        case 'CREATE_EVENT_TAGS':
+            return { ...state, TagName: action.payload }
         default:
             return state;
     }
