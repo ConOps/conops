@@ -9,6 +9,7 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Paper from '@material-ui/core/Paper';
 import Draggable from 'react-draggable';
+import { isFlowBaseAnnotation } from "@babel/types";
 
 function PaperComponent(props) {
   return (
@@ -39,7 +40,11 @@ class CheckIn extends Component {
     ],
     open: false,
     openPaid: false,
-    rowData: []
+    rowData: [],
+    checkedIn: false,
+    preRegistered: false,
+    walkIn: false,
+    all: false
   };
 
   componentDidMount() {
@@ -147,8 +152,15 @@ class CheckIn extends Component {
               this.props.dispatch({
                 type: "FETCH_CHECKED_IN_ATTENDEES"
               });
+              this.setState({
+                ...this.state,
+                checkedIn: !this.state.checkedIn,
+                preRegistered: false,
+                walkIn: false,
+                all: false
+              })
             }}
-            color="primary"
+            color="inherit"
             style={{ paddingLeft: "6%", paddingRight: "6%", marginRight: "5%" }}
           >
             CHECKED-IN
@@ -159,8 +171,15 @@ class CheckIn extends Component {
               this.props.dispatch({
                 type: "FETCH_PRE-REGISTERED_ATTENDEES"
               });
+              this.setState({
+                ...this.state,
+                checkedIn: false,
+                preRegistered: !this.state.preRegistered,
+                walkIn: false,
+                all: false
+              })
             }}
-            color="primary"
+            color="inherit"
             style={{ paddingLeft: "6%", paddingRight: "6%", marginRight: "5%" }}
           >
             PRE-REGISTERED
@@ -171,8 +190,15 @@ class CheckIn extends Component {
               this.props.dispatch({
                 type: "FETCH_WALK_INS"
               });
+              this.setState({
+                ...this.state,
+                checkedIn: false,
+                preRegistered: false,
+                walkIn: !this.state.walkIn,
+                all: false
+              })
             }}
-            color="primary"
+            color="inherit"
             style={{ paddingLeft: "6%", paddingRight: "6%", marginRight: "5%" }}
           >
             WALK-IN
@@ -182,9 +208,16 @@ class CheckIn extends Component {
               this.props.dispatch({
                 type: "FETCH_ALL_ATTENDEES"
               });
+              this.setState({
+                ...this.state,
+                checkedIn: false,
+                preRegistered: false,
+                walkIn: false,
+                all: !this.state.all
+              })
             }}
             variant="contained"
-            color="primary"
+            color= "inherit"
             style={{ paddingLeft: "6%", paddingRight: "6%" }}
           >
             ALL
