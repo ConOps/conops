@@ -94,7 +94,7 @@ router.put('/event_cancel', rejectUnauthenticated, rejectNonEventOrganizer, (req
 
 //PUT for event update
 
-router.put('/event_update', rejectUnauthenticated, rejectNonEventOrganizer, (req, res) => {
+router.put('/event_update', rejectUnauthenticated, rejectNonEventOrganizer, async (req, res) => {
 
     console.log('event update data:', req.body);
     const connection = await pool.connect();
