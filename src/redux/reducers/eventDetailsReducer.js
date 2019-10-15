@@ -1,4 +1,4 @@
-const eventDetailsReducer = (state = {Tags: [], LocationName: '', EventName: '', EventStartTime: '', EventEndTime: '', }, action) => {
+const eventDetailsReducer = (state = {Tags: [], TagIDs: [], LocationName: '', EventName: '', EventStartTime: '', EventEndTime: '', }, action) => {
     switch (action.type) {
         case 'SET_EVENT_DETAILS':
             
@@ -18,9 +18,9 @@ const eventDetailsReducer = (state = {Tags: [], LocationName: '', EventName: '',
         case 'EDIT_EVENT_TAGS':
             return { ...state, Tags: [... action.payload]}
         case 'EDIT_EVENT_LOCATION':
-            return { ...state, LocationName: action.payload}
+            return { ...state, LocationID: action.payload}
         case 'EDIT_EVENT_SPONSOR':
-            return { ...state, SponsorName: action.payload}
+            return { ...state, SponsorID: action.payload}
         default:
             return state;
     }
