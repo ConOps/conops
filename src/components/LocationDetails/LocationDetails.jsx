@@ -7,6 +7,13 @@ import Button from '@material-ui/core/Button';
 import FormGroup from '@material-ui/core/FormGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Switch from '@material-ui/core/Switch';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import Paper from '@material-ui/core/Paper';
+import Draggable from 'react-draggable';
 
 const styles = ({
     root: {
@@ -17,6 +24,14 @@ const styles = ({
         marginRight: '15px',
     }  
 });
+
+function PaperComponent(props) {
+  return (
+    <Draggable>
+      <Paper {...props} />
+    </Draggable>
+  );
+}
 
 class LocationDetails extends Component {
     componentDidMount() {
@@ -33,6 +48,8 @@ class LocationDetails extends Component {
 
     state = {
         LocationIsActive: true,
+        openSave: false,
+        details: {},
     }
 
     componentDidMount () {
@@ -47,16 +64,32 @@ class LocationDetails extends Component {
       });
     }
 
+  handleCloseSave = () => {
+    this.setState({ openSave: false });
+  };
+
     handleBack = () => {
         this.props.history.push("/locations");
     };
 
+    saveLocation = () => {
+      this.props.dispatch({
+        type: "UPDATE_LOCATION_DETAILS",
+        payload: this.props.details
+      });
+      this.handleCloseSave();
+    }
+
     handleSave = () => {
-        alert("Info has been updated");
-        this.props.dispatch({
-            type: "UPDATE_LOCATION_DETAILS",
-            payload: this.props.details
-        });
+      this.setState({
+        openSave: !this.state.openSave,
+        ...this.state.details, details: this.props.details
+      })
+        // alert("Info has been updated");
+        // this.props.dispatch({
+        //     type: "UPDATE_LOCATION_DETAILS",
+        //     payload: this.props.details
+        // });
     };
 
     handleChange = () => {
@@ -69,6 +102,31 @@ class LocationDetails extends Component {
     render() {
         return (
           <div>
+
+            <Dialog
+              open={this.state.openSave}
+              onClose={this.handleCloseSave}
+              PaperComponent={PaperComponent}
+              aria-labelledby="draggable-dialog-title"
+            >
+              <DialogTitle style={{ cursor: 'move' }} id="draggable-dialog-title">
+                Edit Location?
+        </DialogTitle>
+              <DialogContent>
+                <DialogContentText>
+                  Are you sure that you would like to edit this location?
+          </DialogContentText>
+              </DialogContent>
+              <DialogActions>
+                <Button onClick={this.handleCloseSave} color="primary">
+                  Cancel
+          </Button>
+                <Button onClick={this.saveLocation} color="primary">
+                  Confirm
+          </Button>
+              </DialogActions>
+            </Dialog>
+
             <h1>2D Con 2020: Remaster</h1>
             <h1>Manage Location: {this.props.details.LocationName}</h1>
             <TextField
