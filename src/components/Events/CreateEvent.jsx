@@ -1,6 +1,12 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { withStyles } from '@material-ui/core/styles';
+import Select from '@material-ui/core/Select';
+import MenuItem from '@material-ui/core/MenuItem';
+import FormControl from '@material-ui/core/FormControl';
+import FormHelperText from '@material-ui/core/FormHelperText';
+import Grid from '@material-ui/core/Grid';
+import Chip from '@material-ui/core/Chip';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import DateFnsUtils from "@date-io/date-fns";
@@ -9,6 +15,7 @@ import {
     KeyboardDateTimePicker
 } from "@material-ui/pickers";
 
+
 const styles = ({
     root: {
         margin: '15px',
@@ -16,8 +23,42 @@ const styles = ({
 });
 
 class CreateEvent extends Component {
+    componentDidMount() {
+        this.props.dispatch({
+            type: 'FETCH_LOCATIONS'
+        });
+        this.props.dispatch({
+            type: 'FETCH_TAG_LIST'
+        });
+        this.props.dispatch({
+            type: 'FETCH_CONVENTION'
+        });
+        this.props.dispatch({
+            type: 'FETCH_SPONSORS'
+        })
+    }
+
     handleCancel = () => {
         this.props.history.push('/events');
+    }
+
+    state = {
+        event: {
+            LocationID: '',
+        }
+    }
+
+    handleLocationChange = (event) => {
+        console.log('SELECTED LOCATION:', event.target.value)
+        this.setState({
+            event: {
+                LocationID: event.target.value
+            }
+        })
+        this.props.dispatch({
+            type: 'CREATE_EVENT_LOCATION',
+            payload: event.target.value
+        })
     }
 
     handleSave = (event) => {
@@ -27,7 +68,28 @@ class CreateEvent extends Component {
             payload: this.props.details
         })
     }
+
     render() {
+        let locationsInSelector = this.props.locations.map((location) => {
+            return (
+                <MenuItem value={location.LocationID} key={location.LocationID}>{location.LocationName}</MenuItem>
+            )
+
+            let eventTags = this.props.details.Tags.map((tag) => {
+                return (
+                    <Grid item key={tag}>
+                        <Chip
+                            key={tag}
+                            label={tag}
+                            // onDelete={() => this.handleTagDelete(tag.id)}
+                            // onClick={() => this.handleTagClick(tag)}
+                            className={this.props.classes.chip}
+                            color="primary"
+                        />
+                    </Grid>
+                )
+            })
+        });
         return (
             <div>
                 <h1>Create Event</h1>
@@ -41,6 +103,36 @@ class CreateEvent extends Component {
                             payload: event.target.value
                         })}
                 />
+                <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                    <KeyboardDateTimePicker
+                        label="Start Time"
+                        className={this.props.classes.root}
+                        format="MM/dd/yyyy HH:mm"
+                        KeyboardButtonProps={{
+                            "aria-label": "change date"
+                        }}
+                        onChange={date =>
+                            this.props.dispatch({
+                                type: "CREATE_EVENT_START_TIME",
+                                payload: date
+                            })
+                        }
+                    />
+                    <KeyboardDateTimePicker
+                        label="End Time"
+                        className={this.props.classes.root}
+                        format="MM/dd/yyyy HH:mm"
+                        KeyboardButtonProps={{
+                            "aria-label": "change date"
+                        }}
+                        onChange={date =>
+                            this.props.dispatch({
+                                type: "CREATE_EVENT_END_TIME",
+                                payload: date
+                            })
+                        }
+                    />
+                </MuiPickersUtilsProvider>
                 <TextField
                     label="Description"
                     className={this.props.classes.root}
@@ -50,51 +142,53 @@ class CreateEvent extends Component {
                             payload: event.target.value
                         })}
                 />
-                <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                    <KeyboardDateTimePicker
-                        label="Start Time"
+                <hr></hr>
+                <FormControl>
+                    <FormHelperText className={this.props.classes.helperText}>Location</FormHelperText>
+                <Select
+                    value={this.state.event.LocationID}
+                    className={this.props.classes.root}
+                    onChange={(event) => this.handleLocationChange(event)}
+                >
+                    {locationsInSelector}
+                </Select>
+                </FormControl>
+                <hr></hr>
+                <FormControl>
+                    <FormHelperText className={this.props.classes.helperText}>Add Tags</FormHelperText>
+                    <Select
+                        multiple
+                        value={this.props.details.Tags}
                         className={this.props.classes.root}
-                        value={this.props.details.EventStartTime}
-                        InputLabelProps={{ shrink: this.props.details.EventName }}
-                        format="MM/dd/yyyy HH:mm"
-                        KeyboardButtonProps={{
-                            "aria-label": "change date"
-                        }}
-                        onChange={date =>
+                        renderValue={selected => (
+                            <div>
+                                {selected.map(value => (
+                                    <Chip key={value} label={value} />
+                                ))}
+                            </div>
+                        )}
+                        onChange={event =>
                             this.props.dispatch({
-                                type: "EDIT_EVENT_START_TIME",
-                                payload: date
-                            })
-                        }
-                    />
-                    <KeyboardDateTimePicker
-                        label="End Time"
-                        className={this.props.classes.root}
-                        value={this.props.details.EventEndTime}
-                        InputLabelProps={{ shrink: this.props.details.EventName }}
-                        format="MM/dd/yyyy HH:mm"
-                        KeyboardButtonProps={{
-                            "aria-label": "change date"
-                        }}
-                        onChange={date =>
-                            this.props.dispatch({
-                                type: "EDIT_EVENT_END_TIME",
-                                payload: date
-                            })
-                        }
-                    />
-                </MuiPickersUtilsProvider>
+                                type: 'EDIT_EVENT_TAGS',
+                                payload: event.target.value
+                            })}
+                    >
+                        {allTags}
+                    </Select>
+                </FormControl>
                 <hr></hr>
                 <Button onClick={this.handleCancel}>Cancel</Button>
                 <Button onClick={this.handleSave}>Save</Button>
             </div>
+            
         )
     }
 }
 
 const mapStateToProps = reduxStore => {
     return {
-        // create: reduxStore.
+        locations: reduxStore.LocationReducer,
+        tags: reduxStore.TagsReducer
     };
 };
 
