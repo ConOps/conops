@@ -44,6 +44,7 @@ class Details extends Component {
     openPaid: false,
     openCheckOutWalkIn: false,
     openCheckOut: false,
+    openSave: false,
     id: {},
   };
 
@@ -74,6 +75,10 @@ class Details extends Component {
 
   handleCloseCheckOut = () => {
     this.setState({ openCheckOut: false });
+  };
+
+  handleCloseSave = () => {
+    this.setState({ openSave: false });
   };
 
   deleteAttendee = () => {
@@ -114,6 +119,14 @@ class Details extends Component {
       payload: this.state.id
     });
     this.handleCloseCheckOut();
+  }
+
+  save = () => {
+    this.props.dispatch({
+      type: "UPDATE_ATTENDEE_INFO",
+      payload: this.props.info
+    });
+    this.handleCloseSave();
   }
 
   fetchAttendeeInformation = () => {
@@ -232,11 +245,15 @@ class Details extends Component {
   };
 
   handleSave = () => {
-    alert("Info has been updated");
-    this.props.dispatch({
-      type: "UPDATE_ATTENDEE_INFO",
-      payload: this.props.info
-    });
+    this.setState({
+      openSave: !this.state.openSave,
+      ...this.state.info, info: this.props.info
+    })
+    // alert("Info has been updated");
+    // this.props.dispatch({
+    //   type: "UPDATE_ATTENDEE_INFO",
+    //   payload: this.props.info
+    // });
   };
 
   render() {
@@ -358,6 +375,30 @@ class Details extends Component {
               Cancel
           </Button>
             <Button onClick={this.checkOut} color="primary">
+              Confirm
+          </Button>
+          </DialogActions>
+        </Dialog>
+
+        <Dialog
+          open={this.state.openSave}
+          onClose={this.handleCloseSave}
+          PaperComponent={PaperComponent}
+          aria-labelledby="draggable-dialog-title"
+        >
+          <DialogTitle style={{ cursor: 'move' }} id="draggable-dialog-title">
+            Edit Attendee?
+        </DialogTitle>
+          <DialogContent>
+            <DialogContentText>
+              Info has been updated?
+          </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={this.handleCloseSave} color="primary">
+              Cancel
+          </Button>
+            <Button onClick={this.save} color="primary">
               Confirm
           </Button>
           </DialogActions>
