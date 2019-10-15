@@ -5,8 +5,13 @@ import MaterialTable from "material-table";
 import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
 import moment from 'moment';
+
+import Chip from '@material-ui/core/Chip';
+
+
 import { createMuiTheme } from '@material-ui/core/styles';
 import { ThemeProvider } from '@material-ui/styles';
+
 
 const theme = createMuiTheme({
   palette: {
