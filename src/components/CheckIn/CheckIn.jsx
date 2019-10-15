@@ -12,6 +12,7 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Paper from '@material-ui/core/Paper';
 import Draggable from 'react-draggable';
+import { isFlowBaseAnnotation } from "@babel/types";
 
 function PaperComponent(props) {
   return (
@@ -42,7 +43,11 @@ class CheckIn extends Component {
     ],
     open: false,
     openPaid: false,
-    rowData: []
+    rowData: [],
+    checkedIn: false,
+    preRegistered: false,
+    walkIn: false,
+    all: true
   };
 
   componentDidMount() {
@@ -99,19 +104,19 @@ class CheckIn extends Component {
           PaperComponent={PaperComponent}
           aria-labelledby="draggable-dialog-title"
         >
-          <DialogTitle style={{ cursor: 'move' }} id="draggable-dialog-title">
+          <DialogTitle style={{ cursor: 'move', color: 'white' }} id="draggable-dialog-title" className="Dialog">
             Payment Check
         </DialogTitle>
-          <DialogContent>
-            <DialogContentText>
+          <DialogContent >
+            <DialogContentText style={{color: 'black'}} >
               This person must submit payment to be checked into the convention!
           </DialogContentText>
           </DialogContent>
-          <DialogActions>
-            <Button onClick={this.handleClose} color="primary">
+          <DialogActions >
+            <Button onClick={this.handleClose} variant="contained" color="secondary">
               Cancel
           </Button>
-            <Button onClick={this.paymentCheckInPrompt} color="primary">
+            <Button onClick={this.paymentCheckInPrompt} variant="contained" color="inherit">
               Confirm
           </Button>
           </DialogActions>
@@ -124,19 +129,19 @@ class CheckIn extends Component {
           PaperComponent={PaperComponent}
           aria-labelledby="draggable-dialog-title"
         >
-          <DialogTitle style={{ cursor: 'move' }} id="draggable-dialog-title">
+          <DialogTitle style={{ cursor: 'move', color: 'white' }} id="draggable-dialog-title" className="Dialog">
             Check-In
         </DialogTitle>
           <DialogContent>
-            <DialogContentText>
+            <DialogContentText style={{ color: 'black' }}>
               Are you sure that you would like to check this person in?
           </DialogContentText>
           </DialogContent>
           <DialogActions>
-            <Button onClick={this.handleClosePaid} color="primary">
+            <Button onClick={this.handleClosePaid} variant="contained" color="secondary">
               Cancel
           </Button>
-            <Button onClick={this.checkInPrompt} color="primary">
+            <Button onClick={this.checkInPrompt} variant="contained" color="inherit">
               Confirm
           </Button>
           </DialogActions>
@@ -144,6 +149,7 @@ class CheckIn extends Component {
         <h1 style={{ textAlign: "center" }}>Current Convention: 2DCON 2020</h1>
         <p style={{ textAlign: "center" }}>FILTER</p>
         <div style={{ textAlign: "center" }}>
+          {this.state.checkedIn ?
           <Button
             variant="contained"
             onClick={() => {
@@ -156,6 +162,27 @@ class CheckIn extends Component {
           >
             CHECKED-IN
           </Button>
+          :
+          <Button
+            variant="contained"
+            onClick={() => {
+              this.props.dispatch({
+                type: "FETCH_CHECKED_IN_ATTENDEES"
+              });
+              this.setState({
+                ...this.state,
+                checkedIn: !this.state.checkedIn,
+                preRegistered: false,
+                walkIn: false,
+                all: false
+              })
+            }}
+            color="inherit"
+            style={{ paddingLeft: "6%", paddingRight: "6%", marginRight: "5%" }}
+          >
+            CHECKED-IN
+          </Button>}
+            {this.state.preRegistered ?
           <Button
             variant="contained"
             onClick={() => {
@@ -168,6 +195,27 @@ class CheckIn extends Component {
           >
             PRE-REGISTERED
           </Button>
+          :
+            <Button
+              variant="contained"
+              onClick={() => {
+                this.props.dispatch({
+                  type: "FETCH_PRE-REGISTERED_ATTENDEES"
+                });
+                this.setState({
+                  ...this.state,
+                  checkedIn: false,
+                  preRegistered: !this.state.preRegistered,
+                  walkIn: false,
+                  all: false
+                })
+              }}
+              color="inherit"
+              style={{ paddingLeft: "6%", paddingRight: "6%", marginRight: "5%" }}
+            >
+              PRE-REGISTERED
+          </Button>}
+              {this.state.walkIn ?
           <Button
             variant="contained"
             onClick={() => {
@@ -180,6 +228,27 @@ class CheckIn extends Component {
           >
             WALK-IN
           </Button>
+          :
+            <Button
+              variant="contained"
+              onClick={() => {
+                this.props.dispatch({
+                  type: "FETCH_WALK_INS"
+                });
+                this.setState({
+                  ...this.state,
+                  checkedIn: false,
+                  preRegistered: false,
+                  walkIn: !this.state.walkIn,
+                  all: false
+                })
+              }}
+              color="inherit"
+              style={{ paddingLeft: "6%", paddingRight: "6%", marginRight: "5%" }}
+            >
+              WALK-IN
+          </Button>}
+              {this.state.all ?
           <Button
             onClick={() => {
               this.props.dispatch({
@@ -187,11 +256,31 @@ class CheckIn extends Component {
               });
             }}
             variant="contained"
-            color="primary"
+            color= "primary"
             style={{ paddingLeft: "6%", paddingRight: "6%" }}
           >
             ALL
           </Button>
+          :
+            <Button
+              onClick={() => {
+                this.props.dispatch({
+                  type: "FETCH_ALL_ATTENDEES"
+                });
+                this.setState({
+                  ...this.state,
+                  checkedIn: false,
+                  preRegistered: false,
+                  walkIn: false,
+                  all: !this.state.all
+                })
+              }}
+              variant="contained"
+              color="inherit"
+              style={{ paddingLeft: "6%", paddingRight: "6%" }}
+            >
+              ALL
+          </Button>}
         </div>
         {(this.props.reduxStore.user.authorization == 4 ||
           this.props.reduxStore.user.authorization == 1)
