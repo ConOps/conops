@@ -19,6 +19,17 @@ const styles = ({
 });
 
 class LocationDetails extends Component {
+    componentDidMount() {
+      this.fetchLocationDetails();
+    }
+
+    fetchLocationDetails = () => {
+      let id = this.props.match.params.id;
+      this.props.dispatch({
+        type: 'FETCH_LOCATION_DETAILS',
+        payload: id
+      });
+    }
 
     state = {
         LocationIsActive: true,

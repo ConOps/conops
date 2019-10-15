@@ -72,7 +72,7 @@ class Locations extends Component {
                         type: "FETCH_LOCATION_DETAILS",
                         payload: rowData.LocationID
                       });
-                      this.props.history.push("/locationdetails");
+                      this.props.history.push(`/location/details/${rowData.LocationID}`);
                     }
                   }
                 ]}
