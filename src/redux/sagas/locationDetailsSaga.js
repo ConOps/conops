@@ -15,8 +15,8 @@ function* fetchDetails(action) {
             payload: response.data
         })
 
-    } catch (err) {
-        console.log('error in fetch event details saga', err);
+    } catch (error) {
+        console.log('error in fetch event details saga', error);
     }
 }
 

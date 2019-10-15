@@ -15,6 +15,7 @@ import TagDetailReducer from './TagDetailReducer';
 import LocationReducer from './LocationReducer'
 import locationDetailsReducer from './locationDetailsReducer';
 import sponsorReducer from './sponsorReducer';
+import sponsorDetailsReducer from './sponsorDetailsReducer'
 
 
 
@@ -42,6 +43,7 @@ const rootReducer = combineReducers({
   LocationReducer,
   locationDetailsReducer,
   sponsorReducer,
+  sponsorDetailsReducer,
 });
 
 export default rootReducer;

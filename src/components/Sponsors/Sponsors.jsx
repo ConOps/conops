@@ -45,10 +45,10 @@ class Sponsors extends Component {
                     actions={[
                         {
                             icon: "edit",
-                            tooltip: "Edit Location",
+                            tooltip: "Edit Sponsor",
                             onClick: (event, rowData) => {
                                 this.props.dispatch({
-                                    type: "FETCH_LOCATION_DETAILS",
+                                    type: "FETCH_SPONSOR_DETAILS",
                                     payload: rowData.SponsorID
                                 });
                                 this.props.history.push(`/sponsor/details/${rowData.SponsorID}`);
