@@ -77,7 +77,7 @@ class AttendeesNav extends React.Component {
                             >
                                 <Paper>
                                     <ClickAwayListener onClickAway={this.handleClose}>
-                                        <MenuList>
+                                        <MenuList className ="onTop">
                                             <MenuItem onClick={(event) => this.handleClick('check-in', event)}>CHECK-IN</MenuItem>
                                             <MenuItem onClick={(event) => this.handleClick('pre-register', event)}>PRE-REGISTER</MenuItem>
                                         </MenuList>

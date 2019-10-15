@@ -27,38 +27,47 @@ class Sponsors extends Component {
     }
 
     render() {
-        return(
-            <div>
-                <MaterialTable
-                    title="Sponsors"
-                    columns={this.state.columns}
-                    options={{
-                        columnsButton: true,
-                        pageSize: 10,
-                        pageSizeOptions: [10, 20, 50],
-                        toolbarButtonAlignment: "right",
-                        searchFieldAlignment: "left",
-                        showTitle: false
-                    }}
-                    data={this.props.reduxStore.sponsorReducer}
-                    editable={{}}
-                    actions={[
-                        {
-                            icon: "edit",
-                            tooltip: "Edit Sponsor",
-                            onClick: (event, rowData) => {
-                                this.props.dispatch({
-                                    type: "FETCH_SPONSOR_DETAILS",
-                                    payload: rowData.SponsorID
-                                });
-                                this.props.history.push(`/sponsor/details/${rowData.SponsorID}`);
-                            }
-                            
-                        }
-                    ]}
-                />
-            </div>
-        )
+        return (
+          <div>
+            {this.props.reduxStore.user.authorization === 4 ? (
+              <MaterialTable
+                title="Sponsors"
+                columns={this.state.columns}
+                options={{
+                  columnsButton: true,
+                  pageSize: 10,
+                  pageSizeOptions: [10, 20, 50],
+                  toolbarButtonAlignment: "right",
+                  searchFieldAlignment: "left",
+                  showTitle: false
+                }}
+                data={this.props.reduxStore.sponsorReducer}
+                editable={{}}
+                actions={[
+                  {
+                    icon: "edit",
+                    tooltip: "Edit Location"
+                  }
+                ]}
+              />
+            ) : (
+              <MaterialTable
+                title="Sponsors"
+                columns={this.state.columns}
+                options={{
+                  columnsButton: true,
+                  pageSize: 10,
+                  pageSizeOptions: [10, 20, 50],
+                  toolbarButtonAlignment: "right",
+                  searchFieldAlignment: "left",
+                  showTitle: false
+                }}
+                data={this.props.reduxStore.sponsorReducer}
+                editable={{}}
+              />
+            )}
+          </div>
+        );
     }
 }
 
