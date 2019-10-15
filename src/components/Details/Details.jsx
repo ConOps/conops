@@ -21,10 +21,14 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Paper from '@material-ui/core/Paper';
 import Draggable from 'react-draggable';
+import { createMuiTheme } from '@material-ui/core/styles';
+import { ThemeProvider } from '@material-ui/styles';
 
-
-
-
+const theme = createMuiTheme({
+  palette: {
+    primary: {main: "#19375f"}
+  }
+});
 
 
 
@@ -427,6 +431,7 @@ class Details extends Component {
             </Button>
           )}
           {this.props.info.orderID != null && (
+            <ThemeProvider theme={theme}>
             <Button
               variant="contained"
               color="primary"
@@ -434,6 +439,7 @@ class Details extends Component {
             >
               Find
             </Button>
+            </ThemeProvider>
           )}
 
           {(this.props.user.authorization === 4 || this.props.user.authorization === 1 ) && (this.props.info.CheckInDate === null ? (
