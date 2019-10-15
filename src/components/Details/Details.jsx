@@ -40,6 +40,8 @@ class Details extends Component {
   state = {
     Badge: "None",
     openDelete: false,
+    openCheckIn: false,
+    openPaid: false,
     id: {},
   };
 
@@ -47,12 +49,23 @@ class Details extends Component {
     this.fetchAttendeeInformation();
   }
 
-  handleClickOpenDelete = () => {
-    this.setState({ openDelete: true });
-  };
+ 
 
   handleCloseDelete = () => {
     this.setState({ openDelete: false });
+  };
+
+  
+
+  handleClosePaid = () => {
+    this.setState({ openPaid: false });
+  };
+
+
+ 
+
+  handleCloseCheckIn = () => {
+    this.setState({ openCheckIn: false });
   };
 
 
@@ -62,6 +75,22 @@ class Details extends Component {
       payload: this.state.id
     });
     this.props.history.push(`/check-in`)
+  }
+
+  handlePaid = () => {
+    this.props.dispatch({
+             type: "CHECK_IN_AND_PAY_ATTENDEE",
+             payload: this.state.id
+           });
+    this.handleClosePaid();
+  }
+
+  checkIn = () => {
+    this.props.dispatch({
+           type: "CHECK_IN_FROM_DETAILS",
+           payload: [this.state.id]
+         });
+    this.handleCloseCheckIn();
   }
 
   fetchAttendeeInformation = () => {
@@ -102,31 +131,44 @@ class Details extends Component {
 };
 
   handleCheckIn = (id, payment) => {
-    if (payment == null) {
-      if (window.confirm("get their money!")) {
-        if (
-          window.confirm("Are you sure that you want to check this person in?")
-        ) {
-          this.props.dispatch({
-            type: "CHECK_IN_AND_PAY_ATTENDEE",
-            payload: id
-          });
-        } else {
-          return false;
-        }
-      } else {
-        return false;
-      }
-    } else {
-      if (
-        window.confirm("Are you sure that you want to check this person in?")
-      ) {
-        this.props.dispatch({
-          type: "CHECK_IN_FROM_DETAILS",
-          payload: [id]
-        });
-      }
+    if(payment){
+      this.setState({
+        openCheckIn: !this.state.openCheckIn,
+        ...this.state.id, id: id
+      });
+      
+    }else{
+      this.setState({
+        openPaid: !this.state.openPaid,
+        ...this.state.id, id: id
+      });
+      
     }
+    // if (payment == null) {
+    //   if (window.confirm("get their money!")) {
+    //     if (
+    //       window.confirm("Are you sure that you want to check this person in?")
+    //     ) {
+    //       this.props.dispatch({
+    //         type: "CHECK_IN_AND_PAY_ATTENDEE",
+    //         payload: id
+    //       });
+    //     } else {
+    //       return false;
+    //     }
+    //   } else {
+    //     return false;
+    //   }
+    // } else {
+    //   if (
+    //     window.confirm("Are you sure that you want to check this person in?")
+    //   ) {
+    //     this.props.dispatch({
+    //       type: "CHECK_IN_FROM_DETAILS",
+    //       payload: [id]
+    //     });
+    //   }
+    // }
   };
 
   handleCheckOut = (id, order) => {
@@ -185,6 +227,54 @@ class Details extends Component {
               Cancel
           </Button>
             <Button onClick={this.deleteAttendee} color="primary">
+              Confirm
+          </Button>
+          </DialogActions>
+        </Dialog>
+
+        <Dialog
+          open={this.state.openPaid}
+          onClose={this.handleClosePaid}
+          PaperComponent={PaperComponent}
+          aria-labelledby="draggable-dialog-title"
+        >
+          <DialogTitle style={{ cursor: 'move' }} id="draggable-dialog-title">
+            Has Attendee Paid?
+        </DialogTitle>
+          <DialogContent>
+            <DialogContentText>
+              This person must submit payment to be checked into the convention!
+          </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={this.handleClosePaid} color="primary">
+              Cancel
+          </Button>
+            <Button onClick={this.handlePaid} color="primary">
+              Confirm
+          </Button>
+          </DialogActions>
+        </Dialog>
+
+        <Dialog
+          open={this.state.openCheckIn}
+          onClose={this.handleCloseCheckIn}
+          PaperComponent={PaperComponent}
+          aria-labelledby="draggable-dialog-title"
+        >
+          <DialogTitle style={{ cursor: 'move' }} id="draggable-dialog-title">
+            Check-In Attendee?
+        </DialogTitle>
+          <DialogContent>
+            <DialogContentText>
+              Are you sure that you would like to check-in this attendee?
+          </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={this.handleCloseCheckIn} color="primary">
+              Cancel
+          </Button>
+            <Button onClick={this.checkIn} color="primary">
               Confirm
           </Button>
           </DialogActions>
