@@ -14,6 +14,7 @@ import {
     MuiPickersUtilsProvider,
     KeyboardDateTimePicker
 } from "@material-ui/pickers";
+import moment from 'moment';
 
 
 const styles = ({
@@ -131,7 +132,7 @@ class EventDetails extends Component {
                     {this.props.details.DateLastModified && <h3 className={this.props.classes.cancelledText}>Event Has Been Modified!</h3>}
                     {this.props.details.DateLastModified && <h4 className={this.props.classes.cancelledText}>{this.props.details.DateLastModified}</h4>}
                     {this.props.details.EventModifiedNotes && <h4>{this.props.details.EventModifiedNotes}</h4>}
-                </div>
+                </div>  
                 <hr></hr>
                 <h2>Event Details</h2>
                 <TextField

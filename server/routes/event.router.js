@@ -93,19 +93,41 @@ router.put('/event_cancel', rejectUnauthenticated, (req, res) => {
 })
 
 //PUT for event update
-router.put('/event_update', rejectUnauthenticated, (req, res) => {
+router.put('/event_update', rejectUnauthenticated, async (req, res) => {
     console.log('event update data:', req.body);
-    const eventUpdate = req.body;
-    const queryText = `UPDATE "Event"
-                        SET "EventName" = $1, "EventDescription" = $2, "EventStartTime" = $3, "EventEndTime" = $4, "DateLastModified" = NOW(), "EventModifiedNotes" = $5
-                        WHERE "EventID" = $6;`;
-    pool.query(queryText, [eventUpdate.EventName, eventUpdate.EventDescription, eventUpdate.EventStartTime, eventUpdate.EventEndTime, eventUpdate.EventModifiedNotes, eventUpdate.EventID])
-        .then(result => {
-            res.sendStatus(200);
-        }).catch(error => {
-            console.log('error in event update PUT', error);
-            res.sendStatus(500);
-        })
+    const connection = await pool.connect();
+    try {
+        let currentTime
+        await connection.query('BEGIN');
+        const eventUpdate = req.body;
+        const queryText = `UPDATE "Event"
+                        SET "EventName" = $1, "EventDescription" = $2, "EventStartTime" = $3, "EventEndTime" = $4, "DateLastModified" = $5, "EventModifiedNotes" = $6
+                        WHERE "EventID" = $7;`;
+        const findTime = `SELECT CURRENT_TIMESTAMP AS time;`;
+        await connection.query(findTime)
+            .then(result => {
+                currentTime = result.rows[0].time
+            });
+        await connection.query(queryText, [eventUpdate.EventName, eventUpdate.EventDescription, eventUpdate.EventStartTime, eventUpdate.EventEndTime, currentTime, eventUpdate.EventModifiedNotes, eventUpdate.EventID] )
+        await connection.query('COMMIT');
+        res.sendStatus(200);
+    } catch(error) {
+        console.log('error in event update PUT', error);
+        res.sendStatus(500);
+    } finally {
+        connection.release();
+    }
+    // const eventUpdate = req.body;
+    // const queryText = `UPDATE "Event"
+    //                     SET "EventName" = $1, "EventDescription" = $2, "EventStartTime" = $3, "EventEndTime" = $4, "DateLastModified" = $5, "EventModifiedNotes" = $6
+    //                     WHERE "EventID" = $7;`;
+    // pool.query(queryText, [eventUpdate.EventName, eventUpdate.EventDescription, eventUpdate.EventStartTime, eventUpdate.EventEndTime, eventUpdate.EventModifiedNotes, eventUpdate.EventID])
+    //     .then(result => {
+    //         res.sendStatus(200);
+    //     }).catch(error => {
+    //         console.log('error in event update PUT', error);
+    //         res.sendStatus(500);
+    //     })
 })
 
 

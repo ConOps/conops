@@ -59,14 +59,14 @@ CREATE TABLE "Event"
     "EventID" SERIAL NOT NULL,
     "ConventionID" INTEGER NOT NULL,
     "EventName" VARCHAR(255) NOT NULL,
-    "EventStartTime" TIMESTAMP NOT NULL,
-    "EventEndTime" TIMESTAMP NOT NULL,
+    "EventStartTime" TIMESTAMP WITH TIME ZONE NOT NULL,
+    "EventEndTime" TIMESTAMP WITH TIME ZONE NOT NULL,
     "LocationID" INTEGER NOT NULL,
     "IsCancelled" BOOLEAN NOT NULL,
     "EventDescription" VARCHAR(255) NOT NULL,
     "SponsorID" INTEGER,
-    "DateCreated" TIMESTAMP NOT NULL,
-    "DateLastModified" TIMESTAMP,
+    "DateCreated" TIMESTAMP WITH TIME ZONE NOT NULL,
+    "DateLastModified" TIMESTAMP WITH TIME ZONE,
     "EventModifiedNotes" VARCHAR(255),
     CONSTRAINT "Event_pk" PRIMARY KEY ("EventID")
 )

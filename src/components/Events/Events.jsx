@@ -28,8 +28,8 @@ class Events extends Component {
             { title: "EventID", field: "EventID", hidden: true },
             { title: "ConventionID", field: "ConventionID", hidden: true },
             { title: "Event", field: "EventName", hidden: false },
-            { title: "Start Time", field: "EventStartTime", hidden: false },
-            { title: "End Time", field: "EventEndTime", hidden: false },
+            { title: "Start Time", field: "EventStartTime", hidden: false, type: "datetime" },
+            { title: "End Time", field: "EventEndTime", hidden: false, type: "datetime" },
             { title: "Description", field: "EventDescription", hidden: false },
             { title: "Location", field: "LocationName", hidden: false },
             { title: "Location Description", field: "LocationDescription", hidden: true },
@@ -51,7 +51,7 @@ class Events extends Component {
         return (
             <div>
                 <h1>Events</h1>
-                <Fab color="primary" aria-label="add" className={this.props.classes.fab}>
+                <Fab color="primary" aria-label="add" size="small" className={this.props.classes.fab}>
                     <AddIcon onClick={this.handleClick} />
                 </Fab>
                 <MaterialTable
