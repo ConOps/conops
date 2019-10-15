@@ -28,7 +28,6 @@ function PaperComponent(props) {
 class CreateLocation extends Component {
   state ={
     openSave: false,
-    details: {},
   }
 
 
@@ -51,7 +50,7 @@ class CreateLocation extends Component {
     handleSave = () => {
       this.setState({
         openSave: !this.state.openSave,
-        ...this.state.details, details: this.props.details
+       
       })
     }
     render() {
