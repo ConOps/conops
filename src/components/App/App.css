@@ -17,6 +17,11 @@ body {
     margin: 50px;
 }
 
+.Dialog{
+    background-image:url(https://raw.githubusercontent.com/ConOps/conops/master/BG.png);
+    background-size: 700px;
+}
+
 .main{
     text-align: center;
     padding-top: 0px;
