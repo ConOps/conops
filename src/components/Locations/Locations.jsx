@@ -68,10 +68,10 @@ class Locations extends Component {
                     icon: "edit",
                     tooltip: "Edit Location",
                     onClick: (event, rowData) => {
-                      this.props.dispatch({
-                        type: "FETCH_LOCATION_DETAILS",
-                        payload: rowData.LocationID
-                      });
+                      // this.props.dispatch({
+                      //   type: "FETCH_LOCATION_DETAILS",
+                      //   payload: rowData.LocationID
+                      // });
                       this.props.history.push(`/location/details/${rowData.LocationID}`);
                     }
                   }
