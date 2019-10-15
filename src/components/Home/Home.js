@@ -14,10 +14,11 @@ componentDidMount() {
 
 render(){
   return(
-  <div>
-    <p>Home</p>
-    <h1>Welcome to ConOps!!</h1>
     <div>
+      <h1>HOME</h1>
+  <div className = "homeBig">
+    <div className = "homePage">
+        <h1>Welcome to ConOps!!</h1>
     {this.props.reduxStore.user.authorization === 1 &&
       <p>You have logged in under the check-in permissions.  You will be allowed to check attendees into the convention! Click on the attendees tab above to navigate to the check in page.
         You will also be able to view other information about the convention in other sections of this application.  Enjoy the convention and smile for the guests!!
@@ -42,11 +43,12 @@ render(){
       <p>Hello! You have been logged in using view only mode.  You can click on the tags in the header above to navigate through the application and view information about this years convention.</p>
     }
       </div>
-      <div>
+      <div className = "homePage1">
         <h1>Important convention News!</h1>
         <p>{this.props.reduxStore.homePageReducer.ConventionNews}</p>
       </div>
   </div>
+    </div>
 )}};
 
 const mapStateToProps = reduxStore => {
