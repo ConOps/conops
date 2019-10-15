@@ -43,38 +43,53 @@ class EditTag extends Component {
     render() {
         
         return (
-            <>
+          <>
+            <div style={{ textAlign: "center" }}>
+              <h1>Rename your Tag!</h1>
+              <form>
+                <TextField
+                  label="Edit Tag"
+                  InputLabelProps={{ shrink: this.props.info.TagName }}
+                  value={this.props.info.TagName}
+                  onChange={event =>
+                    this.props.dispatch({
+                      type: "UPDATE_PROPERTY",
+                      payload: { key: "TagName", newValue: event.target.value }
+                    })
+                  }
+                />
 
-
-                <div style={{ textAlign: "center" }}>
-                    <h1>Rename your Tag!</h1>
-                    <form >
-                       
-                        <TextField
-                            label="Edit Tag"
-                            InputLabelProps={{shrink: this.props.info.TagName}}
-                            value={this.props.info.TagName}
-                            onChange={(event) => this.props.dispatch(
-                                {
-                                    type: 'UPDATE_PROPERTY',
-                                    payload: { key: 'TagName', newValue: event.target.value }
-                                }
-                            )}
-                        />
-                        
-                        <div style={{marginTop:"3%"}}>
-                            <Button style={{marginRight:"3%"}} variant="contained" color="secondary" onClick={() => { this.props.history.push(`/tags`) }} >Cancel</Button>
-                            <Button variant="contained" color="primary" onClick={this.edit} >Save Changes</Button>
-                        </div>
-                    </form>
+                <div style={{ marginTop: "3%" }}>
+                  <Button
+                    style={{ marginRight: "3%" }}
+                    variant="contained"
+                    color="secondary"
+                    onClick={() => {
+                      this.props.history.push(`/tags`);
+                    }}
+                  >
+                    Cancel
+                  </Button>
+                  {this.props.user.authorization === 4 && (
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      onClick={this.edit}
+                    >
+                      Save Changes
+                    </Button>
+                  )}
                 </div>
-            </>
+              </form>
+            </div>
+          </>
         );
     }
 }
 const mapStateToProps = (reduxStore) => {
     return {
-       info: reduxStore.TagDetailReducer
+       info: reduxStore.TagDetailReducer,
+       user: reduxStore.user
     }
 }
 export default connect(mapStateToProps)(EditTag);

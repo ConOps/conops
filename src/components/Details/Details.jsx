@@ -14,6 +14,13 @@ import {
   KeyboardDatePicker
 } from "@material-ui/pickers";
 import { withStyles } from "@material-ui/core/styles";
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import Paper from '@material-ui/core/Paper';
+import Draggable from 'react-draggable';
 
 const styles = {
   root: {
@@ -21,15 +28,106 @@ const styles = {
   }
 };
 
+function PaperComponent(props) {
+  return (
+    <Draggable>
+      <Paper {...props} />
+    </Draggable>
+  );
+}
+
 class Details extends Component {
   state = {
-    Badge: "None"
+    Badge: "None",
+    openDelete: false,
+    openCheckIn: false,
+    openPaid: false,
+    openCheckOutWalkIn: false,
+    openCheckOut: false,
+    openSave: false,
+    id: {},
   };
 
   componentDidMount() {
     this.fetchAttendeeInformation();
   }
 
+ 
+
+  handleCloseDelete = () => {
+    this.setState({ openDelete: false });
+  };
+
+  
+
+  handleClosePaid = () => {
+    this.setState({ openPaid: false });
+  };
+
+
+  handleCloseCheckIn = () => {
+    this.setState({ openCheckIn: false });
+  };
+
+  handleCloseCheckOutWalkIn = () => {
+    this.setState({ openCheckOutWalkIn: false });
+  };
+
+  handleCloseCheckOut = () => {
+    this.setState({ openCheckOut: false });
+  };
+
+  handleCloseSave = () => {
+    this.setState({ openSave: false });
+  };
+
+  deleteAttendee = () => {
+    this.props.dispatch({
+      type: "DELETE_ATTENDEE_INFO",
+      payload: this.state.id
+    });
+    this.props.history.push(`/check-in`)
+  }
+
+  handlePaid = () => {
+    this.props.dispatch({
+             type: "CHECK_IN_AND_PAY_ATTENDEE",
+             payload: this.state.id
+           });
+    this.handleClosePaid();
+  }
+
+  checkIn = () => {
+    this.props.dispatch({
+           type: "CHECK_IN_FROM_DETAILS",
+           payload: [this.state.id]
+         });
+    this.handleCloseCheckIn();
+  }
+
+  checkOutWalkIn = () => {
+    this.props.dispatch({
+      type: "CHECK_OUT_WALK_IN",
+      payload: this.state.id
+    });
+    this.handleCloseCheckOutWalkIn();
+  }
+
+  checkOut = () => {
+    this.props.dispatch({
+      type: "CHECK_OUT",
+      payload: this.state.id
+    });
+    this.handleCloseCheckOut();
+  }
+
+  save = () => {
+    this.props.dispatch({
+      type: "UPDATE_ATTENDEE_INFO",
+      payload: this.props.info
+    });
+    this.handleCloseSave();
+  }
 
   fetchAttendeeInformation = () => {
     let id = this.props.match.params.id;
@@ -59,79 +157,253 @@ class Details extends Component {
   };
 
   handleDelete = id => {
-    if(window.confirm('are you sure that you would like to delete this attendee??')){
-    this.props.dispatch({
-      type: "DELETE_ATTENDEE_INFO",
-      payload: id
-    });
-  this.props.history.push(`/check-in`)
-  }};
+    this.setState({
+      openDelete: !this.state.openDelete,
+      ...this.state.id, id: id
+    })
+    // if(window.confirm('are you sure that you would like to delete this attendee??'))
+   
+  
+};
 
   handleCheckIn = (id, payment) => {
-    if (payment == null) {
-      if (window.confirm("get their money!")) {
-        if (
-          window.confirm("Are you sure that you want to check this person in?")
-        ) {
-          this.props.dispatch({
-            type: "CHECK_IN_AND_PAY_ATTENDEE",
-            payload: id
-          });
-        } else {
-          return false;
-        }
-      } else {
-        return false;
-      }
-    } else {
-      if (
-        window.confirm("Are you sure that you want to check this person in?")
-      ) {
-        this.props.dispatch({
-          type: "CHECK_IN_FROM_DETAILS",
-          payload: [id]
-        });
-      }
+    if(payment){
+      this.setState({
+        openCheckIn: !this.state.openCheckIn,
+        ...this.state.id, id: id
+      });
+      
+    }else{
+      this.setState({
+        openPaid: !this.state.openPaid,
+        ...this.state.id, id: id
+      });
+      
     }
+    // if (payment == null) {
+    //   if (window.confirm("get their money!")) {
+    //     if (
+    //       window.confirm("Are you sure that you want to check this person in?")
+    //     ) {
+    //       this.props.dispatch({
+    //         type: "CHECK_IN_AND_PAY_ATTENDEE",
+    //         payload: id
+    //       });
+    //     } else {
+    //       return false;
+    //     }
+    //   } else {
+    //     return false;
+    //   }
+    // } else {
+    //   if (
+    //     window.confirm("Are you sure that you want to check this person in?")
+    //   ) {
+    //     this.props.dispatch({
+    //       type: "CHECK_IN_FROM_DETAILS",
+    //       payload: [id]
+    //     });
+    //   }
+    // }
   };
 
   handleCheckOut = (id, order) => {
-    if (order == null) {
-      if (
-        window.confirm("Are you sure that you want to check this person OUT?")
-      ) {
-        this.props.dispatch({
-          type: "CHECK_OUT_WALK_IN",
-          payload: id
-        });
-      } else {
-        return false;
-      }
+    if(order == null){
+      this.setState({
+        openCheckOutWalkIn: !this.state.openCheckOutWalkIn,
+        ...this.state.id, id: id
+      })
     } else {
-      if (
-        window.confirm("Are you sure that you want to check this person OUT?")
-      ) {
-        this.props.dispatch({
-          type: "CHECK_OUT",
-          payload: id
-        });
-      } else {
-        return false;
-      }
+      this.setState({
+        openCheckOut: !this.state.openCheckOut,
+        ...this.state.id, id: id
+      })
     }
+    // if (order == null) {
+    //   if (
+    //     window.confirm("Are you sure that you want to check this person OUT?")
+    //   ) {
+    //     this.props.dispatch({
+    //       type: "CHECK_OUT_WALK_IN",
+    //       payload: id
+    //     });
+    //   } else {
+    //     return false;
+    //   }
+    // } else {
+    //   if (
+    //     window.confirm("Are you sure that you want to check this person OUT?")
+    //   ) {
+    //     this.props.dispatch({
+    //       type: "CHECK_OUT",
+    //       payload: id
+    //     });
+    //   } else {
+    //     return false;
+    //   }
+    // }
   };
 
   handleSave = () => {
-    alert("Info has been updated");
-    this.props.dispatch({
-      type: "UPDATE_ATTENDEE_INFO",
-      payload: this.props.info
-    });
+    this.setState({
+      openSave: !this.state.openSave,
+      ...this.state.info, info: this.props.info
+    })
+    // alert("Info has been updated");
+    // this.props.dispatch({
+    //   type: "UPDATE_ATTENDEE_INFO",
+    //   payload: this.props.info
+    // });
   };
 
   render() {
     return (
       <div className="detailsPage">
+        <Dialog
+          open={this.state.openDelete}
+          onClose={this.handleCloseDelete}
+          PaperComponent={PaperComponent}
+          aria-labelledby="draggable-dialog-title"
+        >
+          <DialogTitle style={{ cursor: 'move' }} id="draggable-dialog-title">
+            Delete Attendee?
+        </DialogTitle>
+          <DialogContent>
+            <DialogContentText>
+              Are you sure that you would like to delete this attendee?
+          </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={this.handleCloseDelete} color="primary">
+              Cancel
+          </Button>
+            <Button onClick={this.deleteAttendee} color="primary">
+              Confirm
+          </Button>
+          </DialogActions>
+        </Dialog>
+
+        <Dialog
+          open={this.state.openPaid}
+          onClose={this.handleClosePaid}
+          PaperComponent={PaperComponent}
+          aria-labelledby="draggable-dialog-title"
+        >
+          <DialogTitle style={{ cursor: 'move' }} id="draggable-dialog-title">
+            Has Attendee Paid?
+        </DialogTitle>
+          <DialogContent>
+            <DialogContentText>
+              This person must submit payment to be checked into the convention!
+          </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={this.handleClosePaid} color="primary">
+              Cancel
+          </Button>
+            <Button onClick={this.handlePaid} color="primary">
+              Confirm
+          </Button>
+          </DialogActions>
+        </Dialog>
+
+        <Dialog
+          open={this.state.openCheckIn}
+          onClose={this.handleCloseCheckIn}
+          PaperComponent={PaperComponent}
+          aria-labelledby="draggable-dialog-title"
+        >
+          <DialogTitle style={{ cursor: 'move' }} id="draggable-dialog-title">
+            Check-In Attendee?
+        </DialogTitle>
+          <DialogContent>
+            <DialogContentText>
+              Are you sure that you would like to check-in this attendee?
+          </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={this.handleCloseCheckIn} color="primary">
+              Cancel
+          </Button>
+            <Button onClick={this.checkIn} color="primary">
+              Confirm
+          </Button>
+          </DialogActions>
+        </Dialog>
+
+        <Dialog
+          open={this.state.openCheckOutWalkIn}
+          onClose={this.handleCloseCheckOutWalkIn}
+          PaperComponent={PaperComponent}
+          aria-labelledby="draggable-dialog-title"
+        >
+          <DialogTitle style={{ cursor: 'move' }} id="draggable-dialog-title">
+            Check-Out Attendee?
+        </DialogTitle>
+          <DialogContent>
+            <DialogContentText>
+              Are you sure that you want to check this person OUT?
+          </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={this.handleCloseCheckOutWalkIn} color="primary">
+              Cancel
+          </Button>
+            <Button onClick={this.checkOutWalkIn} color="primary">
+              Confirm
+          </Button>
+          </DialogActions>
+        </Dialog>
+
+
+        <Dialog
+          open={this.state.openCheckOut}
+          onClose={this.handleCloseCheckOut}
+          PaperComponent={PaperComponent}
+          aria-labelledby="draggable-dialog-title"
+        >
+          <DialogTitle style={{ cursor: 'move' }} id="draggable-dialog-title">
+            Check-Out Attendee?
+        </DialogTitle>
+          <DialogContent>
+            <DialogContentText>
+              Are you sure that you want to check this person OUT?
+          </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={this.handleCloseCheckOut} color="primary">
+              Cancel
+          </Button>
+            <Button onClick={this.checkOut} color="primary">
+              Confirm
+          </Button>
+          </DialogActions>
+        </Dialog>
+
+        <Dialog
+          open={this.state.openSave}
+          onClose={this.handleCloseSave}
+          PaperComponent={PaperComponent}
+          aria-labelledby="draggable-dialog-title"
+        >
+          <DialogTitle style={{ cursor: 'move' }} id="draggable-dialog-title">
+            Edit Attendee?
+        </DialogTitle>
+          <DialogContent>
+            <DialogContentText>
+              Info has been updated?
+          </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={this.handleCloseSave} color="primary">
+              Cancel
+          </Button>
+            <Button onClick={this.save} color="primary">
+              Confirm
+          </Button>
+          </DialogActions>
+        </Dialog>
+
         <div>
           <h1> Manage Attendee: {this.props.info.FirstName}</h1>
           {/* needs to render the name of the attendee */}

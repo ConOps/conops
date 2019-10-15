@@ -45,53 +45,55 @@ class LocationDetails extends Component {
 
     render() {
         return (
-        <div>
+          <div>
             <h1>2D Con 2020: Remaster</h1>
             <h1>Manage Location: {this.props.details.LocationName}</h1>
-            <TextField 
-                label="Name" 
-                className={this.props.classes.root} 
-                value={this.props.details.LocationName}
-                onChange={event => 
-                    this.props.dispatch({
-                        type: "EDIT_LOCATION_NAME",
-                        payload: event.target.value
-                    })
-                }
+            <TextField
+              label="Name"
+              className={this.props.classes.root}
+              value={this.props.details.LocationName}
+              onChange={event =>
+                this.props.dispatch({
+                  type: "EDIT_LOCATION_NAME",
+                  payload: event.target.value
+                })
+              }
             ></TextField>
-            <TextField 
-                label="Description" 
-                className={this.props.classes.root} 
-                value={this.props.details.LocationDescription}
-                onChange={event => 
-                    this.props.dispatch ({
-                        type: "EDIT_LOCATION_DESCRIPTION",
-                        payload: event.target.value
-                    })
-                }
+            <TextField
+              label="Description"
+              className={this.props.classes.root}
+              value={this.props.details.LocationDescription}
+              onChange={event =>
+                this.props.dispatch({
+                  type: "EDIT_LOCATION_DESCRIPTION",
+                  payload: event.target.value
+                })
+              }
             ></TextField>
             <FormGroup>
-                <FormControlLabel
-                    control={
-                        <Switch 
-                            checked={this.props.details.LocationIsActive}
-                            />}
-                            label="Active"
-                            labelPlacement="start"
-                            onChange={this.handleChange}
-                            />
+              <FormControlLabel
+                control={
+                  <Switch checked={this.props.details.LocationIsActive} />
+                }
+                label="Active"
+                labelPlacement="start"
+                onChange={this.handleChange}
+              />
             </FormGroup>
             <hr></hr>
             <Button onClick={this.handleBack}>Back</Button>
-            <Button onClick={this.handleSave}>Save</Button>
-        </div>
-        )
+            {this.props.user.authorization === 4 && (
+              <Button onClick={this.handleSave}>Save</Button>
+            )}
+          </div>
+        );
     }
 }
 
 const mapStateToProps = reduxStore => {
     return {
-        details: reduxStore.locationDetailsReducer
+        details: reduxStore.locationDetailsReducer,
+        user: reduxStore.user
     };
 };
 
