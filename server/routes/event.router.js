@@ -116,14 +116,13 @@ router.put('/event_update', rejectUnauthenticated, rejectNonEventOrganizer, asyn
         await connection.query(queryText, [eventUpdate.EventName, eventUpdate.EventDescription, eventUpdate.EventStartTime, eventUpdate.EventEndTime, currentTime, eventUpdate.EventModifiedNotes, eventUpdate.SponsorID, eventUpdate.LocationID, eventUpdate.EventID] )
         const tagsToAdd = eventUpdate.Tags;
         //need to update tags.. this is a shotgun approach; we're removing all event tags here, then saving all that we get the client
-        // const tagsDeleteText = `DELETE FROM "EventTags" WHERE "Event_ID" = $1;`;
-        // await connection.query(tagsDeleteText, [eventUpdate.EventID]);
-        const tagsQueryText = `SELECT * FROM "Tags" WHERE "TagName" = $1;`;
+        const tagsDeleteText = `DELETE FROM "EventTags" WHERE "Event_ID" = $1;`;
+        await connection.query(tagsDeleteText, [eventUpdate.EventID]);
         const tagsInsertText = `INSERT INTO "EventTags" ("Event_ID", "Tag_ID")
                                 VALUES ($1, $2);`;
-        // await connection.query(`
-        //                         `)
-        // await connection.query()
+        for (let i = 0; i < eventUpdate.TagObjects.length; i++) {
+            await connection.query(tagsInsertText, [eventUpdate.EventID, eventUpdate.TagObjects[i].TagID])
+        }
         await connection.query('COMMIT');
         res.sendStatus(200);
     } catch(error) {

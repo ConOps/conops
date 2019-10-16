@@ -57,8 +57,8 @@ class EventDetails extends Component {
         this.props.dispatch({
             type: 'FETCH_CONVENTION'
         });
-        this.props.dispatch({ 
-            type: 'FETCH_SPONSORS' 
+        this.props.dispatch({
+            type: 'FETCH_SPONSORS'
         });
 
         this.fetchEventDetails();
@@ -94,10 +94,10 @@ class EventDetails extends Component {
             type: 'REMOVE_TAG_FROM_EVENT',
             payload: tag
         })
-        
+
     }
 
-    
+
 
     render() {
 
@@ -135,7 +135,7 @@ class EventDetails extends Component {
         })
 
         return (
-            <div style={{margin: '20px'}}>
+            <div style={{ margin: '20px' }}>
                 {/* {JSON.stringify(this.props.details)} */}
                 <h1>{this.props.convention.ConventionName}</h1>
                 {this.props.details.IsCancelled && <h3 className={this.props.classes.cancelledText}>Event is cancelled.</h3>}
@@ -159,18 +159,21 @@ class EventDetails extends Component {
                 <div className={this.props.classes.topRight}>
                     {this.props.details.DateLastModified && <h3 className={this.props.classes.cancelledText}>Event Has Been Modified!</h3>}
                     {this.props.details.DateLastModified && <h4 className={this.props.classes.cancelledText}>{moment(this.props.details.DateLastModified).format('LLLL')}</h4>}
-                    {this.props.details.DateLastModified && <><TextField
-                                                                    label="Change Notes"
-                                                                    className={this.props.classes.root}
-                                                                    value={this.props.details.EventModifiedNotes}
-                                                                    InputLabelProps={{ shrink: this.props.details.EventModifiedNotes }}
-                                                                    onChange={event =>
-                                                                        this.props.dispatch({
-                                                                            type: "EDIT_EVENT_MODIFIED_NOTES",
-                                                                            payload: event.target.value
-                                                                        })}
-                                                                /></>}
-                </div>  
+                    <TextField
+                        label="Change Notes"
+                        multiline
+                        fullWidth
+                        margin="normal"
+                        className={this.props.classes.multiline}
+                        value={this.props.details.EventModifiedNotes}
+                        InputLabelProps={{ shrink: this.props.details.EventModifiedNotes }}
+                        onChange={event =>
+                            this.props.dispatch({
+                                type: "EDIT_EVENT_MODIFIED_NOTES",
+                                payload: event.target.value
+                            })}
+                    />
+                </div>
                 <hr></hr>
                 <h2>Event Details</h2>
                 <TextField
@@ -287,12 +290,12 @@ class EventDetails extends Component {
                 </FormControl>
                 <hr></hr>
                 <div>
-                    <Button variant="contained" color="secondary" onClick={this.handleBack} style={{margin: '5px'}}>
+                    <Button variant="contained" color="secondary" onClick={this.handleBack} style={{ margin: '5px' }}>
                         Back
                     </Button>
                     <ThemeProvider theme={theme}>
                         <Button variant="contained" color="primary" onClick={this.handleSave} style={{ margin: '5px' }}>
-                        Save
+                            Save
                     </Button>
                     </ThemeProvider>
                 </div>
@@ -306,7 +309,7 @@ const mapStateToProps = reduxStore => {
         details: reduxStore.eventDetailsReducer,
         locations: reduxStore.LocationReducer,
         tags: reduxStore.TagsReducer,
-        
+
         convention: reduxStore.ConventionsReducer,
         sponsors: reduxStore.sponsorReducer
     };
