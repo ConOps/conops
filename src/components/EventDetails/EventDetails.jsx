@@ -96,7 +96,7 @@ class EventDetails extends Component {
                     <Chip
                         key={tag.TagID}
                         label={tag.TagName}
-                        value={tag}
+                        value={tag.TagID}
                         className={this.props.classes.chip}
                         color="primary"
                     />
@@ -242,13 +242,13 @@ class EventDetails extends Component {
                         value={this.props.details.TagObjects}
                         className={this.props.classes.root}
                         input={<Input id="select-multiple-chip" />}
-                        renderValue={selected => (
-                            <div>
-                                {selected.map(value => (
-                                    <Chip key={value.TagID} label={value.TagName} value={value} />
-                                ))}
-                            </div>
-                        )}
+                        // renderValue={selected => (
+                        //     <div>
+                        //         {selected.map(value => (
+                        //             <Chip key={value.TagID} label={value.TagName} value={value.TagID} />
+                        //         ))}
+                        //     </div>
+                        // )}
                         onChange={event =>
                             this.props.dispatch({
                                 type: 'EDIT_EVENT_TAGS',

@@ -14,9 +14,10 @@ componentDidMount() {
 
 render(){
   return(
-    <div>
+    <div className = "homeBigger">
       <h1>HOME</h1>
   <div className = "homeBig">
+        
     <div className = "homePage">
         <h1>Welcome to ConOps!!</h1>
     {this.props.reduxStore.user.authorization === 1 &&
