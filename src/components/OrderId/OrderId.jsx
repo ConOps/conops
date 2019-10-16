@@ -2,6 +2,22 @@ import React, { Component } from "react";
 import MaterialTable from "material-table";
 import { connect } from "react-redux";
 import Button from "@material-ui/core/Button";
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import Paper from '@material-ui/core/Paper';
+import Draggable from 'react-draggable';
+
+
+function PaperComponent(props) {
+  return (
+    <Draggable>
+      <Paper {...props} />
+    </Draggable>
+  );
+}
 
 class OrderID extends Component {
   state = {
@@ -31,7 +47,8 @@ class OrderID extends Component {
       { title: "Pre Reg Sort Number", field: "PreRegSortNumber", hidden: true },
       { title: "OrderID", field: "OrderID" }
     ],
-    data: []
+    data: [],
+    open: false,
   };
 
   componentDidMount() {
@@ -48,9 +65,48 @@ class OrderID extends Component {
 
   }
 
+  handleClose = () => {
+    this.setState({ open: false });
+  };
+
+  checkInPrompt = () => {
+
+    this.props.dispatch({
+      type: "CHECK_IN_ALL_SELECTED",
+      payload: this.state.data
+    });
+    this.handleClose();
+    this.props.history.push(`/check-in`);
+  }
+
   render() {
     return (
       <div>
+
+        <Dialog
+          open={this.state.open}
+          onClose={this.handleClose}
+          PaperComponent={PaperComponent}
+          aria-labelledby="draggable-dialog-title"
+        >
+          <DialogTitle style={{ cursor: 'move', color: 'white' }} id="draggable-dialog-title" className="Dialog">
+            Check-In
+        </DialogTitle>
+          <DialogContent>
+            <DialogContentText style={{ color: 'black' }}>
+              Are you sure that you would like to check these people in?
+          </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={this.handleClose} variant="contained" color="secondary">
+              Cancel
+          </Button>
+            <Button onClick={this.checkInPrompt} variant="contained" color="inherit">
+              Confirm
+          </Button>
+          </DialogActions>
+        </Dialog>
+
         <h1 style={{ textAlign: "center" }}>Current Convention: 2DCON 2020</h1>
         {this.props.reduxStore.user.authorization === 4 ||
         this.props.reduxStore.user.authorization === 1 ? (
@@ -76,26 +132,40 @@ class OrderID extends Component {
                 icon: "check_circle",
                 tooltip: "Check in all of the selected attendees",
                 onClick: (event, data) => {
-                  if (
-                    window.confirm(
-                      "Are you sure that you would like to check in all of the selected attendees?"
-                    )
-                  ) {
-                    console.log(data);
+                  if(data) {
                     let attendeesToCheckIn = [];
                     for (let i = 0; i < data.length; i++) {
                       console.log("i am in the loop");
                       attendeesToCheckIn.push(data[i].AttendeeID);
                     }
-                    this.props.dispatch({
-                      type: "CHECK_IN_ALL_SELECTED",
-                      payload: attendeesToCheckIn
-                    });
-                    this.props.history.push(`/check-in`);
-                  } else {
-                    return false;
+                    this.setState({
+                      open: !this.state.open,
+                      ...this.state.data, data: attendeesToCheckIn
+                    })
                   }
                 }
+                // (event, data) => {
+                //   if (
+                //     window.confirm(
+                //       "Are you sure that you would like to check in all of the selected attendees?"
+                //     )
+                //   ) 
+                //   {
+                //     console.log(data);
+                    // let attendeesToCheckIn = [];
+                    // for (let i = 0; i < data.length; i++) {
+                    //   console.log("i am in the loop");
+                    //   attendeesToCheckIn.push(data[i].AttendeeID);
+                    // }
+                    // this.props.dispatch({
+                    //   type: "CHECK_IN_ALL_SELECTED",
+                    //   payload: attendeesToCheckIn
+                    // });
+                    // this.props.history.push(`/check-in`);
+                //   } else {
+                //     return false;
+                //   }
+                // }
               }
             ]}
             editable={{}}
