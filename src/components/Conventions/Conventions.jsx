@@ -11,6 +11,13 @@ import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import { createMuiTheme } from '@material-ui/core/styles';
 import { ThemeProvider } from '@material-ui/styles';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import Paper from '@material-ui/core/Paper';
+import Draggable from 'react-draggable';
 
 const theme = createMuiTheme({
   palette: {
@@ -18,8 +25,28 @@ const theme = createMuiTheme({
   }
 }); 
 
+function PaperComponent(props) {
+  return (
+    <Draggable>
+      <Paper {...props} />
+    </Draggable>
+  );
+}
+
 class Conventions extends Component {
-  state = {};
+  state = {
+    openEdit: false,
+    openSave: false,
+    info: {},
+  };
+
+  handleCloseEdit = () => {
+    this.setState({ openEdit: false });
+  };
+
+  handleCloseSave = () => {
+    this.setState({ openSave: false });
+  };
 
   componentDidMount() {
     this.props.dispatch({
@@ -46,13 +73,18 @@ class Conventions extends Component {
   };
 
   newConvention = () => {
-    console.log("convention state", this.state);
+    this.setState({
+      openSave: !this.state.openSave,
+    })
+  };
 
+  saveConvention = () => {
     this.props.dispatch({
       type: "ADD_NEW_CONVENTION",
       payload: this.state
     });
-  };
+    this.handleCloseSave();
+  }
 
   updateName = event => {
     this.props.dispatch({
@@ -76,15 +108,72 @@ class Conventions extends Component {
   };
 
   editConvention = () => {
+    this.setState({
+      openEdit: !this.state.openEdit,
+      ...this.state.info, info: this.props.info
+    })
+  };
+
+  editConventionSave = () => {
     this.props.dispatch({
       type: "UPDATE_CONVENTION",
       payload: this.props.info
     });
-  };
+    this.handleCloseEdit();
+  }
 
   render() {
     return (
       <div style={{ marginTop: '65px' }}>
+
+        <Dialog
+          open={this.state.openSave}
+          onClose={this.handleCloseSave}
+          PaperComponent={PaperComponent}
+          aria-labelledby="draggable-dialog-title"
+        >
+          <DialogTitle style={{ cursor: 'move' }} id="draggable-dialog-title">
+            Create Convention?
+        </DialogTitle>
+          <DialogContent>
+            <DialogContentText>
+              Are you sure that you would like to create this Convention?
+          </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={this.handleCloseSave} color="primary">
+              Cancel
+          </Button>
+            <Button onClick={this.saveConvention} color="primary">
+              Confirm
+          </Button>
+          </DialogActions>
+        </Dialog>
+
+        <Dialog
+          open={this.state.openEdit}
+          onClose={this.handleCloseEdit}
+          PaperComponent={PaperComponent}
+          aria-labelledby="draggable-dialog-title"
+        >
+          <DialogTitle style={{ cursor: 'move' }} id="draggable-dialog-title">
+            Edit Convention?
+        </DialogTitle>
+          <DialogContent>
+            <DialogContentText>
+              Are you sure that you would like to edit this Convention?
+          </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={this.handleCloseEdit} color="primary">
+              Cancel
+          </Button>
+            <Button onClick={this.editConventionSave} color="primary">
+              Confirm
+          </Button>
+          </DialogActions>
+        </Dialog>
+
         <h1>The Active Convention is: </h1>
         <hr></hr>
         <h3>Create New Convention:</h3>
