@@ -36,11 +36,16 @@ function PaperComponent(props) {
 class Conventions extends Component {
   state = {
     openEdit: false,
+    openSave: false,
     info: {},
   };
 
   handleCloseEdit = () => {
     this.setState({ openEdit: false });
+  };
+
+  handleCloseSave = () => {
+    this.setState({ openSave: false });
   };
 
   componentDidMount() {
@@ -68,13 +73,18 @@ class Conventions extends Component {
   };
 
   newConvention = () => {
-    console.log("convention state", this.state);
+    this.setState({
+      openSave: !this.state.openSave,
+    })
+  };
 
+  saveConvention = () => {
     this.props.dispatch({
       type: "ADD_NEW_CONVENTION",
       payload: this.state
     });
-  };
+    this.handleCloseSave();
+  }
 
   updateName = event => {
     this.props.dispatch({
@@ -115,6 +125,30 @@ class Conventions extends Component {
   render() {
     return (
       <div style={{ marginTop: '65px' }}>
+
+        <Dialog
+          open={this.state.openSave}
+          onClose={this.handleCloseSave}
+          PaperComponent={PaperComponent}
+          aria-labelledby="draggable-dialog-title"
+        >
+          <DialogTitle style={{ cursor: 'move' }} id="draggable-dialog-title">
+            Create Convention?
+        </DialogTitle>
+          <DialogContent>
+            <DialogContentText>
+              Are you sure that you would like to create this Convention?
+          </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={this.handleCloseSave} color="primary">
+              Cancel
+          </Button>
+            <Button onClick={this.saveConvention} color="primary">
+              Confirm
+          </Button>
+          </DialogActions>
+        </Dialog>
 
         <Dialog
           open={this.state.openEdit}
