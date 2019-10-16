@@ -6,6 +6,14 @@ import Button from '@material-ui/core/Button';
 import FormGroup from '@material-ui/core/FormGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Switch from '@material-ui/core/Switch';
+import { createMuiTheme } from '@material-ui/core/styles';
+import { ThemeProvider } from '@material-ui/styles';
+
+const theme = createMuiTheme({
+    palette: {
+        primary: { main: "#19375f" }
+    }
+});
 
 const styles = ({
     root: {
@@ -56,14 +64,15 @@ class SponsorDetails extends Component {
     render() {
         console.log('SPONSOR NAME:', this.props.details.SponsorName)
         return (
-            <div>
+            <div style={{margin:'20px'}}>
                 <h1>2D Con 2020: Remaster</h1>
                 <h1>Manage Sponsor: {this.props.details.SponsorName}</h1>
                 <TextField
                     label="Name"
                     className={this.props.classes.root}
                     value={this.props.details.SponsorName}
-                    onChange={event => 
+                    InputLabelProps={{ shrink: this.props.details.SponsorName}}
+                    onChange={event =>
                         this.props.dispatch({
                             type: "EDIT_SPONSOR_NAME",
                             payload: event.target.value
@@ -73,6 +82,7 @@ class SponsorDetails extends Component {
                     label="Amount Paid"
                     className={this.props.classes.root}
                     value={this.props.details.AmountPaid}
+                    InputLabelProps={{ shrink: this.props.details.AmountPaid }}
                     onChange={event =>
                         this.props.dispatch({
                             type: "EDIT_SPONSOR_AMOUNT_PAID",
@@ -83,6 +93,8 @@ class SponsorDetails extends Component {
                     label="Website"
                     className={this.props.classes.root}
                     value={this.props.details.Website}
+                    InputLabelProps={{ shrink: this.props.details.Website }}
+                    fullWidth
                     onChange={event =>
                         this.props.dispatch({
                             type: "EDIT_SPONSOR_WEBSITE",
@@ -93,6 +105,8 @@ class SponsorDetails extends Component {
                     label="Notes"
                     className={this.props.classes.root}
                     value={this.props.details.Notes}
+                    InputLabelProps={{ shrink: this.props.details.Notes }}
+                    fullWidth
                     onChange={event =>
                         this.props.dispatch({
                             type: "EDIT_SPONSOR_NOTES",
@@ -111,8 +125,10 @@ class SponsorDetails extends Component {
                     />
                 </FormGroup>
                 <hr></hr>
-                <Button onClick={this.handleBack}>Back</Button>
-                <Button onClick={this.handleSave}>Save</Button>
+                <Button onClick={this.handleBack} variant="contained" color="secondary" style={{margin: '5px'}}>Back</Button>
+                <ThemeProvider theme={theme}>
+                    <Button onClick={this.handleSave} variant="contained" color="primary" style={{ margin: '5px' }}>Save</Button>
+                </ThemeProvider>
             </div>
         )
     }

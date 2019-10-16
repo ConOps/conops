@@ -84,8 +84,8 @@ class Conventions extends Component {
 
   render() {
     return (
-      <div style={{ marginTop: '65px' }}>
-        <h1>The Active Convention is: </h1>
+      <div style={{ margin: '20px' }}>
+        <h1>The Active Convention is: {this.props.info.ConventionName}</h1>
         <hr></hr>
         <h3>Create New Convention:</h3>
         <TextField

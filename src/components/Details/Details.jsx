@@ -287,9 +287,11 @@ class Details extends Component {
             <Button onClick={this.handleCloseDelete} variant="contained" color="secondary">
               Cancel
           </Button>
-            <Button onClick={this.deleteAttendee} variant="contained" color="inherit">
+            <ThemeProvider theme={theme}>
+            <Button onClick={this.deleteAttendee} variant="contained" color="primary">
               Confirm
           </Button>
+            </ThemeProvider>
           </DialogActions>
         </Dialog>
 
@@ -311,9 +313,11 @@ class Details extends Component {
             <Button onClick={this.handleClosePaid} variant="contained" color="secondary">
               Cancel
           </Button>
-            <Button onClick={this.handlePaid} variant="contained" color="inherit">
+            <ThemeProvider theme={theme}>
+            <Button onClick={this.handlePaid} variant="contained" color="primary">
               Confirm
           </Button>
+            </ThemeProvider>
           </DialogActions>
         </Dialog>
 
@@ -335,9 +339,11 @@ class Details extends Component {
             <Button onClick={this.handleCloseCheckIn} variant="contained" color="secondary">
               Cancel
           </Button>
-            <Button onClick={this.checkIn} variant="contained" color="inherit">
+            <ThemeProvider theme={theme}>
+            <Button onClick={this.checkIn} variant="contained" color="primary">
               Confirm
           </Button>
+            </ThemeProvider>
           </DialogActions>
         </Dialog>
 
@@ -359,9 +365,11 @@ class Details extends Component {
             <Button onClick={this.handleCloseCheckOutWalkIn} variant="contained" color="secondary">
               Cancel
           </Button>
-            <Button onClick={this.checkOutWalkIn} variant="contained" color="inherit">
+            <ThemeProvider theme={theme}>
+            <Button onClick={this.checkOutWalkIn} variant="contained" color="primary">
               Confirm
           </Button>
+            </ThemeProvider>
           </DialogActions>
         </Dialog>
 
@@ -384,9 +392,11 @@ class Details extends Component {
             <Button onClick={this.handleCloseCheckOut} variant="contained" color="secondary">
               Cancel
           </Button>
-            <Button onClick={this.checkOut} variant="contained" color="inherit">
+            <ThemeProvider theme={theme}>
+            <Button onClick={this.checkOut} variant="contained" color="primary">
               Confirm
           </Button>
+            </ThemeProvider>
           </DialogActions>
         </Dialog>
 
@@ -408,9 +418,11 @@ class Details extends Component {
             <Button onClick={this.handleCloseSave} variant="contained" color="secondary">
               Cancel
           </Button>
-            <Button onClick={this.save} variant="contained" color="inherit">
+            <ThemeProvider theme={theme}>
+            <Button onClick={this.save} variant="contained" color="primary">
               Confirm
           </Button>
+            </ThemeProvider>
           </DialogActions>
         </Dialog>
 
@@ -426,24 +438,27 @@ class Details extends Component {
             <p>Find All Attendees With Order ID: {this.props.info.orderID} </p>
           )}
           {this.props.info.orderID === null && (
-            <Button variant="contained" disabled>
-              Find
+            <Button style={{margin: '10px'}}variant="contained" disabled>
+              Find Group
             </Button>
           )}
           {this.props.info.orderID != null && (
             <ThemeProvider theme={theme}>
-            <Button
+              <Button
+              style={{ margin: '10px' }}
               variant="contained"
               color="primary"
               onClick={() => this.handleFind(this.props.info.orderID)}
             >
-              Find
+              Find Group
             </Button>
             </ThemeProvider>
           )}
 
           {(this.props.user.authorization === 4 || this.props.user.authorization === 1 ) && (this.props.info.CheckInDate === null ? (
-            <Button
+            <ThemeProvider theme={theme}>
+           <Button
+              style={{ margin: '10px' }}
               variant="contained"
               color="primary"
               onClick={() =>
@@ -455,10 +470,12 @@ class Details extends Component {
             >
               Check-In
             </Button>
+            </ThemeProvider>
           )
           :
           (
             <Button
+              style={{ margin: '10px' }}
               variant="contained"
               color="secondary"
               onClick={() =>
@@ -474,6 +491,7 @@ class Details extends Component {
 
           {this.props.user.authorization === 4 && (
             <Button
+              style={{ margin: '10px' }}
               variant="contained"
               color="secondary"
               onClick={() => this.handleDelete(this.props.info.AttendeeID)}
@@ -739,14 +757,18 @@ class Details extends Component {
           </MuiPickersUtilsProvider>
         </div>
         <hr></hr>
-        <Button variant="contained" color="primary" onClick={this.handleBack}>
+        <ThemeProvider theme={theme}>
+          <Button variant="contained" color="primary" onClick={this.handleBack} style={{ margin: '10px' }}>
           Back
         </Button>
+        </ThemeProvider>
         {(this.props.user.authorization === 4 || this.props.user.authorization === 1)
         &&(
-        <Button variant="contained" color="primary" onClick={this.handleSave}>
+          <ThemeProvider theme={theme}>
+            <Button variant="contained" color="primary" onClick={this.handleSave} style={{ margin: '10px' }}>
           Save
         </Button>
+          </ThemeProvider>
         )}
       </div>
     );
