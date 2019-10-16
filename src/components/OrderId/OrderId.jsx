@@ -81,7 +81,7 @@ class OrderID extends Component {
 
   render() {
     return (
-      <div>
+      <div style={{marginTop:'100px'}}>
 
         <Dialog
           open={this.state.open}
@@ -169,7 +169,7 @@ class OrderID extends Component {
         <Button
           variant="contained"
           color="secondary"
-          style={{ marginLeft: "3%", marginRight: "3%" }}
+          style={{ marginLeft: "3%", marginTop: '10px' }}
           onClick={() => this.props.history.push("/check-in")}
         >
           Back to Check In
