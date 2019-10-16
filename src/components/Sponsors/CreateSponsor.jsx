@@ -42,11 +42,6 @@ class CreateSponsor extends Component {
         this.setState({
             openSave: !this.state.openSave,
         })
-        // alert('Sponsor created.')
-        // this.props.dispatch({
-        //     type: "ADD_SPONSOR",
-        //     payload: this.props.details
-        // })
     }
 
     saveSponsor = () => {
@@ -55,6 +50,7 @@ class CreateSponsor extends Component {
             payload: this.props.details
         });
         this.handleCloseSave();
+        this.props.history.push(`/sponsors`);
     }
 
     render() {
