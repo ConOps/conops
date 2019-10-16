@@ -3,6 +3,13 @@ import { connect } from "react-redux";
 import { withStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import Paper from '@material-ui/core/Paper';
+import Draggable from 'react-draggable';
 
 const styles = ({
     root: {
@@ -10,21 +17,74 @@ const styles = ({
     },
 });
 
+function PaperComponent(props) {
+    return (
+        <Draggable>
+            <Paper {...props} />
+        </Draggable>
+    );
+}
+
 class CreateSponsor extends Component {
+    state = {
+        openSave: false,
+    }
+
     handleCancel = () => {
         this.props.history.push('/sponsors');
     }
 
-    handleSave = (event) => {
-        alert('Sponsor created.')
+    handleCloseSave = () => {
+        this.setState({ openSave: false });
+    };
+
+    handleSave = () => {
+        this.setState({
+            openSave: !this.state.openSave,
+        })
+        // alert('Sponsor created.')
+        // this.props.dispatch({
+        //     type: "ADD_SPONSOR",
+        //     payload: this.props.details
+        // })
+    }
+
+    saveSponsor = () => {
         this.props.dispatch({
             type: "ADD_SPONSOR",
             payload: this.props.details
-        })
+        });
+        this.handleCloseSave();
     }
+
     render() {
         return (
             <div>
+
+                <Dialog
+                    open={this.state.openSave}
+                    onClose={this.handleCloseSave}
+                    PaperComponent={PaperComponent}
+                    aria-labelledby="draggable-dialog-title"
+                >
+                    <DialogTitle style={{ cursor: 'move' }} id="draggable-dialog-title">
+                        Create Sponsor?
+        </DialogTitle>
+                    <DialogContent>
+                        <DialogContentText>
+                            Are you sure that you would like to create this Sponsor?
+          </DialogContentText>
+                    </DialogContent>
+                    <DialogActions>
+                        <Button onClick={this.handleCloseSave} color="primary">
+                            Cancel
+          </Button>
+                        <Button onClick={this.saveSponsor} color="primary">
+                            Confirm
+          </Button>
+                    </DialogActions>
+                </Dialog>
+                
                 <h1>Create Sponsor</h1>
                 <hr></hr>
                 <TextField
