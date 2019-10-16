@@ -30,12 +30,12 @@ class News extends Component {
               }
             ></TextField>
             {this.props.reduxStore.user.authorization === 4 &&
-            <Button variant= "contained" color= "primary" onClick = {
+            <Button variant= "contained" color= "primary" onClick = {() => {
                 this.props.dispatch({
                     type: 'SAVE_CONVENTION_NEWS',
-                    payload: this.props.reduxStore.homePageReducer.ConventionNews
+                    payload: this.props.reduxStore.homePageReducer
                 })
-            }>
+            }}>
                 Save
             </Button>
             }

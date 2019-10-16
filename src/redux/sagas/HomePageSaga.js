@@ -17,8 +17,27 @@ function * fetchNews(){
     
 }
 }
+
+function * saveConventionNews(action){
+    try {
+        const config = {
+            headers: { 'Content-Type': 'application/json' },
+            withCredentials: true,
+        };
+        yield console.log('in saveConventionNews, action.payload :', action.payload);
+        yield axios.put(`/api/home/edit`, action.payload, config)
+        yield put({
+           type: 'FETCH_NEWS'
+        })
+    }catch(error){
+        console.log('error in saveConventionNews', error);
+        
+    }
+}
+
 function * homePageSaga(){
     yield takeLatest('FETCH_NEWS', fetchNews)
+    yield takeLatest('SAVE_CONVENTION_NEWS', saveConventionNews)
 }
 
 export default homePageSaga;
