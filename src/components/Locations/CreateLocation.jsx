@@ -63,7 +63,7 @@ class CreateLocation extends Component {
     }
     render() {
         return (
-          <div>
+          <div style={{margin:'20px'}}>
 
             <Dialog
               open={this.state.openSave}
@@ -114,10 +114,10 @@ class CreateLocation extends Component {
               }
             ></TextField>
             <hr></hr>
-            <Button onClick={this.handleCancel} variant="contained" color="secondary">Cancel</Button>
+            <Button onClick={this.handleCancel} variant="contained" color="secondary" style={{margin:'5px'}}> Cancel</Button>
             {this.props.user.authorization === 4 && (
               <ThemeProvider theme={theme}>
-              <Button onClick={this.handleSave} variant="contained" color="primary">Save</Button>
+                <Button onClick={this.handleSave} variant="contained" color="primary" style={{ margin: '5px' }}>Save</Button>
               </ThemeProvider>
             )}
           </div>

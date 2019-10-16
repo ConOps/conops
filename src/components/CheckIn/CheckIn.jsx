@@ -2,9 +2,7 @@ import React, { Component } from "react";
 import MaterialTable from "material-table";
 import { connect } from "react-redux";
 import Button from "@material-ui/core/Button";
-
 import moment from "moment";
-
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';

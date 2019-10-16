@@ -8,12 +8,20 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Switch from '@material-ui/core/Switch';
 import { createMuiTheme } from '@material-ui/core/styles';
 import { ThemeProvider } from '@material-ui/styles';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import Paper from '@material-ui/core/Paper';
+import Draggable from 'react-draggable';
 
 const theme = createMuiTheme({
     palette: {
         primary: { main: "#19375f" }
     }
 });
+
 
 const styles = ({
     root: {
@@ -24,6 +32,14 @@ const styles = ({
         marginRight: '15px',
     } 
 });
+
+function PaperComponent(props) {
+    return (
+        <Draggable>
+            <Paper {...props} />
+        </Draggable>
+    );
+}
 
 class SponsorDetails extends Component {
     componentDidMount() {
@@ -40,19 +56,32 @@ class SponsorDetails extends Component {
 
     state = {
         SponsorIsActive: true,
+        openSave: false,
+        details: {},
     }
+
+    handleCloseSave = () => {
+        this.setState({ openSave: false });
+    };
 
     handleBack = () => {
         this.props.history.push("/sponsors");
     };
 
     handleSave = () => {
-        alert("Info has been updated");
+        this.setState({
+            openSave: !this.state.openSave,
+            ...this.state.details, details: this.props.details
+        })
+    };
+
+    saveSponsor = () => {
         this.props.dispatch({
             type: "UPDATE_SPONSOR_DETAILS",
             payload: this.props.details
         });
-    };
+        this.handleCloseSave();
+    }
 
     handleChange = () => {
         this.props.dispatch({
@@ -64,7 +93,34 @@ class SponsorDetails extends Component {
     render() {
         console.log('SPONSOR NAME:', this.props.details.SponsorName)
         return (
-            <div style={{margin:'20px'}}>
+            <div style={{margin: '20px'}}>
+
+                <Dialog
+                    open={this.state.openSave}
+                    onClose={this.handleCloseSave}
+                    PaperComponent={PaperComponent}
+                    aria-labelledby="draggable-dialog-title"
+                >
+                    <DialogTitle style={{ cursor: 'move', color: 'white' }} id="draggable-dialog-title" className="Dialog">
+                        Edit Sponsor?
+        </DialogTitle>
+                    <DialogContent>
+                        <DialogContentText style={{ color: 'black' }}>
+                            Are you sure that you would like to edit this sponsor?
+          </DialogContentText>
+                    </DialogContent>
+                    <DialogActions>
+                        <Button onClick={this.handleCloseSave} variant="contained" color="secondary">
+                            Cancel
+          </Button>
+                        <ThemeProvider theme={theme}>
+                        <Button onClick={this.saveSponsor} variant="contained" color="primary">
+                            Confirm
+          </Button>
+                        </ThemeProvider>
+                    </DialogActions>
+                </Dialog>
+
                 <h1>2D Con 2020: Remaster</h1>
                 <h1>Manage Sponsor: {this.props.details.SponsorName}</h1>
                 <TextField

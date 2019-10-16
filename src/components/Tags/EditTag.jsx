@@ -2,8 +2,6 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Button from '@material-ui/core/Button';
 import TextField from "@material-ui/core/TextField"
-import { createMuiTheme } from '@material-ui/core/styles';
-import { ThemeProvider } from '@material-ui/styles';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
@@ -11,12 +9,16 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Paper from '@material-ui/core/Paper';
 import Draggable from 'react-draggable';
+import { createMuiTheme } from '@material-ui/core/styles';
+import { ThemeProvider } from '@material-ui/styles';
 
 const theme = createMuiTheme({
   palette: {
     primary: { main: "#19375f" }
   }
-}); 
+});
+
+
 
 function PaperComponent(props) {
   return (
@@ -90,21 +92,23 @@ class EditTag extends Component {
                 PaperComponent={PaperComponent}
                 aria-labelledby="draggable-dialog-title"
               >
-                <DialogTitle style={{ cursor: 'move' }} id="draggable-dialog-title">
+                <DialogTitle style={{ cursor: 'move', color: 'white' }} id="draggable-dialog-title" className="Dialog">
                   Edit tag?
         </DialogTitle>
                 <DialogContent>
-                  <DialogContentText>
+                  <DialogContentText style={{ color: 'black' }}>
                     Are you sure that you would like to edit this tag?
           </DialogContentText>
                 </DialogContent>
                 <DialogActions>
-                  <Button onClick={this.handleCloseSave} color="primary">
+                  <Button onClick={this.handleCloseSave} variant="contained" color="secondary">
                     Cancel
           </Button>
-                  <Button onClick={this.saveTag} color="primary">
+                  <ThemeProvider theme={theme}>
+                  <Button onClick={this.saveTag} variant="contained" color="primary">
                     Confirm
           </Button>
+                  </ThemeProvider>
                 </DialogActions>
               </Dialog>
 

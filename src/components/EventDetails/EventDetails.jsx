@@ -9,6 +9,7 @@ import FormHelperText from '@material-ui/core/FormHelperText';
 import Grid from '@material-ui/core/Grid';
 import Chip from '@material-ui/core/Chip';
 import Button from '@material-ui/core/Button';
+import Input from '@material-ui/core/Input';
 import DateFnsUtils from "@date-io/date-fns";
 import {
     MuiPickersUtilsProvider,
@@ -97,12 +98,13 @@ class EventDetails extends Component {
             )
         });
 
-        let eventTags = this.props.details.TagIDs.map((tag) => {
+        let eventTags = this.props.details.TagObjects.map((tag) => {
             return (
-                <Grid item key={tag}>
+                <Grid item key={tag.TagID}>
                     <Chip
-                        key={tag}
-                        label={tag}
+                        key={tag.TagID}
+                        label={tag.TagName}
+                        value={tag}
                         className={this.props.classes.chip}
                         color="primary"
                     />
@@ -112,7 +114,7 @@ class EventDetails extends Component {
 
         let allTags = this.props.tags.map((tag) => {
             return (
-                <MenuItem value={tag.TagID} key={tag.TagID}>{tag.TagName}</MenuItem>
+                <MenuItem value={tag} key={tag.TagID}>{tag.TagName}</MenuItem>
             )
         })
 
@@ -147,7 +149,17 @@ class EventDetails extends Component {
                 <div className={this.props.classes.topRight}>
                     {this.props.details.DateLastModified && <h3 className={this.props.classes.cancelledText}>Event Has Been Modified!</h3>}
                     {this.props.details.DateLastModified && <h4 className={this.props.classes.cancelledText}>{moment(this.props.details.DateLastModified).format('LLLL')}</h4>}
-                    {this.props.details.EventModifiedNotes && <h4>{this.props.details.EventModifiedNotes}</h4>}
+                    {this.props.details.DateLastModified && <><TextField
+                                                                    label="Change Notes"
+                                                                    className={this.props.classes.root}
+                                                                    value={this.props.details.EventModifiedNotes}
+                                                                    InputLabelProps={{ shrink: this.props.details.EventModifiedNotes }}
+                                                                    onChange={event =>
+                                                                        this.props.dispatch({
+                                                                            type: "EDIT_EVENT_MODIFIED_NOTES",
+                                                                            payload: event.target.value
+                                                                        })}
+                                                                /></>}
                 </div>  
                 <hr></hr>
                 <h2>Event Details</h2>
@@ -235,12 +247,13 @@ class EventDetails extends Component {
                     <FormHelperText className={this.props.classes.helperText}>Add Tags</FormHelperText>
                     <Select
                         multiple
-                        value={this.props.details.Tags}
+                        value={this.props.details.TagObjects}
                         className={this.props.classes.root}
+                        input={<Input id="select-multiple-chip" />}
                         renderValue={selected => (
                             <div>
                                 {selected.map(value => (
-                                    <Chip key={value} label={value} />
+                                    <Chip key={value.TagID} label={value.TagName} value={value} />
                                 ))}
                             </div>
                         )}
