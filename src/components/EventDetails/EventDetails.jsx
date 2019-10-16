@@ -9,7 +9,6 @@ import FormHelperText from '@material-ui/core/FormHelperText';
 import Grid from '@material-ui/core/Grid';
 import Chip from '@material-ui/core/Chip';
 import Button from '@material-ui/core/Button';
-import Input from '@material-ui/core/Input';
 import DateFnsUtils from "@date-io/date-fns";
 import {
     MuiPickersUtilsProvider,
@@ -89,6 +88,16 @@ class EventDetails extends Component {
         this.props.history.push("/events");
     }
 
+    handleDeleteTag = (tag) => {
+        console.log('clicked on tag', tag);
+        this.props.dispatch({
+            type: 'REMOVE_TAG_FROM_EVENT',
+            payload: tag
+        })
+        
+    }
+
+    
 
     render() {
 
@@ -106,6 +115,7 @@ class EventDetails extends Component {
                         label={tag.TagName}
                         value={tag.TagID}
                         className={this.props.classes.chip}
+                        onDelete={() => this.handleDeleteTag(tag)}
                         color="primary"
                     />
                 </Grid>
@@ -243,20 +253,13 @@ class EventDetails extends Component {
                 <Grid item container direction="row" spacing={2} justify="flex-start">
                     {eventTags}
                 </Grid>
+                {/* {JSON.stringify(this.props.details.TagObjects)} */}
+
                 <FormControl>
                     <FormHelperText className={this.props.classes.helperText}>Add Tags</FormHelperText>
                     <Select
-                        multiple
-                        value={this.props.details.TagObjects}
+                        value={this.props.tags}
                         className={this.props.classes.root}
-                        input={<Input id="select-multiple-chip" />}
-                        // renderValue={selected => (
-                        //     <div>
-                        //         {selected.map(value => (
-                        //             <Chip key={value.TagID} label={value.TagName} value={value.TagID} />
-                        //         ))}
-                        //     </div>
-                        // )}
                         onChange={event =>
                             this.props.dispatch({
                                 type: 'EDIT_EVENT_TAGS',
