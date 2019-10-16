@@ -93,7 +93,7 @@ class SponsorDetails extends Component {
                     aria-labelledby="draggable-dialog-title"
                 >
                     <DialogTitle style={{ cursor: 'move' }} id="draggable-dialog-title">
-                        Edit tag?
+                        Edit Sponsor?
         </DialogTitle>
                     <DialogContent>
                         <DialogContentText>
