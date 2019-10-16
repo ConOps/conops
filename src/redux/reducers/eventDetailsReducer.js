@@ -1,4 +1,4 @@
-const eventDetailsReducer = (state = {Tags: [], TagIDs: [], LocationName: '', EventName: '', EventStartTime: '', EventEndTime: '', }, action) => {
+const eventDetailsReducer = (state = { Tags: [], TagIDs: [], TagObjects: [], LocationName: '', EventName: '', EventStartTime: '', EventEndTime: '', SponsorID: '', LocationID: '', EventModifiedNotes: ''}, action) => {
     switch (action.type) {
         case 'SET_EVENT_DETAILS':
             return action.payload;
@@ -23,11 +23,13 @@ const eventDetailsReducer = (state = {Tags: [], TagIDs: [], LocationName: '', Ev
         case 'CREATE_EVENT_TAGS':
             return { ...state, TagName: action.payload }
         case 'EDIT_EVENT_TAGS':
-            return { ...state, Tags: [... action.payload]}
+            return { ...state, TagObjects: [... action.payload]}
         case 'EDIT_EVENT_LOCATION':
             return { ...state, LocationID: action.payload}
         case 'EDIT_EVENT_SPONSOR':
             return { ...state, SponsorID: action.payload}
+        case 'EDIT_EVENT_MODIFIED_NOTES':
+            return { ...state, EventModifiedNotes: action.payload}
         default:
             return state;
     }
