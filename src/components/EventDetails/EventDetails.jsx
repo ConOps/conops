@@ -80,6 +80,13 @@ class EventDetails extends Component {
         this.props.history.push("/events");
     }
 
+    handleTagChange = (tadID) => {
+        this.props.dispatch({
+            type: 'EDIT_EVENT_TAGS',
+            // payload: event.target.value
+        })
+    }
+
 
     render() {
 
@@ -89,7 +96,7 @@ class EventDetails extends Component {
             )
         });
 
-        let eventTags = this.props.details.TagIDs.map((tag) => {
+        let eventTags = this.props.details.Tags.map((tag) => {
             return (
                 <Grid item key={tag}>
                     <Chip
@@ -104,7 +111,7 @@ class EventDetails extends Component {
 
         let allTags = this.props.tags.map((tag) => {
             return (
-                <MenuItem value={tag.TagID} key={tag.TagID}>{tag.TagName}</MenuItem>
+                <MenuItem value={tag.TagName} key={tag.TagID}>{tag.TagName}</MenuItem>
             )
         })
 
@@ -236,11 +243,9 @@ class EventDetails extends Component {
                                 ))}
                             </div>
                         )}
-                        onChange={event =>
-                            this.props.dispatch({
-                                type: 'EDIT_EVENT_TAGS',
-                                payload: event.target.value
-                            })}
+                        onChange={() => this.handleTagChange(tagID)
+                            
+                        }
                     >
                         {allTags}
                     </Select>
