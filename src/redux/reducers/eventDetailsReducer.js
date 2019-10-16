@@ -30,6 +30,14 @@ const eventDetailsReducer = (state = { Tags: [], TagObjects: [], LocationName: '
             return { ...state, SponsorID: action.payload}
         case 'EDIT_EVENT_MODIFIED_NOTES':
             return { ...state, EventModifiedNotes: action.payload}
+        case 'REMOVE_TAG_FROM_EVENT':
+            const newTagObjects = state.TagObjects;
+            for (let i = 0; i < newTagObjects.length; i++) {
+                if (action.payload === state.TagObjects[i]) {
+                    newTagObjects.splice(i, 1)
+                }
+            }
+            return { ...state, TagObjects: newTagObjects }
         default:
             return state;
     }

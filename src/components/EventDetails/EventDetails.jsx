@@ -9,9 +9,6 @@ import FormHelperText from '@material-ui/core/FormHelperText';
 import Grid from '@material-ui/core/Grid';
 import Chip from '@material-ui/core/Chip';
 import Button from '@material-ui/core/Button';
-import FormGroup from '@material-ui/core/FormGroup';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
 import DateFnsUtils from "@date-io/date-fns";
 import {
     MuiPickersUtilsProvider,
@@ -85,6 +82,10 @@ class EventDetails extends Component {
 
     handleDeleteTag = (tag) => {
         console.log('clicked on tag', tag);
+        this.props.dispatch({
+            type: 'REMOVE_TAG_FROM_EVENT',
+            payload: tag
+        })
         
     }
 
@@ -244,7 +245,7 @@ class EventDetails extends Component {
                 <Grid item container direction="row" spacing={2} justify="flex-start">
                     {eventTags}
                 </Grid>
-                {JSON.stringify(this.props.details.TagObjects)}
+                {/* {JSON.stringify(this.props.details.TagObjects)} */}
 
                 <FormControl>
                     <FormHelperText className={this.props.classes.helperText}>Add Tags</FormHelperText>
@@ -256,7 +257,6 @@ class EventDetails extends Component {
                                 type: 'EDIT_EVENT_TAGS',
                                 payload: event.target.value
                             })}
-                        // onChange={event => console.log(event.target.value)}
                     >
                         {allTags}
                     </Select>
