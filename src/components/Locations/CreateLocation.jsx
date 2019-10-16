@@ -53,6 +53,7 @@ class CreateLocation extends Component {
       payload: this.props.details
     });
     this.handleCloseSave();
+    this.props.history.push('/locations');
   }
 
     handleSave = () => {
