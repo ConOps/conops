@@ -39,8 +39,8 @@ router.get('/details/:id', rejectUnauthenticated, (req, res) => {
 router.put('/edit/:id', rejectUnauthenticated, rejectNonAdmin, (req, res) => {
    
     console.log('in TAGS PUT route, req.body:', req.body);
-    const queryText = `UPDATE "Tags" SET "TagName" = $1 WHERE "TagID" = $2`
-    pool.query(queryText, [req.body.TagName, req.params.id])
+    const queryText = `UPDATE "Tags" SET "TagName" = $1, "TagIsActive" = $2 WHERE "TagID" = $3`
+    pool.query(queryText, [req.body.TagName, req.body.TagIsActive, req.params.id])
         .then(result => {
             res.send(201);
         })

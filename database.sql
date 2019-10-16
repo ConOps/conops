@@ -185,6 +185,8 @@ CREATE TABLE "Event"
 
         "TagName" VARCHAR(255) NOT NULL,
 
+        "TagIsActive" boolean DEFAULT true,
+
         CONSTRAINT "Tags_pk" PRIMARY KEY ("TagID")
 
     )
