@@ -14,7 +14,7 @@ router.get('/', rejectUnauthenticated, async (req, res) => {
         const result = await connection.query(queryCon);
         const conventionID = result.rows[0].convention;
         //below query grabs all events and the necessary info tied to each event. the array_agg will grab all tags and throw into an array, the array_remove removes all nulls from that (only applicable for events without any tags).
-        const queryText = `SELECT "Event"."EventID", "Event"."ConventionID", "Event"."EventName", "Event"."EventStartTime", "Event"."EventEndTime", "Event"."LocationID", "Location"."LocationName", "Location"."LocationDescription", "Event"."IsCancelled", "Event"."EventDescription", "Event"."SponsorID", "Sponsor"."SponsorName", "Event"."DateCreated", "Event"."DateLastModified", "Event"."EventModifiedNotes", array_remove(array_agg("Tags"."TagID"), NULL) AS "TagIDs", array_remove(array_agg("Tags"."TagName"), NULL) AS "Tags" 
+        const queryText = `SELECT "Event"."EventID", "Event"."ConventionID", "Event"."EventName", "Event"."EventStartTime", "Event"."EventEndTime", "Event"."LocationID", "Location"."LocationName", "Location"."LocationDescription", "Event"."IsCancelled", "Event"."EventDescription", "Event"."SponsorID", "Sponsor"."SponsorName", "Event"."DateCreated", "Event"."DateLastModified", "Event"."EventModifiedNotes", array_remove(array_agg(jsonb_build_object('TagID', "Tags"."TagID", 'TagName', "Tags"."TagName" )), to_jsonb('{"TagID" : null, "TagName" : null}'::json) ) AS "TagObjects", array_remove(array_agg("Tags"."TagName"), NULL) AS "Tags"
                             FROM "Event"
                             LEFT OUTER JOIN "Location" ON "Location"."LocationID" = "Event"."LocationID"
                             LEFT OUTER JOIN "Sponsor" ON "Sponsor"."SponsorID" = "Event"."SponsorID"
@@ -40,7 +40,7 @@ router.get('/', rejectUnauthenticated, async (req, res) => {
 router.get('/eventdetails/:id', rejectUnauthenticated, (req, res) => {
     const id = req.params.id;
     console.log('in event details GET')
-    const queryText = `SELECT "Event"."EventID", "Event"."ConventionID", "Event"."EventName", "Event"."EventStartTime", "Event"."EventEndTime", "Event"."LocationID", "Location"."LocationName", "Location"."LocationDescription", "Event"."IsCancelled", "Event"."EventDescription", "Event"."SponsorID", "Sponsor"."SponsorName", "Event"."DateCreated", "Event"."DateLastModified", "Event"."EventModifiedNotes", array_remove(array_agg("Tags"."TagID"), NULL) AS "TagIDs", array_remove(array_agg("Tags"."TagName"), NULL) AS "Tags" 
+    const queryText = `SELECT "Event"."EventID", "Event"."ConventionID", "Event"."EventName", "Event"."EventStartTime", "Event"."EventEndTime", "Event"."LocationID", "Location"."LocationName", "Location"."LocationDescription", "Event"."IsCancelled", "Event"."EventDescription", "Event"."SponsorID", "Sponsor"."SponsorName", "Event"."DateCreated", "Event"."DateLastModified", "Event"."EventModifiedNotes", array_remove(array_agg(jsonb_build_object('TagID', "Tags"."TagID", 'TagName', "Tags"."TagName" )), to_jsonb('{"TagID" : null, "TagName" : null}'::json) ) AS "TagObjects", array_remove(array_agg("Tags"."TagName"), NULL) AS "Tags"
                             FROM "Event"
                             LEFT OUTER JOIN "Location" ON "Location"."LocationID" = "Event"."LocationID"
                             LEFT OUTER JOIN "Sponsor" ON "Sponsor"."SponsorID" = "Event"."SponsorID"
