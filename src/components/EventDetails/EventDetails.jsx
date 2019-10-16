@@ -15,6 +15,14 @@ import {
     KeyboardDateTimePicker
 } from "@material-ui/pickers";
 import moment from 'moment';
+import { createMuiTheme } from '@material-ui/core/styles';
+import { ThemeProvider } from '@material-ui/styles';
+
+const theme = createMuiTheme({
+    palette: {
+        primary: { main: "#19375f" }
+    }
+});
 
 
 const styles = ({
@@ -105,7 +113,7 @@ class EventDetails extends Component {
                     <Chip
                         key={tag.TagID}
                         label={tag.TagName}
-                        value={tag}
+                        value={tag.TagID}
                         className={this.props.classes.chip}
                         onDelete={() => this.handleDeleteTag(tag)}
                         color="primary"
@@ -127,7 +135,7 @@ class EventDetails extends Component {
         })
 
         return (
-            <div>
+            <div style={{margin: '20px'}}>
                 {/* {JSON.stringify(this.props.details)} */}
                 <h1>{this.props.convention.ConventionName}</h1>
                 {this.props.details.IsCancelled && <h3 className={this.props.classes.cancelledText}>Event is cancelled.</h3>}
@@ -277,13 +285,16 @@ class EventDetails extends Component {
                         {sponsorSelector}
                     </Select>
                 </FormControl>
+                <hr></hr>
                 <div>
-                    <Button variant="contained" color="secondary" onClick={this.handleBack}>
+                    <Button variant="contained" color="secondary" onClick={this.handleBack} style={{margin: '5px'}}>
                         Back
                     </Button>
-                    <Button variant="contained" color="primary" onClick={this.handleSave}>
+                    <ThemeProvider theme={theme}>
+                        <Button variant="contained" color="primary" onClick={this.handleSave} style={{ margin: '5px' }}>
                         Save
                     </Button>
+                    </ThemeProvider>
                 </div>
             </div>
         )
