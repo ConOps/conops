@@ -144,28 +144,7 @@ class OrderID extends Component {
                     })
                   }
                 }
-                // (event, data) => {
-                //   if (
-                //     window.confirm(
-                //       "Are you sure that you would like to check in all of the selected attendees?"
-                //     )
-                //   ) 
-                //   {
-                //     console.log(data);
-                    // let attendeesToCheckIn = [];
-                    // for (let i = 0; i < data.length; i++) {
-                    //   console.log("i am in the loop");
-                    //   attendeesToCheckIn.push(data[i].AttendeeID);
-                    // }
-                    // this.props.dispatch({
-                    //   type: "CHECK_IN_ALL_SELECTED",
-                    //   payload: attendeesToCheckIn
-                    // });
-                    // this.props.history.push(`/check-in`);
-                //   } else {
-                //     return false;
-                //   }
-                // }
+               
               }
             ]}
             editable={{}}
@@ -182,7 +161,7 @@ class OrderID extends Component {
               searchFieldAlignment: "left",
               showTitle: false
             }}
-            // onSelectionChange={(rows) => alert('You selected ' + rows.length + ' rows')}
+           
             data={this.props.reduxStore.AttendeesOrderIdReducer}
             editable={{}}
           />
