@@ -39,7 +39,7 @@ class Locations extends Component {
             { title: "LocationID", field: "LocationID", hidden: true},
             { title: "Location Name", field: "LocationName", hidden: false },
             { title: "Location Description", field: "LocationDescription", hidden: false},
-            { title: "Active Status", field: "LocationIsActive", hidden: false}
+            { title: "Active Status", field: "LocationIsActive", hidden: false, render: (rowData) => <p>{JSON.stringify(rowData.LocationIsActive)}</p>},
         ],
         data: []
     }
