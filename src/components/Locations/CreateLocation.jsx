@@ -10,6 +10,14 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Paper from '@material-ui/core/Paper';
 import Draggable from 'react-draggable';
+import { createMuiTheme } from '@material-ui/core/styles';
+import { ThemeProvider } from '@material-ui/styles';
+
+const theme = createMuiTheme({
+  palette: {
+    primary: { main: "#19375f" }
+  }
+}); 
 
 const styles = ({
     root: {
@@ -56,7 +64,7 @@ class CreateLocation extends Component {
     }
     render() {
         return (
-          <div>
+          <div style={{margin:'20px'}}>
 
             <Dialog
               open={this.state.openSave}
@@ -64,21 +72,23 @@ class CreateLocation extends Component {
               PaperComponent={PaperComponent}
               aria-labelledby="draggable-dialog-title"
             >
-              <DialogTitle style={{ cursor: 'move' }} id="draggable-dialog-title">
+              <DialogTitle style={{ cursor: 'move', color: 'white' }} id="draggable-dialog-title" className="Dialog">
                 Create Location?
         </DialogTitle>
               <DialogContent>
-                <DialogContentText>
+                <DialogContentText style={{ color: 'black' }}>
                   Are you sure that you would like to create this location?
           </DialogContentText>
               </DialogContent>
               <DialogActions>
-                <Button onClick={this.handleCloseSave} color="primary">
+                <Button onClick={this.handleCloseSave} variant="contained" color="secondary">
                   Cancel
           </Button>
-                <Button onClick={this.saveLocation} color="primary">
+                <ThemeProvider theme={theme}>
+                <Button onClick={this.saveLocation} variant="contained" color="primary">
                   Confirm
           </Button>
+                </ThemeProvider>
               </DialogActions>
             </Dialog>
 
@@ -105,9 +115,11 @@ class CreateLocation extends Component {
               }
             ></TextField>
             <hr></hr>
-            <Button onClick={this.handleCancel}>Cancel</Button>
+            <Button onClick={this.handleCancel} variant="contained" color="secondary" style={{margin:'5px'}}> Cancel</Button>
             {this.props.user.authorization === 4 && (
-              <Button onClick={this.handleSave}>Save</Button>
+              <ThemeProvider theme={theme}>
+                <Button onClick={this.handleSave} variant="contained" color="primary" style={{ margin: '5px' }}>Save</Button>
+              </ThemeProvider>
             )}
           </div>
         );

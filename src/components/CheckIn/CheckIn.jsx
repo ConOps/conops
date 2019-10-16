@@ -122,9 +122,11 @@ class CheckIn extends Component {
             <Button onClick={this.handleClose} variant="contained" color="secondary">
               Cancel
           </Button>
-            <Button onClick={this.paymentCheckInPrompt} variant="contained" color="inherit">
+            <ThemeProvider theme={theme}>
+            <Button onClick={this.paymentCheckInPrompt} variant="contained" color="primary">
               Confirm
           </Button>
+            </ThemeProvider>
           </DialogActions>
         </Dialog>
 
@@ -147,9 +149,11 @@ class CheckIn extends Component {
             <Button onClick={this.handleClosePaid} variant="contained" color="secondary">
               Cancel
           </Button>
-            <Button onClick={this.checkInPrompt} variant="contained" color="inherit">
+            <ThemeProvider theme={theme}>
+            <Button onClick={this.checkInPrompt} variant="contained" color="primary">
               Confirm
           </Button>
+            </ThemeProvider>
           </DialogActions>
         </Dialog>
         <h1 style={{ textAlign: "center" }}>Current Convention: 2DCON 2020</h1>

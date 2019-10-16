@@ -2,6 +2,14 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
+import { createMuiTheme } from '@material-ui/core/styles';
+import { ThemeProvider } from '@material-ui/styles';
+
+const theme = createMuiTheme({
+  palette: {
+    primary: { main: "#19375f" }
+  }
+}); 
 
 class News extends Component {
 
@@ -13,8 +21,8 @@ class News extends Component {
 
     render(){
         return (
-          <div>
-            <p>News</p>
+          <div style={{margin:'20px', marginTop:'60px'}}>
+            <h1>News</h1>
             <TextField
               label="Convention News"
               InputLabelProps={{ shrink: this.props.reduxStore.homePageReducer.ConventionNews}}
@@ -29,7 +37,9 @@ class News extends Component {
                 })
               }
             ></TextField>
+            <hr></hr>
             {this.props.reduxStore.user.authorization === 4 &&
+              <ThemeProvider theme={theme}>
             <Button variant= "contained" color= "primary" onClick = {() => {
                 this.props.dispatch({
                     type: 'SAVE_CONVENTION_NEWS',
@@ -38,6 +48,7 @@ class News extends Component {
             }}>
                 Save
             </Button>
+            </ThemeProvider>
             }
           </div>
         );

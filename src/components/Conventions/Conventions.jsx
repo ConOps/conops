@@ -124,7 +124,7 @@ class Conventions extends Component {
 
   render() {
     return (
-      <div style={{ marginTop: '65px' }}>
+      <div style={{ margin: '20px'}}>
 
         <Dialog
           open={this.state.openSave}
@@ -132,21 +132,23 @@ class Conventions extends Component {
           PaperComponent={PaperComponent}
           aria-labelledby="draggable-dialog-title"
         >
-          <DialogTitle style={{ cursor: 'move' }} id="draggable-dialog-title">
+          <DialogTitle style={{ cursor: 'move', color: 'white' }} id="draggable-dialog-title" className="Dialog">
             Create Convention?
         </DialogTitle>
           <DialogContent>
-            <DialogContentText>
+            <DialogContentText style={{ color: 'black' }}>
               Are you sure that you would like to create this Convention?
           </DialogContentText>
           </DialogContent>
           <DialogActions>
-            <Button onClick={this.handleCloseSave} color="primary">
+            <Button onClick={this.handleCloseSave} variant="contained" color="secondary">
               Cancel
           </Button>
-            <Button onClick={this.saveConvention} color="primary">
+            <ThemeProvider theme={theme}>
+            <Button onClick={this.saveConvention} variant="contained" color="primary">
               Confirm
           </Button>
+            </ThemeProvider>
           </DialogActions>
         </Dialog>
 
@@ -156,25 +158,27 @@ class Conventions extends Component {
           PaperComponent={PaperComponent}
           aria-labelledby="draggable-dialog-title"
         >
-          <DialogTitle style={{ cursor: 'move' }} id="draggable-dialog-title">
+          <DialogTitle style={{ cursor: 'move', color: 'white' }} id="draggable-dialog-title" className="Dialog">
             Edit Convention?
         </DialogTitle>
           <DialogContent>
-            <DialogContentText>
+            <DialogContentText style={{ color: 'black' }}>
               Are you sure that you would like to edit this Convention?
           </DialogContentText>
           </DialogContent>
           <DialogActions>
-            <Button onClick={this.handleCloseEdit} color="primary">
+            <Button onClick={this.handleCloseEdit} variant="contained" color="secondary">
               Cancel
           </Button>
-            <Button onClick={this.editConventionSave} color="primary">
+            <ThemeProvider theme={theme}>
+            <Button onClick={this.editConventionSave} variant="contained" color="primary">
               Confirm
           </Button>
+            </ThemeProvider>
           </DialogActions>
         </Dialog>
 
-        <h1>The Active Convention is: </h1>
+        <h1>The Active Convention is: {this.props.info.ConventionName} </h1>
         <hr></hr>
         <h3>Create New Convention:</h3>
         <TextField
