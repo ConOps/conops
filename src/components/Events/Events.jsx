@@ -75,8 +75,9 @@ class Events extends Component {
                 color="primary"
                 aria-label="add"
                 className={this.props.classes.fab}
+                onClick={this.handleClick} 
               >
-                <AddIcon onClick={this.handleClick} />
+                <AddIcon />
               </Fab>
               </ThemeProvider>
             )}
