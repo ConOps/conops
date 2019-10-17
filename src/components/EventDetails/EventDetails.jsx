@@ -17,6 +17,13 @@ import {
 import moment from 'moment';
 import { createMuiTheme } from '@material-ui/core/styles';
 import { ThemeProvider } from '@material-ui/styles';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import Paper from '@material-ui/core/Paper';
+import Draggable from 'react-draggable';
 
 const theme = createMuiTheme({
     palette: {
@@ -46,7 +53,20 @@ const styles = ({
     }
 });
 
+function PaperComponent(props) {
+    return (
+        <Draggable>
+            <Paper {...props} />
+        </Draggable>
+    );
+}
+
 class EventDetails extends Component {
+    state = {
+        openSave: false,
+    }
+
+
     componentDidMount() {
         this.props.dispatch({
             type: 'FETCH_LOCATIONS'
@@ -63,6 +83,10 @@ class EventDetails extends Component {
 
         this.fetchEventDetails();
     }
+
+    handleCloseSave = () => {
+        this.setState({ openSave: false });
+    };
 
 
     fetchEventDetails = () => {
@@ -84,10 +108,18 @@ class EventDetails extends Component {
             return
         }
         // alert("Event has been updated");
+        this.setState({
+            openSave: !this.state.openSave,
+            ...this.state.details, details: this.props.details
+        })
+    }
+
+    saveEvent = () => {
         this.props.dispatch({
             type: "UPDATE_EVENT_INFO",
             payload: this.props.details
         });
+        this.handleCloseSave();
         this.props.history.push("/events");
     }
 
@@ -154,6 +186,33 @@ class EventDetails extends Component {
 
         return (
             <div style={{ margin: '20px' }}>
+
+                <Dialog
+                    open={this.state.openSave}
+                    onClose={this.handleCloseSave}
+                    PaperComponent={PaperComponent}
+                    aria-labelledby="draggable-dialog-title"
+                >
+                    <DialogTitle style={{ cursor: 'move', color: 'white' }} id="draggable-dialog-title" className="Dialog">
+                        Edit Event?
+        </DialogTitle>
+                    <DialogContent>
+                        <DialogContentText style={{ color: 'black' }}>
+                            Are you sure that you would like to edit this Event?
+          </DialogContentText>
+                    </DialogContent>
+                    <DialogActions>
+                        <Button onClick={this.handleCloseSave} variant="contained" color="secondary">
+                            Cancel
+          </Button>
+                        <ThemeProvider theme={theme}>
+                            <Button onClick={this.saveEvent} variant="contained" color="primary">
+                                Confirm
+          </Button>
+                        </ThemeProvider>
+                    </DialogActions>
+                </Dialog>
+
                 {/* {JSON.stringify(this.props.details)} */}
                 <h1>{this.props.convention.ConventionName}</h1>
                 {this.props.details.IsCancelled && <h3 className={this.props.classes.cancelledText}>Event is cancelled.</h3>}
