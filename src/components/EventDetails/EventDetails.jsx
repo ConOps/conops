@@ -17,6 +17,13 @@ import {
 import moment from 'moment';
 import { createMuiTheme } from '@material-ui/core/styles';
 import { ThemeProvider } from '@material-ui/styles';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import Paper from '@material-ui/core/Paper';
+import Draggable from 'react-draggable';
 
 const theme = createMuiTheme({
     palette: {
@@ -46,7 +53,24 @@ const styles = ({
     }
 });
 
+function PaperComponent(props) {
+    return (
+        <Draggable>
+            <Paper {...props} />
+        </Draggable>
+    );
+}
+
 class EventDetails extends Component {
+    state = {
+        openSave: false,
+        openAlert: false,
+        openCancel: false,
+        openActivate: false,
+        details: {},
+    }
+
+
     componentDidMount() {
         this.props.dispatch({
             type: 'FETCH_LOCATIONS'
@@ -64,6 +88,22 @@ class EventDetails extends Component {
         this.fetchEventDetails();
     }
 
+    handleCloseSave = () => {
+        this.setState({ openSave: false });
+    };
+
+    handleCloseAlert = () => {
+        this.setState({ openAlert: false });
+    };
+
+    handleCloseCancel = () => {
+        this.setState({ openCancel: false });
+    };
+
+    handleCloseActivate = () => {
+        this.setState({ openActivate: false });
+    };
+
 
     fetchEventDetails = () => {
         let id = this.props.match.params.id;
@@ -80,15 +120,41 @@ class EventDetails extends Component {
     handleSave = () => {
         console.log('clicked save!');
         if (this.props.details.EventModifiedNotes === null || this.props.details.EventModifiedNotes === '') {
-            alert("Please enter some notes of what you changed!")
-            return
+            this.setState({
+                openAlert: !this.state.openAlert
+            })
+        } else {
+            this.setState({
+                openSave: !this.state.openSave,
+                ...this.state.details, details: this.props.details
+            })
         }
-        // alert("Event has been updated");
+
+    }
+
+    saveEvent = () => {
         this.props.dispatch({
             type: "UPDATE_EVENT_INFO",
             payload: this.props.details
         });
+        this.handleCloseSave();
         this.props.history.push("/events");
+    }
+
+    cancelEvent = () => {
+        this.props.dispatch({
+            type: "CANCEL_EVENT",
+            payload: this.props.details.EventID
+        });
+        this.handleCloseCancel();
+    }
+
+    activateEvent = () => {
+        this.props.dispatch({
+            type: "UNCANCEL_EVENT",
+            payload: this.props.details.EventID
+        });
+        this.handleCloseActivate();
     }
 
     handleDeleteTag = (tag) => {
@@ -112,7 +178,7 @@ class EventDetails extends Component {
             } else {
                 return false
             }
-            
+
         });
 
         let eventTags = this.props.details.TagObjects.map((tag) => {
@@ -138,7 +204,7 @@ class EventDetails extends Component {
             } else {
                 return false
             }
-            
+
         })
 
         let sponsorSelector = this.props.sponsors.map((sponsor) => {
@@ -149,27 +215,129 @@ class EventDetails extends Component {
             } else {
                 return false
             }
-            
+
         })
 
         return (
             <div style={{ margin: '20px' }}>
+
+                <Dialog
+                    open={this.state.openSave}
+                    onClose={this.handleCloseSave}
+                    PaperComponent={PaperComponent}
+                    aria-labelledby="draggable-dialog-title"
+                >
+                    <DialogTitle style={{ cursor: 'move', color: 'white' }} id="draggable-dialog-title" className="Dialog">
+                        Edit Event?
+        </DialogTitle>
+                    <DialogContent>
+                        <DialogContentText style={{ color: 'black' }}>
+                            Are you sure that you would like to edit this Event?
+          </DialogContentText>
+                    </DialogContent>
+                    <DialogActions>
+                        <Button onClick={this.handleCloseSave} variant="contained" color="secondary">
+                            Cancel
+          </Button>
+                        <ThemeProvider theme={theme}>
+                            <Button onClick={this.saveEvent} variant="contained" color="primary">
+                                Confirm
+          </Button>
+                        </ThemeProvider>
+                    </DialogActions>
+                </Dialog>
+
+                <Dialog
+                    open={this.state.openAlert}
+                    onClose={this.handleCloseAlert}
+                    PaperComponent={PaperComponent}
+                    aria-labelledby="draggable-dialog-title"
+                >
+                    <DialogTitle style={{ cursor: 'move', color: 'white' }} id="draggable-dialog-title" className="Dialog">
+                        Missing Information?
+        </DialogTitle>
+                    <DialogContent>
+                        <DialogContentText style={{ color: 'black' }}>
+                            Please enter some notes of what you changed!
+          </DialogContentText>
+                    </DialogContent>
+                    <DialogActions>
+                        <ThemeProvider theme={theme}>
+                            <Button onClick={this.handleCloseAlert} variant="contained" color="primary">
+                                Confirm
+          </Button>
+                        </ThemeProvider>
+                    </DialogActions>
+                </Dialog>
+
+                <Dialog
+                    open={this.state.openCancel}
+                    onClose={this.handleCloseCancel}
+                    PaperComponent={PaperComponent}
+                    aria-labelledby="draggable-dialog-title"
+                >
+                    <DialogTitle style={{ cursor: 'move', color: 'white' }} id="draggable-dialog-title" className="Dialog">
+                        Cancel Event?
+        </DialogTitle>
+                    <DialogContent>
+                        <DialogContentText style={{ color: 'black' }}>
+                            Are you sure that you would like to cancel this Event?
+          </DialogContentText>
+                    </DialogContent>
+                    <DialogActions>
+                        <Button onClick={this.handleCloseCancel} variant="contained" color="secondary">
+                            Back
+          </Button>
+                        <ThemeProvider theme={theme}>
+                            <Button onClick={this.cancelEvent} variant="contained" color="primary">
+                                Confirm
+          </Button>
+                        </ThemeProvider>
+                    </DialogActions>
+                </Dialog>
+
+                <Dialog
+                    open={this.state.openActivate}
+                    onClose={this.handleCloseActivate}
+                    PaperComponent={PaperComponent}
+                    aria-labelledby="draggable-dialog-title"
+                >
+                    <DialogTitle style={{ cursor: 'move', color: 'white' }} id="draggable-dialog-title" className="Dialog">
+                        Activate Event?
+        </DialogTitle>
+                    <DialogContent>
+                        <DialogContentText style={{ color: 'black' }}>
+                            Are you sure that you would like to activate this Event?
+          </DialogContentText>
+                    </DialogContent>
+                    <DialogActions>
+                        <Button onClick={this.handleCloseActivate} variant="contained" color="secondary">
+                            Back
+          </Button>
+                        <ThemeProvider theme={theme}>
+                            <Button onClick={this.activateEvent} variant="contained" color="primary">
+                                Confirm
+          </Button>
+                        </ThemeProvider>
+                    </DialogActions>
+                </Dialog>
+
                 {/* {JSON.stringify(this.props.details)} */}
                 <h1>{this.props.convention.ConventionName}</h1>
                 {this.props.details.IsCancelled && <h3 className={this.props.classes.cancelledText}>Event is cancelled.</h3>}
                 <h1> Manage Event: {this.props.details.EventName}</h1>
                 {this.props.details.IsCancelled && <Button variant="contained" color="secondary" onClick={() => {
-                    this.props.dispatch({
-                        type: "UNCANCEL_EVENT",
-                        payload: this.props.details.EventID
+                    this.setState({
+                        openActivate: !this.state.openActivate,
+                        ...this.state.details, details: this.props.details.EventId
                     })
                 }}>
-                    UnCancel
+                    Make Active
                 </Button>}
                 {!this.props.details.IsCancelled && <Button variant="contained" color="secondary" onClick={() => {
-                    this.props.dispatch({
-                        type: "CANCEL_EVENT",
-                        payload: this.props.details.EventID
+                    this.setState({
+                        openCancel: !this.state.openCancel,
+                        ...this.state.details, details: this.props.details.EventId
                     })
                 }}>
                     Cancel
