@@ -60,7 +60,7 @@ class EventDetails extends Component {
         this.props.dispatch({
             type: 'FETCH_SPONSORS'
         });
-        
+
         this.fetchEventDetails();
     }
 
@@ -79,7 +79,10 @@ class EventDetails extends Component {
 
     handleSave = () => {
         console.log('clicked save!');
-
+        if (this.props.details.EventModifiedNotes === null) {
+            alert("Please enter some notes of what you changed!")
+            return
+        }
         // alert("Event has been updated");
         this.props.dispatch({
             type: "UPDATE_EVENT_INFO",
