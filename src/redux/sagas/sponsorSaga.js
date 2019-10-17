@@ -14,8 +14,24 @@ function* fetchSponsors() {
     }
 }
 
+function* addSponsor(action) {
+    try{
+        const config = {
+            headers: { 'Content-Type': 'application/json' },
+            withCredentials: true,
+    };
+    yield axios.post(`/api/sponsor`, action.payload, config)
+    yield put({type: 'FETCH_SPONSORS'})
+    } catch (error) {
+        console.log('error in addSponsor saga:', error)
+    }
+}
+
+
+
 function* sponsorSaga() {
     yield takeLatest('FETCH_SPONSORS', fetchSponsors)
+    yield takeLatest('ADD_SPONSOR', addSponsor)
 }
 
 export default sponsorSaga;
