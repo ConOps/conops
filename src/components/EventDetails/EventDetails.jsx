@@ -64,6 +64,7 @@ function PaperComponent(props) {
 class EventDetails extends Component {
     state = {
         openSave: false,
+        openAlert: false,
     }
 
 
@@ -88,6 +89,10 @@ class EventDetails extends Component {
         this.setState({ openSave: false });
     };
 
+    handleCloseAlert = () => {
+        this.setState({ openAlert: false });
+    };
+
 
     fetchEventDetails = () => {
         let id = this.props.match.params.id;
@@ -104,14 +109,19 @@ class EventDetails extends Component {
     handleSave = () => {
         console.log('clicked save!');
         if (this.props.details.EventModifiedNotes === null || this.props.details.EventModifiedNotes === '') {
-            alert("Please enter some notes of what you changed!")
-            return
+            this.setState({
+                openAlert: !this.state.openAlert
+            })
+            // alert("Please enter some notes of what you changed!")
+            // return
+        } else {
+            // alert("Event has been updated");
+            this.setState({
+                openSave: !this.state.openSave,
+                ...this.state.details, details: this.props.details
+            })
         }
-        // alert("Event has been updated");
-        this.setState({
-            openSave: !this.state.openSave,
-            ...this.state.details, details: this.props.details
-        })
+       
     }
 
     saveEvent = () => {
@@ -207,6 +217,32 @@ class EventDetails extends Component {
           </Button>
                         <ThemeProvider theme={theme}>
                             <Button onClick={this.saveEvent} variant="contained" color="primary">
+                                Confirm
+          </Button>
+                        </ThemeProvider>
+                    </DialogActions>
+                </Dialog>
+
+                <Dialog
+                    open={this.state.openAlert}
+                    onClose={this.handleCloseAlert}
+                    PaperComponent={PaperComponent}
+                    aria-labelledby="draggable-dialog-title"
+                >
+                    <DialogTitle style={{ cursor: 'move', color: 'white' }} id="draggable-dialog-title" className="Dialog">
+                        Missing Information?
+        </DialogTitle>
+                    <DialogContent>
+                        <DialogContentText style={{ color: 'black' }}>
+                            Please enter some notes of what you changed!
+          </DialogContentText>
+                    </DialogContent>
+                    <DialogActions>
+                        {/* <Button onClick={this.handleCloseAlert} variant="contained" color="secondary">
+                            Cancel
+          </Button> */}
+                        <ThemeProvider theme={theme}>
+                            <Button onClick={this.handleCloseAlert} variant="contained" color="primary">
                                 Confirm
           </Button>
                         </ThemeProvider>
