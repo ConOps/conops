@@ -79,7 +79,10 @@ class EventDetails extends Component {
 
     handleSave = () => {
         console.log('clicked save!');
-
+        if (this.props.details.EventModifiedNotes === null || this.props.details.EventModifiedNotes === '') {
+            alert("Please enter some notes of what you changed!")
+            return
+        }
         // alert("Event has been updated");
         this.props.dispatch({
             type: "UPDATE_EVENT_INFO",
@@ -102,9 +105,14 @@ class EventDetails extends Component {
     render() {
 
         let locationsInSelector = this.props.locations.map((location) => {
-            return (
-                <MenuItem value={location.LocationID} key={location.LocationID}>{location.LocationName}</MenuItem>
-            )
+            if (location.LocationIsActive === true) {
+                return (
+                    <MenuItem value={location.LocationID} key={location.LocationID}>{location.LocationName}</MenuItem>
+                )
+            } else {
+                return false
+            }
+            
         });
 
         let eventTags = this.props.details.TagObjects.map((tag) => {
@@ -123,15 +131,25 @@ class EventDetails extends Component {
         })
 
         let allTags = this.props.tags.map((tag) => {
-            return (
-                <MenuItem value={tag} key={tag.TagID}>{tag.TagName}</MenuItem>
-            )
+            if (tag.TagIsActive === true) {
+                return (
+                    <MenuItem value={tag} key={tag.TagID}>{tag.TagName}</MenuItem>
+                )
+            } else {
+                return false
+            }
+            
         })
 
         let sponsorSelector = this.props.sponsors.map((sponsor) => {
-            return (
-                <MenuItem value={sponsor.SponsorID} key={sponsor.SponsorID}>{sponsor.SponsorName}</MenuItem>
-            )
+            if (sponsor.SponsorIsActive === true) {
+                return (
+                    <MenuItem value={sponsor.SponsorID} key={sponsor.SponsorID}>{sponsor.SponsorName}</MenuItem>
+                )
+            } else {
+                return false
+            }
+            
         })
 
         return (
