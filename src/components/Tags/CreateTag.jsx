@@ -101,7 +101,7 @@ class CreateTag extends Component {
                     })
                   }
                 />
-
+               <hr></hr>
                 <div style={{ marginTop: "3%" }}>
                   <Button
                     style={{ marginRight: "3%" }}

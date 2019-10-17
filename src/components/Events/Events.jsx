@@ -64,7 +64,7 @@ class Events extends Component {
         return (
 
           <div>
-            <h1>Events</h1>
+            <h1 style={{textAlign: 'center'}}>Events</h1>
             {(this.props.reduxStore.user.authorization === 4 ||
               this.props.reduxStore.user.authorization === 2) && (
               <ThemeProvider theme={theme}>

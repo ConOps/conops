@@ -159,6 +159,7 @@ class EventDetails extends Component {
                 <div className={this.props.classes.topRight}>
                     {this.props.details.DateLastModified && <h3 className={this.props.classes.cancelledText}>Event Has Been Modified!</h3>}
                     {this.props.details.DateLastModified && <h4 className={this.props.classes.cancelledText}>{moment(this.props.details.DateLastModified).format('LLLL')}</h4>}
+                    
                     <TextField
                         label="Change Notes"
                         multiline
