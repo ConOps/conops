@@ -65,6 +65,7 @@ router.post('/add_event', rejectUnauthenticated, async (req, res) => {
     const connection = await pool.connect();
     try {
         let currentTime
+        let EventID
         await connection.query('BEGIN');
         const queryCon = `SELECT MAX("ConventionID") AS convention FROM "Convention";`;
         const result = await connection.query(queryCon);
@@ -74,11 +75,30 @@ router.post('/add_event', rejectUnauthenticated, async (req, res) => {
             .then(result => {
                 currentTime = result.rows[0].time
             });
-        const queryText = `INSERT INTO "Event" ("ConventionID", "EventName", "EventStartTime", "EventEndTime", "LocationID", "EventDescription", "SponsorID", "DateCreated") VALUES ($1, $2, $3, $4, $5, $6, $7, $8);`
-        const eventResult = await connection.query(queryText, [conventionId, event.EventName, event.EventStartTime, event.EventEndTime, event.LocationID, event.EventDescription, event.SponsorID, currentTime]);
+        const queryText = `INSERT INTO "Event" ("ConventionID", "EventName", "EventStartTime", "EventEndTime", "LocationID", "EventDescription", "SponsorID", "DateCreated") VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING "Event"."EventID";`
+        await connection.query(queryText, [conventionId, event.EventName, event.EventStartTime, event.EventEndTime, event.LocationID, event.EventDescription, event.SponsorID, currentTime])
+            .then(result => {
+                EventID = result.rows[0].EventID
+                console.log('new event id', EventID);
+                
+            })
+        
+        // console.log('event result!!', eventResult);
+        console.log('event tags:', event.TagName);
+        let tagsToAdd = event.TagName;
+        if (tagsToAdd === null || tagsToAdd === undefined) {
+            tagsToAdd = []
+        }
+
+        const insertTagsText = `INSERT INTO "EventTags" ("Event_ID", "Tag_ID")
+                                VALUES ($1, $2);`;
+        
+        for (let tag of tagsToAdd) {
+            await connection.query(insertTagsText, [EventID, tag.TagID])
+        }
         await connection.query('COMMIT');
-        console.log(eventResult.rows);
-        res.send(eventResult.rows);
+        // console.log(eventResult.rows);
+        res.sendStatus(201);
     } catch (error) {
         await connection.query('ROLLBACK');
         console.log('error in event post:', error);

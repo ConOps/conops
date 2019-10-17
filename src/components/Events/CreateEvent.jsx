@@ -237,7 +237,7 @@ class CreateEvent extends Component {
                 </Dialog>
 
                 <h1>Create Event</h1>
-                {JSON.stringify(this.state)}
+                {/* {JSON.stringify(this.state)} */}
                 <hr></hr>
                 <TextField
                     label="Name"
