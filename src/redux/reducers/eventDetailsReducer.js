@@ -38,6 +38,8 @@ const eventDetailsReducer = (state = { Tags: [], TagObjects: [], LocationName: '
                 }
             }
             return { ...state, TagObjects: newTagObjects }
+        case 'CLEAR_EVENT_DETAILS':
+            return { Tags: [], TagObjects: [], LocationName: '', EventName: '', EventStartTime: '08/20/2014', EventEndTime: '08/20/2014', SponsorID: '', LocationID: '', EventModifiedNotes: '' }
         default:
             return state;
     }

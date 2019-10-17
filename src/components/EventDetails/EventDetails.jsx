@@ -79,7 +79,10 @@ class EventDetails extends Component {
 
     handleSave = () => {
         console.log('clicked save!');
-
+        if (this.props.details.EventModifiedNotes === null || this.props.details.EventModifiedNotes === '') {
+            alert("Please enter some notes of what you changed!")
+            return
+        }
         // alert("Event has been updated");
         this.props.dispatch({
             type: "UPDATE_EVENT_INFO",
