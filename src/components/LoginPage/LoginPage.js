@@ -33,7 +33,7 @@ class LoginPage extends Component {
 
   render() {
     return (
-      <div  >
+      <div style={{textAlign: 'center'}} >
         {this.props.errors.loginMessage && (
           <h2
             className="alert"
@@ -43,12 +43,12 @@ class LoginPage extends Component {
           </h2>
         )}
         <div className="main">
-        <div className="form">
-          <h1 style={{textAlign: 'center', color: 'white', paddingTop: '20px', fontSize: '40px', }}>Login</h1>
-          <div>
-           
+            <form className="form">
+            <h1 style={{ textAlign: 'center', color: 'white', marginTop: '80px', paddingTop: '55px', paddingBottom: '70px', fontSize: '40px', backgroundSize: '200px', backgroundPosition: 'center', backgroundRepeat: 'no-repeat', backgroundImage: 'url(https://raw.githubusercontent.com/ConOps/conops/master/LogoBlackedOut.png)' }}>Login</h1>
+            <div>
+              <div>
               <TextField
-              style={{ marginTop: '15px', backgroundColor: 'white', paddingLeft: '5px'}}
+              style={{ marginTop: 'px', backgroundColor: 'white', paddingLeft: '5px'}}
               label="username"
                 type="text"
                 name="username"
@@ -57,8 +57,7 @@ class LoginPage extends Component {
               />
             
           </div>
-          <div>
-           
+            <div>
               <TextField
               style={{ margin: '10px', backgroundColor: 'white', paddingLeft: '5px' }}
                 label="password"
@@ -77,7 +76,9 @@ class LoginPage extends Component {
               onClick={this.login}
             >Log-In</Button>
           </div>
-        </div>
+            </div>
+            </form>
+      
         </div>
       </div>
     );

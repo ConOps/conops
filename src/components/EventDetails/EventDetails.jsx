@@ -164,7 +164,7 @@ class EventDetails extends Component {
                         payload: this.props.details.EventID
                     })
                 }}>
-                    UnCancel
+                    UnCancel Event
                 </Button>}
                 {!this.props.details.IsCancelled && <Button variant="contained" color="secondary" onClick={() => {
                     this.props.dispatch({
@@ -172,7 +172,7 @@ class EventDetails extends Component {
                         payload: this.props.details.EventID
                     })
                 }}>
-                    Cancel
+                    Cancel Event
                 </Button>}
                 <div className={this.props.classes.topRight}>
                     {this.props.details.DateLastModified && <h3 className={this.props.classes.cancelledText}>Event Has Been Modified!</h3>}

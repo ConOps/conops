@@ -411,7 +411,7 @@ class Details extends Component {
         </DialogTitle>
           <DialogContent>
             <DialogContentText style={{ color: 'black' }}>
-              Info has been updated?
+              Update this attendees info?
           </DialogContentText>
           </DialogContent>
           <DialogActions>
