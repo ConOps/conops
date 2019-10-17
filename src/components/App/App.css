@@ -58,20 +58,15 @@ body {
 .main{
     text-align: center;
     padding-top: 0px;
+}
+
+.form {}
+    /* background-position: center;
     background-image: url(https://raw.githubusercontent.com/ConOps/conops/master/LogoBlackedOut.png);
     background-size: 700px;
     background-repeat: no-repeat;
-    background-attachment: fixed;
-    background-position: center ;
-}
-
-.form {
-    padding-top: 100px;
-    padding-bottom: 200px;
-    text-align: center;
-    position: static;;
-    
-}
+    background-position: unset;
+} */
 
 
 

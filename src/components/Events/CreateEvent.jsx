@@ -168,7 +168,7 @@ class CreateEvent extends Component {
         });
 
         return (
-            <div>
+            <div style={{margin: '20px'}}>
                 
                 <Dialog
                     open={this.state.openSave}
@@ -316,8 +316,10 @@ class CreateEvent extends Component {
                     </Select>
                 </FormControl>
                 <hr></hr>
-                <Button onClick={this.handleCancel}>Cancel</Button>
-                <Button onClick={this.handleSave}>Save</Button>
+                <Button onClick={this.handleCancel} variant="contained" color="secondary" style={{margin: '5px'}}>Cancel</Button>
+                <ThemeProvider theme={theme}>
+                    <Button onClick={this.handleSave} variant="contained" color="primary" style={{ margin: '5px' }}>Save</Button>
+                </ThemeProvider>
             </div>
             
         )
