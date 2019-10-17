@@ -10,11 +10,7 @@ import Chip from '@material-ui/core/Chip';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import DateFnsUtils from "@date-io/date-fns";
-import {
-    MuiPickersUtilsProvider,
-    KeyboardDateTimePicker
-} from "@material-ui/pickers";
-
+import { MuiPickersUtilsProvider, KeyboardDateTimePicker } from "@material-ui/pickers";
 
 const styles = ({
     root: {
@@ -45,26 +41,25 @@ class CreateEvent extends Component {
     state = {
             LocationID: '',
             TagID: [],
-            SponsorID: ''
+            SponsorID: '',
     }
 
     handleLocationChange = (event) => {
         console.log('SELECTED LOCATION:', event.target.value)
-        this.setState({ LocationID: event.target.value })
-        
-        // this.props.dispatch({
-        //     type: 'CREATE_EVENT_LOCATION',
-        //     payload: event.target.value
-        // })
+        this.setState({ LocationID: event.target.value })    
+        this.props.dispatch({
+            type: 'CREATE_EVENT_LOCATION',
+            payload: event.target.value
+        })
     }
 
     handleTagChange = (event) => {
         console.log('SELECTED TAG(S):', event.target.value)
         this.setState({ TagID: event.target.value })
-        // this.props.dispatch({
-        //     type: 'CREATE_EVENT_TAGS',
-        //     payload: event.target.value
-        // })
+        this.props.dispatch({
+            type: 'CREATE_EVENT_TAGS',
+            payload: event.target.value
+        })
     }
 
     handleSponsorChange = (event) => {
@@ -130,6 +125,7 @@ class CreateEvent extends Component {
                 <MuiPickersUtilsProvider utils={DateFnsUtils}>
                     <KeyboardDateTimePicker
                         label="Start Time"
+                        value={this.props.details.EventStartTime || this.props.conventions.ConventionStartTime}
                         className={this.props.classes.root}
                         format="MM/dd/yyyy HH:mm"
                         KeyboardButtonProps={{
@@ -144,6 +140,7 @@ class CreateEvent extends Component {
                     />
                     <KeyboardDateTimePicker
                         label="End Time"
+                        value={this.props.details.EventEndTime || this.props.conventions.ConventionEndTime}
                         className={this.props.classes.root}
                         format="MM/dd/yyyy HH:mm"
                         KeyboardButtonProps={{
@@ -224,7 +221,8 @@ const mapStateToProps = reduxStore => {
         details: reduxStore.eventDetailsReducer,
         locations: reduxStore.LocationReducer,
         tags: reduxStore.TagsReducer,
-        sponsors: reduxStore.sponsorReducer
+        sponsors: reduxStore.sponsorReducer,
+        conventions: reduxStore.ConventionsReducer
     };
 };
 
