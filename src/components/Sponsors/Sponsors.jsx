@@ -47,6 +47,7 @@ class Sponsors extends Component {
     render() {
         return (
             <div style={{ marginTop: '65px' }}>
+                <h1 style={{textAlign: 'center'}}>Sponsors</h1>
             {this.props.reduxStore.user.authorization === 4 ? (
                 <div>
                         <ThemeProvider theme={theme}>

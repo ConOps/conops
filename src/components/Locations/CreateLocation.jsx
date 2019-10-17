@@ -93,7 +93,6 @@ class CreateLocation extends Component {
             </Dialog>
 
             <h1>Create Location</h1>
-            <hr></hr>
             <TextField
               label="Name"
               className={this.props.classes.root}

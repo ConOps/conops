@@ -69,10 +69,15 @@ class CreateEvent extends Component {
             TagID: [],
             SponsorID: '',
             openSave: false,
+            openAlert: false,
     }
 
     handleCloseSave = () => {
         this.setState({ openSave: false });
+    };
+
+    handleCloseAlert = () => {
+        this.setState({ openAlert: false });
     };
 
     handleLocationChange = (event) => {
@@ -103,14 +108,23 @@ class CreateEvent extends Component {
     }
 
     handleSave = () => {
-        this.setState({
-            openSave: !this.state.openSave,
-        })
-        // alert('Event created.')
-        // this.props.dispatch({
-        //     type: 'ADD_EVENT',
-        //     payload: this.props.details
-        // })
+        if(this.props.details.EventName === null ||
+            this.props.details.EventName === '' ||
+            this.props.details.EventDescription === null ||
+            this.props.details.EventDescription === '' ||
+            this.props.details.EventStartTime === null ||
+            this.props.details.EventStartTime === '' ||
+            this.props.details.EventEndTime === null ||
+            this.props.details.EventEndTime === ''
+            ){
+                this.setState({
+                    openAlert: !this.state.openAlert,
+                })
+            } else {
+            this.setState({
+                openSave: !this.state.openSave,
+            })
+            }
     }
 
     saveEvent = () => {
@@ -171,7 +185,7 @@ class CreateEvent extends Component {
         });
 
         return (
-            <div>
+            <div style={{margin: '20px'}}>
                 
                 <Dialog
                     open={this.state.openSave}
@@ -193,6 +207,29 @@ class CreateEvent extends Component {
           </Button>
                         <ThemeProvider theme={theme}>
                             <Button onClick={this.saveEvent} variant="contained" color="primary">
+                                Confirm
+          </Button>
+                        </ThemeProvider>
+                    </DialogActions>
+                </Dialog>
+
+                <Dialog
+                    open={this.state.openAlert}
+                    onClose={this.handleCloseAlert}
+                    PaperComponent={PaperComponent}
+                    aria-labelledby="draggable-dialog-title"
+                >
+                    <DialogTitle style={{ cursor: 'move', color: 'white' }} id="draggable-dialog-title" className="Dialog">
+                        Missing Information?
+        </DialogTitle>
+                    <DialogContent>
+                        <DialogContentText style={{ color: 'black' }}>
+                            Please make sure event name, description, start time, and endtime are filled out!
+          </DialogContentText>
+                    </DialogContent>
+                    <DialogActions>
+                        <ThemeProvider theme={theme}>
+                            <Button onClick={this.handleCloseAlert} variant="contained" color="primary">
                                 Confirm
           </Button>
                         </ThemeProvider>
@@ -300,8 +337,10 @@ class CreateEvent extends Component {
                     </Select>
                 </FormControl>
                 <hr></hr>
-                <Button onClick={this.handleCancel}>Cancel</Button>
-                <Button onClick={this.handleSave}>Save</Button>
+                <Button onClick={this.handleCancel} variant="contained" color="secondary" style={{margin: '5px'}}>Cancel</Button>
+                <ThemeProvider theme={theme}>
+                    <Button onClick={this.handleSave} variant="contained" color="primary" style={{ margin: '5px' }}>Save</Button>
+                </ThemeProvider>
             </div>
             
         )

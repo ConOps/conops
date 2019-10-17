@@ -150,7 +150,7 @@ class EditTag extends Component {
                 onChange={this.handleChange}
               />
             </FormGroup>
-            <hr></hr>
+          <hr></hr>
 
             <div style={{ marginTop: "3%" }}>
               <Button

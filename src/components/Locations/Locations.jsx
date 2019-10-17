@@ -47,7 +47,7 @@ class Locations extends Component {
     render() {
         return (
           <div>
-            <h1>Locations</h1>
+            <h1 style={{textAlign:'center'}}>Locations</h1>
             {this.props.reduxStore.user.authorization === 4 && (
               <ThemeProvider theme={theme}>
               <Fab
