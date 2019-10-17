@@ -74,7 +74,7 @@ router.post('/add_event', rejectUnauthenticated, async (req, res) => {
             .then(result => {
                 currentTime = result.rows[0].time
             });
-        const queryText = `INSERT INTO "Event" ("ConventionID", "EventName", "EventStartTime", "EventEndTime", "LocationID", "IsCancelled", "EventDescription", "SponsorID", "DateCreated") VALUES ($1, $2, $3, $4, $5, 'FALSE', $6, $7, $8);`
+        const queryText = `INSERT INTO "Event" ("ConventionID", "EventName", "EventStartTime", "EventEndTime", "LocationID", "EventDescription", "SponsorID", "DateCreated") VALUES ($1, $2, $3, $4, $5, $6, $7, $8);`
         const eventResult = await connection.query(queryText, [conventionId, event.EventName, event.EventStartTime, event.EventEndTime, event.LocationID, event.EventDescription, event.SponsorID, currentTime]);
         await connection.query('COMMIT');
         console.log(eventResult.rows);

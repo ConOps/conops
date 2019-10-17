@@ -132,9 +132,14 @@ class EventDetails extends Component {
 
         let allTags = this.props.tags.map((tag) => {
             if (tag.TagIsActive === true) {
-                return (
-                    <MenuItem value={tag} key={tag.TagID}>{tag.TagName}</MenuItem>
-                )
+                for(let i = 0; i < this.props.details.TagObjects.length; i++) {
+                    if (this.props.details.TagObjects[i].TagID !== tag.TagID) {
+                        return (
+                            <MenuItem value={tag} key={tag.TagID}>{tag.TagName}</MenuItem>
+                        )
+                    }
+                }
+                
             } else {
                 return false
             }

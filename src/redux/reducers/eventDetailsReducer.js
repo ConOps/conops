@@ -1,4 +1,4 @@
-const eventDetailsReducer = (state = { Tags: [], TagObjects: [], LocationName: '', EventName: '', EventStartTime: '08/20/2014', EventEndTime: '08/20/2014', SponsorID: '', LocationID: '', EventModifiedNotes: ''}, action) => {
+const eventDetailsReducer = (state = { Tags: [], TagObjects: [], LocationName: '', EventName: '', EventStartTime: '', EventEndTime: '', EventModifiedNotes: ''}, action) => {
     switch (action.type) {
         case 'SET_EVENT_DETAILS':
             return action.payload;
@@ -10,11 +10,11 @@ const eventDetailsReducer = (state = { Tags: [], TagObjects: [], LocationName: '
             return { ...state, EventEndTime: action.payload}
         case 'EDIT_EVENT_DESCRIPTION':
             return { ...state, EventDescription: action.payload}
-        case 'EDIT_EVENT_TAGS':
-            return { ...state, Tags: [...action.payload] }
         case 'EDIT_EVENT_LOCATION':
             return { ...state, LocationID: action.payload }
         case 'EDIT_EVENT_SPONSOR':
+            return { ...state, SponsorID: action.payload }
+        case 'CREATE_EVENT_SPONSOR':
             return { ...state, SponsorID: action.payload }
         case 'CREATE_EVENT_NAME':
             return { ...state, EventName: action.payload}
@@ -45,7 +45,7 @@ const eventDetailsReducer = (state = { Tags: [], TagObjects: [], LocationName: '
             }
             return { ...state, TagObjects: newTagObjects }
         case 'CLEAR_EVENT_DETAILS':
-            return { Tags: [], TagObjects: [], LocationName: '', EventName: '', EventStartTime: '08/20/2014', EventEndTime: '08/20/2014', SponsorID: '', LocationID: '', EventModifiedNotes: '' }
+            return { Tags: [], TagObjects: [], LocationName: '', EventName: '', EventStartTime: '', EventEndTime: '', EventModifiedNotes: '' }
         default:
             return state;
     }

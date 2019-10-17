@@ -93,6 +93,10 @@ class CreateEvent extends Component {
     handleSponsorChange = (event) => {
         console.log('SELECTED SPONSOR:', event.target.value)
         this.setState({ SponsorID: event.target.value })
+        this.props.dispatch({
+            type: 'CREATE_EVENT_SPONSOR',
+            payload: event.target.value
+        })
     }
 
     handleSave = () => {
