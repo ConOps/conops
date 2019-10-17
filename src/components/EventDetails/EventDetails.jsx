@@ -198,13 +198,13 @@ class EventDetails extends Component {
 
         let allTags = this.props.tags.map((tag) => {
             if (tag.TagIsActive === true) {
-                
-                        return (
-                            <MenuItem value={tag} key={tag.TagID}>{tag.TagName}</MenuItem>
-                        )
-                    
-                
-                
+
+                return (
+                    <MenuItem value={tag} key={tag.TagID}>{tag.TagName}</MenuItem>
+                )
+
+
+
             } else {
                 return false
             }
@@ -233,20 +233,20 @@ class EventDetails extends Component {
                 >
                     <DialogTitle style={{ cursor: 'move', color: 'white' }} id="draggable-dialog-title" className="Dialog">
                         Edit Event?
-        </DialogTitle>
+                    </DialogTitle>
                     <DialogContent>
                         <DialogContentText style={{ color: 'black' }}>
                             Are you sure that you would like to edit this Event?
-          </DialogContentText>
+                        </DialogContentText>
                     </DialogContent>
                     <DialogActions>
                         <Button onClick={this.handleCloseSave} variant="contained" color="secondary">
                             Cancel
-          </Button>
+                        </Button>
                         <ThemeProvider theme={theme}>
                             <Button onClick={this.saveEvent} variant="contained" color="primary">
                                 Confirm
-          </Button>
+                            </Button>
                         </ThemeProvider>
                     </DialogActions>
                 </Dialog>
@@ -259,17 +259,17 @@ class EventDetails extends Component {
                 >
                     <DialogTitle style={{ cursor: 'move', color: 'white' }} id="draggable-dialog-title" className="Dialog">
                         Missing Information?
-        </DialogTitle>
+                    </DialogTitle>
                     <DialogContent>
                         <DialogContentText style={{ color: 'black' }}>
                             Please enter some notes of what you changed!
-          </DialogContentText>
+                        </DialogContentText>
                     </DialogContent>
                     <DialogActions>
                         <ThemeProvider theme={theme}>
                             <Button onClick={this.handleCloseAlert} variant="contained" color="primary">
                                 Confirm
-          </Button>
+                            </Button>
                         </ThemeProvider>
                     </DialogActions>
                 </Dialog>
@@ -282,20 +282,20 @@ class EventDetails extends Component {
                 >
                     <DialogTitle style={{ cursor: 'move', color: 'white' }} id="draggable-dialog-title" className="Dialog">
                         Cancel Event?
-        </DialogTitle>
+                    </DialogTitle>
                     <DialogContent>
                         <DialogContentText style={{ color: 'black' }}>
                             Are you sure that you would like to cancel this Event?
-          </DialogContentText>
+                        </DialogContentText>
                     </DialogContent>
                     <DialogActions>
                         <Button onClick={this.handleCloseCancel} variant="contained" color="secondary">
                             Back
-          </Button>
+                        </Button>
                         <ThemeProvider theme={theme}>
                             <Button onClick={this.cancelEvent} variant="contained" color="primary">
                                 Confirm
-          </Button>
+                            </Button>
                         </ThemeProvider>
                     </DialogActions>
                 </Dialog>
@@ -308,20 +308,20 @@ class EventDetails extends Component {
                 >
                     <DialogTitle style={{ cursor: 'move', color: 'white' }} id="draggable-dialog-title" className="Dialog">
                         Activate Event?
-        </DialogTitle>
+                    </DialogTitle>
                     <DialogContent>
                         <DialogContentText style={{ color: 'black' }}>
                             Are you sure that you would like to activate this Event?
-          </DialogContentText>
+                        </DialogContentText>
                     </DialogContent>
                     <DialogActions>
                         <Button onClick={this.handleCloseActivate} variant="contained" color="secondary">
                             Back
-          </Button>
+                        </Button>
                         <ThemeProvider theme={theme}>
                             <Button onClick={this.activateEvent} variant="contained" color="primary">
                                 Confirm
-          </Button>
+                        </Button>
                         </ThemeProvider>
                     </DialogActions>
                 </Dialog>
@@ -349,7 +349,7 @@ class EventDetails extends Component {
                 <div className={this.props.classes.topRight}>
                     {this.props.details.DateLastModified && <h3 className={this.props.classes.cancelledText}>Event Has Been Modified!</h3>}
                     {this.props.details.DateLastModified && <h4 className={this.props.classes.cancelledText}>{moment(this.props.details.DateLastModified).format('LLLL')}</h4>}
-                    
+
                     <TextField
                         label="Change Notes"
                         multiline

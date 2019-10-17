@@ -166,7 +166,7 @@ class CreateEvent extends Component {
         let allTags = this.props.tags.map((tag) => {
             if (tag.TagIsActive === true) {
                 return (
-                    <MenuItem value={tag.TagName} key={tag.TagID}>{tag.TagName}</MenuItem>
+                    <MenuItem value={tag} key={tag.TagID}>{tag.TagName}</MenuItem>
                 )
             } else {
                 return false
@@ -195,20 +195,20 @@ class CreateEvent extends Component {
                 >
                     <DialogTitle style={{ cursor: 'move', color: 'white' }} id="draggable-dialog-title" className="Dialog">
                         Create Event?
-        </DialogTitle>
+                    </DialogTitle>
                     <DialogContent>
                         <DialogContentText style={{ color: 'black' }}>
                             Are you sure that you would like to create this Event?
-          </DialogContentText>
+                        </DialogContentText>
                     </DialogContent>
                     <DialogActions>
                         <Button onClick={this.handleCloseSave} variant="contained" color="secondary">
                             Cancel
-          </Button>
+                        </Button>
                         <ThemeProvider theme={theme}>
                             <Button onClick={this.saveEvent} variant="contained" color="primary">
                                 Confirm
-          </Button>
+                            </Button>
                         </ThemeProvider>
                     </DialogActions>
                 </Dialog>
@@ -221,22 +221,23 @@ class CreateEvent extends Component {
                 >
                     <DialogTitle style={{ cursor: 'move', color: 'white' }} id="draggable-dialog-title" className="Dialog">
                         Missing Information?
-        </DialogTitle>
+                    </DialogTitle>
                     <DialogContent>
                         <DialogContentText style={{ color: 'black' }}>
                             Please make sure event name, description, start time, and endtime are filled out!
-          </DialogContentText>
+                        </DialogContentText>
                     </DialogContent>
                     <DialogActions>
                         <ThemeProvider theme={theme}>
                             <Button onClick={this.handleCloseAlert} variant="contained" color="primary">
                                 Confirm
-          </Button>
+                            </Button>
                         </ThemeProvider>
                     </DialogActions>
                 </Dialog>
 
                 <h1>Create Event</h1>
+                {/* {JSON.stringify(this.state)} */}
                 <hr></hr>
                 <TextField
                     label="Name"
@@ -316,7 +317,7 @@ class CreateEvent extends Component {
                         renderValue={selected => (
                             <div>
                                 {selected.map(value => (
-                                    <Chip key={value} label={value} />
+                                    <Chip key={value} label={value.TagName} />
                                 ))}
                             </div>
                         )}
