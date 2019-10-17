@@ -65,6 +65,8 @@ class EventDetails extends Component {
     state = {
         openSave: false,
         openAlert: false,
+        openCancel: false,
+        details: {},
     }
 
 
@@ -91,6 +93,10 @@ class EventDetails extends Component {
 
     handleCloseAlert = () => {
         this.setState({ openAlert: false });
+    };
+
+    handleCloseCancel = () => {
+        this.setState({ openCancel: false });
     };
 
 
@@ -121,7 +127,7 @@ class EventDetails extends Component {
                 ...this.state.details, details: this.props.details
             })
         }
-       
+
     }
 
     saveEvent = () => {
@@ -131,6 +137,14 @@ class EventDetails extends Component {
         });
         this.handleCloseSave();
         this.props.history.push("/events");
+    }
+
+    cancelEvent = () => {
+        this.props.dispatch({
+            type: "CANCEL_EVENT",
+            payload: this.props.details.EventID
+        });
+        this.handleCloseCancel();
     }
 
     handleDeleteTag = (tag) => {
@@ -154,7 +168,7 @@ class EventDetails extends Component {
             } else {
                 return false
             }
-            
+
         });
 
         let eventTags = this.props.details.TagObjects.map((tag) => {
@@ -180,7 +194,7 @@ class EventDetails extends Component {
             } else {
                 return false
             }
-            
+
         })
 
         let sponsorSelector = this.props.sponsors.map((sponsor) => {
@@ -191,7 +205,7 @@ class EventDetails extends Component {
             } else {
                 return false
             }
-            
+
         })
 
         return (
@@ -238,11 +252,34 @@ class EventDetails extends Component {
           </DialogContentText>
                     </DialogContent>
                     <DialogActions>
-                        {/* <Button onClick={this.handleCloseAlert} variant="contained" color="secondary">
-                            Cancel
-          </Button> */}
                         <ThemeProvider theme={theme}>
                             <Button onClick={this.handleCloseAlert} variant="contained" color="primary">
+                                Confirm
+          </Button>
+                        </ThemeProvider>
+                    </DialogActions>
+                </Dialog>
+
+                <Dialog
+                    open={this.state.openCancel}
+                    onClose={this.handleCloseCancel}
+                    PaperComponent={PaperComponent}
+                    aria-labelledby="draggable-dialog-title"
+                >
+                    <DialogTitle style={{ cursor: 'move', color: 'white' }} id="draggable-dialog-title" className="Dialog">
+                        Cancel Event?
+        </DialogTitle>
+                    <DialogContent>
+                        <DialogContentText style={{ color: 'black' }}>
+                            Are you sure that you would like to cancel this Event?
+          </DialogContentText>
+                    </DialogContent>
+                    <DialogActions>
+                        <Button onClick={this.handleCloseCancel} variant="contained" color="secondary">
+                            Back
+          </Button>
+                        <ThemeProvider theme={theme}>
+                            <Button onClick={this.cancelEvent} variant="contained" color="primary">
                                 Confirm
           </Button>
                         </ThemeProvider>
@@ -262,10 +299,14 @@ class EventDetails extends Component {
                     UnCancel
                 </Button>}
                 {!this.props.details.IsCancelled && <Button variant="contained" color="secondary" onClick={() => {
-                    this.props.dispatch({
-                        type: "CANCEL_EVENT",
-                        payload: this.props.details.EventID
+                    this.setState({
+                        openCancel: !this.state.openCancel,
+                        ...this.state.details, details: this.props.details.EventId
                     })
+                    // this.props.dispatch({
+                    //     type: "CANCEL_EVENT",
+                    //     payload: this.props.details.EventID
+                    // })
                 }}>
                     Cancel
                 </Button>}
