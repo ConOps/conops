@@ -43,6 +43,9 @@ function PaperComponent(props) {
 
 class CreateEvent extends Component {
     componentDidMount() {
+        this.props.dispatch({ 
+            type: 'CLEAR_EVENT_DETAILS' 
+        });
         this.props.dispatch({
             type: 'FETCH_LOCATIONS'
         });
@@ -135,9 +138,14 @@ class CreateEvent extends Component {
 
     render() {
         let locationsInSelector = this.props.locations.map((location) => {
-            return (
-                <MenuItem value={location.LocationID} key={location.LocationID}>{location.LocationName}</MenuItem>
-            )
+            if (location.LocationIsActive === true) {
+                return (
+                    <MenuItem value={location.LocationID} key={location.LocationID}>{location.LocationName}</MenuItem>
+                )
+            } else {
+                return false
+            }
+            
         });
 
         let eventTags = this.props.details.Tags.map((tag) => {
@@ -156,15 +164,24 @@ class CreateEvent extends Component {
         });
 
         let allTags = this.props.tags.map((tag) => {
-            return (
-                <MenuItem value={tag.TagName} key={tag.TagID}>{tag.TagName}</MenuItem>
-            )
+            if (tag.TagIsActive === true) {
+                return (
+                    <MenuItem value={tag.TagName} key={tag.TagID}>{tag.TagName}</MenuItem>
+                )
+            } else {
+                return false
+            }
         });
 
         let sponsorsInSelector = this.props.sponsors.map((sponsor) => {
-            return (
-                <MenuItem value={sponsor.SponsorID} key={sponsor.SponsorID}>{sponsor.SponsorName}</MenuItem>
-            )
+            if (sponsor.SponsorIsActive === true) {
+                return (
+                    <MenuItem value={sponsor.SponsorID} key={sponsor.SponsorID}>{sponsor.SponsorName}</MenuItem>
+                )
+            } else {
+                return false
+            }
+            
         });
 
         return (
@@ -224,6 +241,7 @@ class CreateEvent extends Component {
                 <TextField
                     label="Name"
                     className={this.props.classes.root}
+                    helperText="Required"
                     onChange={event =>
                         this.props.dispatch({
                             type: "CREATE_EVENT_NAME",
@@ -239,6 +257,7 @@ class CreateEvent extends Component {
                         KeyboardButtonProps={{
                             "aria-label": "change date"
                         }}
+                        helperText="Required"
                         onChange={date =>
                             this.props.dispatch({
                                 type: "CREATE_EVENT_START_TIME",
@@ -254,6 +273,7 @@ class CreateEvent extends Component {
                         KeyboardButtonProps={{
                             "aria-label": "change date"
                         }}
+                        helperText="Required"
                         onChange={date =>
                             this.props.dispatch({
                                 type: "CREATE_EVENT_END_TIME",
@@ -265,6 +285,7 @@ class CreateEvent extends Component {
                 <TextField
                     label="Description"
                     className={this.props.classes.root}
+                    helperText="Required"
                     onChange={event =>
                         this.props.dispatch({
                             type: "CREATE_EVENT_DESCRIPTION",
