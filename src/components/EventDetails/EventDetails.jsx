@@ -60,7 +60,7 @@ class EventDetails extends Component {
         this.props.dispatch({
             type: 'FETCH_SPONSORS'
         });
-
+        
         this.fetchEventDetails();
     }
 
