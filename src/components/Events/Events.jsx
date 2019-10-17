@@ -54,7 +54,7 @@ class Events extends Component {
             { title: "Notes", field: "EventModifiedNotes", hidden: true },
             {
               title: "Tags", field: "Tags", hidden: false, render: (rowData) =>  
-              <p>{rowData.Tags} </p> }
+                <p>{rowData.Tags} </p> },
         ],
         data: []
     }
