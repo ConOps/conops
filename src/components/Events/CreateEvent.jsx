@@ -124,9 +124,14 @@ class CreateEvent extends Component {
 
     render() {
         let locationsInSelector = this.props.locations.map((location) => {
-            return (
-                <MenuItem value={location.LocationID} key={location.LocationID}>{location.LocationName}</MenuItem>
-            )
+            if (location.LocationIsActive === true) {
+                return (
+                    <MenuItem value={location.LocationID} key={location.LocationID}>{location.LocationName}</MenuItem>
+                )
+            } else {
+                return false
+            }
+            
         });
 
         let eventTags = this.props.details.Tags.map((tag) => {
@@ -145,15 +150,24 @@ class CreateEvent extends Component {
         });
 
         let allTags = this.props.tags.map((tag) => {
-            return (
-                <MenuItem value={tag.TagName} key={tag.TagID}>{tag.TagName}</MenuItem>
-            )
+            if (tag.TagIsActive === true) {
+                return (
+                    <MenuItem value={tag.TagName} key={tag.TagID}>{tag.TagName}</MenuItem>
+                )
+            } else {
+                return false
+            }
         });
 
         let sponsorsInSelector = this.props.sponsors.map((sponsor) => {
-            return (
-                <MenuItem value={sponsor.SponsorID} key={sponsor.SponsorID}>{sponsor.SponsorName}</MenuItem>
-            )
+            if (sponsor.SponsorIsActive === true) {
+                return (
+                    <MenuItem value={sponsor.SponsorID} key={sponsor.SponsorID}>{sponsor.SponsorName}</MenuItem>
+                )
+            } else {
+                return false
+            }
+            
         });
 
         return (
