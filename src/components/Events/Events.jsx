@@ -33,6 +33,7 @@ class Events extends Component {
     componentDidMount() {
         this.props.dispatch({ type: 'FETCH_EVENT_LIST' });
         this.props.dispatch({ type: 'FETCH_LOCATIONS' });
+        this.props.dispatch({ type: 'CLEAR_EVENT_DETAILS'})
 
     }
 
@@ -46,12 +47,14 @@ class Events extends Component {
             { title: "Description", field: "EventDescription", hidden: false },
             { title: "Location", field: "LocationName", hidden: false },
             { title: "Location Description", field: "LocationDescription", hidden: true },
-            { title: "Cancelled", field: "IsCancelled", hidden: true },
+        { title: "Cancelled", field: "IsCancelled", hidden: true, render: (rowData) => <p>{JSON.stringify(rowData.IsCancelled)}</p> },
             { title: "Sponsor", field: "SponsorName", hidden: false },
             { title: "Date Created", field: "DateCreated", hidden: true },
             { title: "Date Modified", field: "DatetLastModified", hidden: true },
             { title: "Notes", field: "EventModifiedNotes", hidden: true },
-            { title: "Tags", field: "Tags", hidden: false }
+            {
+              title: "Tags", field: "Tags", hidden: false, render: (rowData) =>  
+              <p>{rowData.Tags} </p> }
         ],
         data: []
     }

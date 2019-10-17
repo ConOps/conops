@@ -14,7 +14,7 @@ router.get('/', rejectUnauthenticated, async (req, res) => {
         const result = await connection.query(queryCon);
         const conventionID = result.rows[0].convention;
         //below query grabs all events and the necessary info tied to each event. the array_agg will grab all tags and throw into an array, the array_remove removes all nulls from that (only applicable for events without any tags).
-        const queryText = `SELECT "Event"."EventID", "Event"."ConventionID", "Event"."EventName", "Event"."EventStartTime", "Event"."EventEndTime", "Event"."LocationID", "Location"."LocationName", "Location"."LocationDescription", "Event"."IsCancelled", "Event"."EventDescription", "Event"."SponsorID", "Sponsor"."SponsorName", "Event"."DateCreated", "Event"."DateLastModified", "Event"."EventModifiedNotes", array_remove(array_agg("Tags"."TagID"), NULL) AS "TagIDs", array_remove(array_agg("Tags"."TagName"), NULL) AS "Tags" 
+        const queryText = `SELECT "Event"."EventID", "Event"."ConventionID", "Event"."EventName", "Event"."EventStartTime", "Event"."EventEndTime", "Event"."LocationID", "Location"."LocationName", "Location"."LocationDescription", "Event"."IsCancelled", "Event"."EventDescription", "Event"."SponsorID", "Sponsor"."SponsorName", "Event"."DateCreated", "Event"."DateLastModified", "Event"."EventModifiedNotes", array_remove(array_agg(jsonb_build_object('TagID', "Tags"."TagID", 'TagName', "Tags"."TagName" )), to_jsonb('{"TagID" : null, "TagName" : null}'::json) ) AS "TagObjects", array_remove(array_agg("Tags"."TagName"), NULL) AS "Tags"
                             FROM "Event"
                             LEFT OUTER JOIN "Location" ON "Location"."LocationID" = "Event"."LocationID"
                             LEFT OUTER JOIN "Sponsor" ON "Sponsor"."SponsorID" = "Event"."SponsorID"
@@ -40,7 +40,7 @@ router.get('/', rejectUnauthenticated, async (req, res) => {
 router.get('/eventdetails/:id', rejectUnauthenticated, (req, res) => {
     const id = req.params.id;
     console.log('in event details GET')
-    const queryText = `SELECT "Event"."EventID", "Event"."ConventionID", "Event"."EventName", "Event"."EventStartTime", "Event"."EventEndTime", "Event"."LocationID", "Location"."LocationName", "Location"."LocationDescription", "Event"."IsCancelled", "Event"."EventDescription", "Event"."SponsorID", "Sponsor"."SponsorName", "Event"."DateCreated", "Event"."DateLastModified", "Event"."EventModifiedNotes", array_remove(array_agg("Tags"."TagID"), NULL) AS "TagIDs", array_remove(array_agg("Tags"."TagName"), NULL) AS "Tags" 
+    const queryText = `SELECT "Event"."EventID", "Event"."ConventionID", "Event"."EventName", "Event"."EventStartTime", "Event"."EventEndTime", "Event"."LocationID", "Location"."LocationName", "Location"."LocationDescription", "Event"."IsCancelled", "Event"."EventDescription", "Event"."SponsorID", "Sponsor"."SponsorName", "Event"."DateCreated", "Event"."DateLastModified", "Event"."EventModifiedNotes", array_remove(array_agg(jsonb_build_object('TagID', "Tags"."TagID", 'TagName', "Tags"."TagName" )), to_jsonb('{"TagID" : null, "TagName" : null}'::json) ) AS "TagObjects", array_remove(array_agg("Tags"."TagName"), NULL) AS "Tags"
                             FROM "Event"
                             LEFT OUTER JOIN "Location" ON "Location"."LocationID" = "Event"."LocationID"
                             LEFT OUTER JOIN "Sponsor" ON "Sponsor"."SponsorID" = "Event"."SponsorID"
@@ -146,14 +146,13 @@ router.put('/event_update', rejectUnauthenticated, rejectNonEventOrganizer, asyn
         await connection.query(queryText, [eventUpdate.EventName, eventUpdate.EventDescription, eventUpdate.EventStartTime, eventUpdate.EventEndTime, currentTime, eventUpdate.EventModifiedNotes, eventUpdate.SponsorID, eventUpdate.LocationID, eventUpdate.EventID] )
         const tagsToAdd = eventUpdate.Tags;
         //need to update tags.. this is a shotgun approach; we're removing all event tags here, then saving all that we get the client
-        // const tagsDeleteText = `DELETE FROM "EventTags" WHERE "Event_ID" = $1;`;
-        // await connection.query(tagsDeleteText, [eventUpdate.EventID]);
-        const tagsQueryText = `SELECT * FROM "Tags" WHERE "TagName" = $1;`;
+        const tagsDeleteText = `DELETE FROM "EventTags" WHERE "Event_ID" = $1;`;
+        await connection.query(tagsDeleteText, [eventUpdate.EventID]);
         const tagsInsertText = `INSERT INTO "EventTags" ("Event_ID", "Tag_ID")
                                 VALUES ($1, $2);`;
-        // await connection.query(`
-        //                         `)
-        // await connection.query()
+        for (let i = 0; i < eventUpdate.TagObjects.length; i++) {
+            await connection.query(tagsInsertText, [eventUpdate.EventID, eventUpdate.TagObjects[i].TagID])
+        }
         await connection.query('COMMIT');
         res.sendStatus(200);
     } catch(error) {

@@ -16,6 +16,7 @@ const eventRouter = require('./routes/event.router');
 const locationRouter = require('./routes/location.router');
 const tagRouter = require('./routes/tag.router');
 const sponsorRouter = require('./routes/sponsor.router');
+const homeRouter = require('./routes/home.router');
 
 // Body parser middleware
 app.use(bodyParser.json());
@@ -36,6 +37,7 @@ app.use('/api/event', eventRouter);
 app.use('/api/location', locationRouter);
 app.use('/api/tag', tagRouter);
 app.use('/api/sponsor', sponsorRouter);
+app.use('/api/home', homeRouter);
 
 // Serve static files
 app.use(express.static('build'));

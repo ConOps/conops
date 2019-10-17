@@ -2,9 +2,7 @@ import React, { Component } from "react";
 import MaterialTable from "material-table";
 import { connect } from "react-redux";
 import Button from "@material-ui/core/Button";
-
 import moment from "moment";
-
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
@@ -124,9 +122,11 @@ class CheckIn extends Component {
             <Button onClick={this.handleClose} variant="contained" color="secondary">
               Cancel
           </Button>
-            <Button onClick={this.paymentCheckInPrompt} variant="contained" color="inherit">
+            <ThemeProvider theme={theme}>
+            <Button onClick={this.paymentCheckInPrompt} variant="contained" color="primary">
               Confirm
           </Button>
+            </ThemeProvider>
           </DialogActions>
         </Dialog>
 
@@ -149,9 +149,11 @@ class CheckIn extends Component {
             <Button onClick={this.handleClosePaid} variant="contained" color="secondary">
               Cancel
           </Button>
-            <Button onClick={this.checkInPrompt} variant="contained" color="inherit">
+            <ThemeProvider theme={theme}>
+            <Button onClick={this.checkInPrompt} variant="contained" color="primary">
               Confirm
           </Button>
+            </ThemeProvider>
           </DialogActions>
         </Dialog>
         <h1 style={{ textAlign: "center" }}>Current Convention: 2DCON 2020</h1>

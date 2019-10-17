@@ -17,6 +17,7 @@ class Tags extends Component {
         columns: [
             { title: "TagID", field: "TagID" },
             { title: "TagName", field: "TagName" },
+            { title: "Active Status", field: "TagIsActive", render: (rowData) => <p>{JSON.stringify(rowData.TagIsActive)}</p>}
 
         ],
         data: []

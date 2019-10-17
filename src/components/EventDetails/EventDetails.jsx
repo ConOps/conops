@@ -15,6 +15,14 @@ import {
     KeyboardDateTimePicker
 } from "@material-ui/pickers";
 import moment from 'moment';
+import { createMuiTheme } from '@material-ui/core/styles';
+import { ThemeProvider } from '@material-ui/styles';
+
+const theme = createMuiTheme({
+    palette: {
+        primary: { main: "#19375f" }
+    }
+});
 
 
 const styles = ({
@@ -49,8 +57,8 @@ class EventDetails extends Component {
         this.props.dispatch({
             type: 'FETCH_CONVENTION'
         });
-        this.props.dispatch({ 
-            type: 'FETCH_SPONSORS' 
+        this.props.dispatch({
+            type: 'FETCH_SPONSORS'
         });
 
         this.fetchEventDetails();
@@ -71,7 +79,10 @@ class EventDetails extends Component {
 
     handleSave = () => {
         console.log('clicked save!');
-
+        if (this.props.details.EventModifiedNotes === null || this.props.details.EventModifiedNotes === '') {
+            alert("Please enter some notes of what you changed!")
+            return
+        }
         // alert("Event has been updated");
         this.props.dispatch({
             type: "UPDATE_EVENT_INFO",
@@ -80,22 +91,39 @@ class EventDetails extends Component {
         this.props.history.push("/events");
     }
 
+    handleDeleteTag = (tag) => {
+        console.log('clicked on tag', tag);
+        this.props.dispatch({
+            type: 'REMOVE_TAG_FROM_EVENT',
+            payload: tag
+        })
+
+    }
+
+
 
     render() {
 
         let locationsInSelector = this.props.locations.map((location) => {
-            return (
-                <MenuItem value={location.LocationID} key={location.LocationID}>{location.LocationName}</MenuItem>
-            )
+            if (location.LocationIsActive === true) {
+                return (
+                    <MenuItem value={location.LocationID} key={location.LocationID}>{location.LocationName}</MenuItem>
+                )
+            } else {
+                return false
+            }
+            
         });
 
-        let eventTags = this.props.details.TagIDs.map((tag) => {
+        let eventTags = this.props.details.TagObjects.map((tag) => {
             return (
-                <Grid item key={tag}>
+                <Grid item key={tag.TagID}>
                     <Chip
-                        key={tag}
-                        label={tag}
+                        key={tag.TagID}
+                        label={tag.TagName}
+                        value={tag.TagID}
                         className={this.props.classes.chip}
+                        onDelete={() => this.handleDeleteTag(tag)}
                         color="primary"
                     />
                 </Grid>
@@ -103,19 +131,29 @@ class EventDetails extends Component {
         })
 
         let allTags = this.props.tags.map((tag) => {
-            return (
-                <MenuItem value={tag.TagID} key={tag.TagID}>{tag.TagName}</MenuItem>
-            )
+            if (tag.TagIsActive === true) {
+                return (
+                    <MenuItem value={tag} key={tag.TagID}>{tag.TagName}</MenuItem>
+                )
+            } else {
+                return false
+            }
+            
         })
 
         let sponsorSelector = this.props.sponsors.map((sponsor) => {
-            return (
-                <MenuItem value={sponsor.SponsorID} key={sponsor.SponsorID}>{sponsor.SponsorName}</MenuItem>
-            )
+            if (sponsor.SponsorIsActive === true) {
+                return (
+                    <MenuItem value={sponsor.SponsorID} key={sponsor.SponsorID}>{sponsor.SponsorName}</MenuItem>
+                )
+            } else {
+                return false
+            }
+            
         })
 
         return (
-            <div>
+            <div style={{ margin: '20px' }}>
                 {/* {JSON.stringify(this.props.details)} */}
                 <h1>{this.props.convention.ConventionName}</h1>
                 {this.props.details.IsCancelled && <h3 className={this.props.classes.cancelledText}>Event is cancelled.</h3>}
@@ -139,8 +177,21 @@ class EventDetails extends Component {
                 <div className={this.props.classes.topRight}>
                     {this.props.details.DateLastModified && <h3 className={this.props.classes.cancelledText}>Event Has Been Modified!</h3>}
                     {this.props.details.DateLastModified && <h4 className={this.props.classes.cancelledText}>{moment(this.props.details.DateLastModified).format('LLLL')}</h4>}
-                    {this.props.details.EventModifiedNotes && <h4>{this.props.details.EventModifiedNotes}</h4>}
-                </div>  
+                    <TextField
+                        label="Change Notes"
+                        multiline
+                        fullWidth
+                        margin="normal"
+                        className={this.props.classes.multiline}
+                        value={this.props.details.EventModifiedNotes}
+                        InputLabelProps={{ shrink: this.props.details.EventModifiedNotes }}
+                        onChange={event =>
+                            this.props.dispatch({
+                                type: "EDIT_EVENT_MODIFIED_NOTES",
+                                payload: event.target.value
+                            })}
+                    />
+                </div>
                 <hr></hr>
                 <h2>Event Details</h2>
                 <TextField
@@ -223,19 +274,13 @@ class EventDetails extends Component {
                 <Grid item container direction="row" spacing={2} justify="flex-start">
                     {eventTags}
                 </Grid>
+                {/* {JSON.stringify(this.props.details.TagObjects)} */}
+
                 <FormControl>
                     <FormHelperText className={this.props.classes.helperText}>Add Tags</FormHelperText>
                     <Select
-                        multiple
-                        value={this.props.details.Tags}
+                        value={this.props.tags}
                         className={this.props.classes.root}
-                        renderValue={selected => (
-                            <div>
-                                {selected.map(value => (
-                                    <Chip key={value} label={value} />
-                                ))}
-                            </div>
-                        )}
                         onChange={event =>
                             this.props.dispatch({
                                 type: 'EDIT_EVENT_TAGS',
@@ -261,13 +306,16 @@ class EventDetails extends Component {
                         {sponsorSelector}
                     </Select>
                 </FormControl>
+                <hr></hr>
                 <div>
-                    <Button variant="contained" color="secondary" onClick={this.handleBack}>
+                    <Button variant="contained" color="secondary" onClick={this.handleBack} style={{ margin: '5px' }}>
                         Back
                     </Button>
-                    <Button variant="contained" color="primary" onClick={this.handleSave}>
-                        Save
+                    <ThemeProvider theme={theme}>
+                        <Button variant="contained" color="primary" onClick={this.handleSave} style={{ margin: '5px' }}>
+                            Save
                     </Button>
+                    </ThemeProvider>
                 </div>
             </div>
         )
@@ -279,7 +327,7 @@ const mapStateToProps = reduxStore => {
         details: reduxStore.eventDetailsReducer,
         locations: reduxStore.LocationReducer,
         tags: reduxStore.TagsReducer,
-        
+
         convention: reduxStore.ConventionsReducer,
         sponsors: reduxStore.sponsorReducer
     };

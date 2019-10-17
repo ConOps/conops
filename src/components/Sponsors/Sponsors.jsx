@@ -39,7 +39,7 @@ class Sponsors extends Component {
             { title: "Amount Paid", field: "AmountPaid", hidden: false }, 
             { title: "Website", field: "Website", hidden: false },
             { title: "Notes", field: "Notes", false: false },
-            { title: "Active Status", field: "SponsorIsActive", hidden: false }
+            { title: "Active Status", field: "SponsorIsActive", hidden: false, render: (rowData) => <p>{JSON.stringify(rowData.SponsorIsActive)}</p>}
         ], 
         data: []
     }

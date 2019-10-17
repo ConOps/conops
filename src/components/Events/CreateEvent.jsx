@@ -11,12 +11,35 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import DateFnsUtils from "@date-io/date-fns";
 import { MuiPickersUtilsProvider, KeyboardDateTimePicker } from "@material-ui/pickers";
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import Paper from '@material-ui/core/Paper';
+import Draggable from 'react-draggable';
+import { createMuiTheme } from '@material-ui/core/styles';
+import { ThemeProvider } from '@material-ui/styles';
 
 const styles = ({
     root: {
         margin: '15px',
     },
 });
+
+const theme = createMuiTheme({
+    palette: {
+        primary: { main: "#19375f" }
+    }
+});
+
+function PaperComponent(props) {
+    return (
+        <Draggable>
+            <Paper {...props} />
+        </Draggable>
+    );
+}
 
 class CreateEvent extends Component {
     componentDidMount() {
@@ -42,7 +65,12 @@ class CreateEvent extends Component {
             LocationID: '',
             TagID: [],
             SponsorID: '',
+            openSave: false,
     }
+
+    handleCloseSave = () => {
+        this.setState({ openSave: false });
+    };
 
     handleLocationChange = (event) => {
         console.log('SELECTED LOCATION:', event.target.value)
@@ -67,12 +95,24 @@ class CreateEvent extends Component {
         this.setState({ SponsorID: event.target.value })
     }
 
-    handleSave = (event) => {
-        alert('Event created.')
+    handleSave = () => {
+        this.setState({
+            openSave: !this.state.openSave,
+        })
+        // alert('Event created.')
+        // this.props.dispatch({
+        //     type: 'ADD_EVENT',
+        //     payload: this.props.details
+        // })
+    }
+
+    saveEvent = () => {
         this.props.dispatch({
             type: 'ADD_EVENT',
             payload: this.props.details
-        })
+        });
+        this.handleCloseSave();
+        this.props.history.push(`/events`);
     }
 
     render() {
@@ -111,6 +151,33 @@ class CreateEvent extends Component {
 
         return (
             <div>
+                
+                <Dialog
+                    open={this.state.openSave}
+                    onClose={this.handleCloseSave}
+                    PaperComponent={PaperComponent}
+                    aria-labelledby="draggable-dialog-title"
+                >
+                    <DialogTitle style={{ cursor: 'move', color: 'white' }} id="draggable-dialog-title" className="Dialog">
+                        Create Event?
+        </DialogTitle>
+                    <DialogContent>
+                        <DialogContentText style={{ color: 'black' }}>
+                            Are you sure that you would like to create this Event?
+          </DialogContentText>
+                    </DialogContent>
+                    <DialogActions>
+                        <Button onClick={this.handleCloseSave} variant="contained" color="secondary">
+                            Cancel
+          </Button>
+                        <ThemeProvider theme={theme}>
+                            <Button onClick={this.saveEvent} variant="contained" color="primary">
+                                Confirm
+          </Button>
+                        </ThemeProvider>
+                    </DialogActions>
+                </Dialog>
+
                 <h1>Create Event</h1>
                 <hr></hr>
                 <TextField
