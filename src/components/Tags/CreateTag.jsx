@@ -33,10 +33,16 @@ class CreateTag extends Component {
 
     state={
         openSave: false,
+        openAlert: false,
+        TagName: ''
     }
 
   handleCloseSave = () => {
     this.setState({ openSave: false });
+  };
+
+  handleCloseAlert = () => {
+    this.setState({ openAlert: false });
   };
 
   saveTag = () => {
@@ -50,10 +56,17 @@ class CreateTag extends Component {
   }
 
     createTag = (event) => {
+      if(this.state.TagName === ''){
+        this.setState({
+          openAlert: !this.state.openAlert,
+        })
+      } else {
         event.preventDefault();
         this.setState({
           openSave: !this.state.openSave,
         })
+      }
+        
     }
 
 
@@ -84,6 +97,29 @@ class CreateTag extends Component {
                   <ThemeProvider theme={theme}>
                   <Button onClick={this.saveTag} variant="contained" color="primary">
                     Confirm
+          </Button>
+                  </ThemeProvider>
+                </DialogActions>
+              </Dialog>
+
+              <Dialog
+                open={this.state.openAlert}
+                onClose={this.handleCloseAlert}
+                PaperComponent={PaperComponent}
+                aria-labelledby="draggable-dialog-title"
+              >
+                <DialogTitle style={{ cursor: 'move', color: 'white' }} id="draggable-dialog-title" className="Dialog">
+                  Missing Information?
+        </DialogTitle>
+                <DialogContent>
+                  <DialogContentText style={{ color: 'black' }}>
+                    Please make sure tag name is filled out!
+          </DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                  <ThemeProvider theme={theme}>
+                    <Button onClick={this.handleCloseAlert} variant="contained" color="primary">
+                      Confirm
           </Button>
                   </ThemeProvider>
                 </DialogActions>

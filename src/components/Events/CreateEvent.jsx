@@ -30,7 +30,12 @@ const styles = ({
 const theme = createMuiTheme({
     palette: {
         primary: { main: "#19375f" }
-    }
+    },
+    multiline: {
+        margin: '0px',
+        maxWidth: '80%'
+        // width: '300'
+    },
 });
 
 function PaperComponent(props) {
@@ -136,6 +141,13 @@ class CreateEvent extends Component {
         this.props.history.push(`/events`);
     }
 
+    createYogaEventForDemo = () => {
+        this.props.dispatch({
+            type: 'ADD_YOGA_EVENT_FOR_DEMO'
+        })
+    }
+
+
     render() {
         let locationsInSelector = this.props.locations.map((location) => {
             if (location.LocationIsActive === true) {
@@ -166,7 +178,7 @@ class CreateEvent extends Component {
         let allTags = this.props.tags.map((tag) => {
             if (tag.TagIsActive === true) {
                 return (
-                    <MenuItem value={tag.TagName} key={tag.TagID}>{tag.TagName}</MenuItem>
+                    <MenuItem value={tag} key={tag.TagID}>{tag.TagName}</MenuItem>
                 )
             } else {
                 return false
@@ -195,20 +207,20 @@ class CreateEvent extends Component {
                 >
                     <DialogTitle style={{ cursor: 'move', color: 'white' }} id="draggable-dialog-title" className="Dialog">
                         Create Event?
-        </DialogTitle>
+                    </DialogTitle>
                     <DialogContent>
                         <DialogContentText style={{ color: 'black' }}>
                             Are you sure that you would like to create this Event?
-          </DialogContentText>
+                        </DialogContentText>
                     </DialogContent>
                     <DialogActions>
                         <Button onClick={this.handleCloseSave} variant="contained" color="secondary">
                             Cancel
-          </Button>
+                        </Button>
                         <ThemeProvider theme={theme}>
                             <Button onClick={this.saveEvent} variant="contained" color="primary">
                                 Confirm
-          </Button>
+                            </Button>
                         </ThemeProvider>
                     </DialogActions>
                 </Dialog>
@@ -221,25 +233,27 @@ class CreateEvent extends Component {
                 >
                     <DialogTitle style={{ cursor: 'move', color: 'white' }} id="draggable-dialog-title" className="Dialog">
                         Missing Information?
-        </DialogTitle>
+                    </DialogTitle>
                     <DialogContent>
                         <DialogContentText style={{ color: 'black' }}>
                             Please make sure event name, description, start time, and endtime are filled out!
-          </DialogContentText>
+                        </DialogContentText>
                     </DialogContent>
                     <DialogActions>
                         <ThemeProvider theme={theme}>
                             <Button onClick={this.handleCloseAlert} variant="contained" color="primary">
                                 Confirm
-          </Button>
+                            </Button>
                         </ThemeProvider>
                     </DialogActions>
                 </Dialog>
 
-                <h1>Create Event</h1>
+                <h1 onClick={() => this.createYogaEventForDemo()}>Create Event</h1>
+                {/* {JSON.stringify(this.state)} */}
                 <hr></hr>
                 <TextField
                     label="Name"
+                    value={this.props.details.EventName}
                     className={this.props.classes.root}
                     helperText="Required"
                     onChange={event =>
@@ -284,7 +298,11 @@ class CreateEvent extends Component {
                 </MuiPickersUtilsProvider>
                 <TextField
                     label="Description"
-                    className={this.props.classes.root}
+                    fullWidth
+                    multiline
+                    margin="normal"
+                    className={this.props.classes.multiline}
+                    value={this.props.details.EventDescription}
                     helperText="Required"
                     onChange={event =>
                         this.props.dispatch({
@@ -316,7 +334,7 @@ class CreateEvent extends Component {
                         renderValue={selected => (
                             <div>
                                 {selected.map(value => (
-                                    <Chip key={value} label={value} />
+                                    <Chip key={value} label={value.TagName} />
                                 ))}
                             </div>
                         )}
