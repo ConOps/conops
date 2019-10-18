@@ -83,11 +83,20 @@ class CheckIn extends Component {
     this.setState({ openPaid: false });
   };
 
+  checkInPromptTwo = () => {
+    this.setState({ openTwo: true });
+  };
+
+  handleClosePromptTwo = () => {
+    this.setState({ openTwo: false });
+  };
+
   paymentCheckInPrompt = () => {
     this.props.dispatch({
       type: "CHECK_IN_AND_PAY_ATTENDEE",
       payload: this.state.rowData
       });
+      this.handleClosePromptTwo()
       this.handleClose()
   }
 
@@ -123,13 +132,38 @@ class CheckIn extends Component {
               Cancel
           </Button>
             <ThemeProvider theme={theme}>
-            <Button onClick={this.paymentCheckInPrompt} variant="contained" color="primary">
+            <Button onClick={this.checkInPromptTwo} variant="contained" color="primary">
               Confirm
           </Button>
             </ThemeProvider>
           </DialogActions>
         </Dialog>
 
+        <Dialog
+          open={this.state.openTwo}
+          onClose={this.handleClosePromptTwo}
+          PaperComponent={PaperComponent}
+          aria-labelledby="draggable-dialog-title"
+        >
+          <DialogTitle style={{ cursor: 'move', color: 'white' }} id="draggable-dialog-title" className="Dialog">
+            Check In
+        </DialogTitle>
+          <DialogContent >
+            <DialogContentText style={{ color: 'black' }} >
+            Are you sure you wanna check this person in!
+          </DialogContentText>
+          </DialogContent>
+          <DialogActions >
+            <Button onClick={this.handleClosePromptTwo} variant="contained" color="secondary">
+              Cancel
+          </Button>
+            <ThemeProvider theme={theme}>
+              <Button onClick={this.paymentCheckInPrompt} variant="contained" color="primary">
+                Confirm
+          </Button>
+            </ThemeProvider>
+          </DialogActions>
+        </Dialog>
 
         <Dialog
           open={this.state.openPaid}
