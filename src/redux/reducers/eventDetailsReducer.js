@@ -46,6 +46,8 @@ const eventDetailsReducer = (state = { Tags: [], TagObjects: [], LocationName: '
             return { ...state, TagObjects: newTagObjects }
         case 'CLEAR_EVENT_DETAILS':
             return { Tags: [], TagObjects: [], LocationName: '', EventName: '', EventStartTime: '', EventEndTime: '', EventModifiedNotes: '', EventDescription: '' }
+        case 'ADD_YOGA_EVENT_FOR_DEMO':
+            return { Tags: [], TagObjects: [], LocationName: '', LocationID: '', EventName: 'Gamer Yoga', EventStartTime: '2021-08-23T17:00:00.000Z', EventEndTime: '2021-08-23T19:00:00.000Z', EventDescription: 'Want to level up your body at the same time you level up your game? Join us at the kids corner (all ages welcome) and bring your favorite gaming controller or handheld gaming device to experience gaming in the here and now.' }
         default:
             return state;
     }
