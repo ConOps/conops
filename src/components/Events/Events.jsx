@@ -47,7 +47,7 @@ class Events extends Component {
             { title: "Description", field: "EventDescription", hidden: false },
             { title: "Location", field: "LocationName", hidden: false },
             { title: "Location Description", field: "LocationDescription", hidden: true },
-        { title: "Cancelled", field: "IsCancelled", hidden: true, render: (rowData) => <p>{JSON.stringify(rowData.IsCancelled)}</p> },
+            { title: "Cancelled", field: "IsCancelled", hidden: true, render: (rowData) => <p>{JSON.stringify(rowData.IsCancelled)}</p> },
             { title: "Sponsor", field: "SponsorName", hidden: false },
             { title: "Date Created", field: "DateCreated", hidden: true },
             { title: "Date Modified", field: "DatetLastModified", hidden: true },
@@ -109,6 +109,8 @@ class Events extends Component {
                 editable={{}}
               />
             ) : (
+                
+              <div className="eventsForNonAdmins">
               <MaterialTable
                 title="Events"
                 columns={this.state.columns}
@@ -122,7 +124,9 @@ class Events extends Component {
                 }}
                 data={this.props.reduxStore.EventsReducer}
                 editable={{}}
+                className="eventsForNonAdmins"
               />
+              </div>
             )}
           </div>
         );
