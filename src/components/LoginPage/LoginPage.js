@@ -49,6 +49,7 @@ class LoginPage extends Component {
               <div>
               <TextField
               style={{ marginTop: 'px', backgroundColor: 'white', paddingLeft: '5px'}}
+                  autoComplete="off"
               label="username"
                 type="text"
                 name="username"
@@ -60,6 +61,7 @@ class LoginPage extends Component {
             <div>
               <TextField
               style={{ margin: '10px', backgroundColor: 'white', paddingLeft: '5px' }}
+                  autoComplete="off"
                 label="password"
                 type="password"
                 name="password"
