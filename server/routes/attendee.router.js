@@ -10,7 +10,7 @@ const router = express.Router();
 
 //GET route for ALL attendees
 router.get('/', rejectUnauthenticated, async (req, res) => {
-    console.log('in attendee GET route');
+    // console.log('in attendee GET route');
     //go get full list of attendees, make sure to grab from current convention!
     const connection = await pool.connect();
     try {
@@ -26,11 +26,11 @@ router.get('/', rejectUnauthenticated, async (req, res) => {
         const attendeeResult = await connection.query(queryText, [conventionId]);
     
         await connection.query('COMMIT');
-        console.log(attendeeResult.rows);
+        // console.log(attendeeResult.rows);
         res.send(attendeeResult.rows);
     } catch (error) {
         await connection.query('ROLLBACK');
-        console.log('error in attendee GET', error);
+        // console.log('error in attendee GET', error);
         res.sendStatus(500);
     } finally {
         connection.release();
@@ -39,7 +39,7 @@ router.get('/', rejectUnauthenticated, async (req, res) => {
 
 //GET route for walk-in attendees, not yet checked-in
 router.get('/walk_ins', rejectUnauthenticated, async (req, res) => {
-    console.log('in attendee walk-in GET route');
+    // console.log('in attendee walk-in GET route');
     //go get walk-in list of attendees, make sure to grab from current convention!
     const connection = await pool.connect();
     try {
@@ -58,7 +58,7 @@ router.get('/walk_ins', rejectUnauthenticated, async (req, res) => {
         res.send(attendeeResult.rows);
     } catch (error) {
         await connection.query('ROLLBACK');
-        console.log('error in attendee walk-in GET', error);
+        // console.log('error in attendee walk-in GET', error);
         res.sendStatus(500);
     } finally {
         connection.release();
@@ -67,7 +67,7 @@ router.get('/walk_ins', rejectUnauthenticated, async (req, res) => {
 
 //GET route for checked-in attendees
 router.get('/checked_in', rejectUnauthenticated, async (req, res) => {
-    console.log('in attendee checked-in GET route');
+    // console.log('in attendee checked-in GET route');
     //go get checked-in list of attendees, make sure to grab from current convention!
     const connection = await pool.connect();
     try {
@@ -86,7 +86,7 @@ router.get('/checked_in', rejectUnauthenticated, async (req, res) => {
         res.send(attendeeResult.rows);
     } catch (error) {
         await connection.query('ROLLBACK');
-        console.log('error in attendee walk-in GET', error);
+        // console.log('error in attendee walk-in GET', error);
         res.sendStatus(500);
     } finally {
         connection.release();
@@ -95,7 +95,7 @@ router.get('/checked_in', rejectUnauthenticated, async (req, res) => {
 
 //GET route for preregistered attendees, not yet checked-in
 router.get('/pre_registered', rejectUnauthenticated, async (req, res) => {
-    console.log('in attendee checked-in GET route');
+    // console.log('in attendee checked-in GET route');
     //go get preregistered list of attendees, make sure to grab from current convention!
     const connection = await pool.connect();
     try {
@@ -114,7 +114,7 @@ router.get('/pre_registered', rejectUnauthenticated, async (req, res) => {
         res.send(attendeeResult.rows);
     } catch (error) {
         await connection.query('ROLLBACK');
-        console.log('error in attendee walk-in GET', error);
+        // console.log('error in attendee walk-in GET', error);
         res.sendStatus(500);
     } finally {
         connection.release();
@@ -126,15 +126,15 @@ router.get('/pre_registered', rejectUnauthenticated, async (req, res) => {
 router.get('/details/:id', rejectUnauthenticated, (req, res) => {
     //declare route id as a variable
     const id = req.params.id;
-    console.log('in attendee details specific GET for ID:', id);
+    // console.log('in attendee details specific GET for ID:', id);
     //no need for async/await, just grabbing ID
     const queryText = `SELECT * FROM "Attendee" WHERE "AttendeeID" = $1;`;
     pool.query(queryText, [id])
         .then(result => {
-            console.log('attendee details:', result.rows[0]);
+            // console.log('attendee details:', result.rows[0]);
             res.send(result.rows[0]);
         }).catch(err => {
-            console.log('error in attendee detail get:', err);
+            // console.log('error in attendee detail get:', err);
             res.sendStatus(500);
         })
 });
@@ -143,15 +143,15 @@ router.get('/details/:id', rejectUnauthenticated, (req, res) => {
 router.get('/order/:id', rejectUnauthenticated, (req, res) => {
     //sending order ID as an object for this route
     const id = req.params.id;
-    console.log('in order details specific GET for ID:', id);
+    // console.log('in order details specific GET for ID:', id);
     //no need for async/await, just grabbing ID
     const queryText = `SELECT * FROM "Attendee" WHERE "orderID" = $1;`;
     pool.query(queryText, [id])
         .then(result => {
-            console.log('attendee order details:', result.rows);
+            // console.log('attendee order details:', result.rows);
             res.send(result.rows);
         }).catch(err => {
-            console.log('error in attendee order get:', err);
+            // console.log('error in attendee order get:', err);
             res.sendStatus(500);
         })
 });
@@ -161,15 +161,15 @@ router.get('/order/:id', rejectUnauthenticated, (req, res) => {
 
 //PUT route for attendee details edit
 router.put('/details/:id', rejectUnauthenticated, rejectNonCheckIn, async (req, res) => {
-    console.log('in attendee PUT route');
+    // console.log('in attendee PUT route');
     const connection = await pool.connect();
     try {
         await connection.query('BEGIN');
         //declare route id as a variable
         const attendeeID = req.params.id;
         const attendee = req.body;
-        console.log('here is attendee:', attendee);
-        
+        // console.log('here is attendee:', attendee);
+        //update for specific attendee, queryText below
         const queryText =   `UPDATE "Attendee"
                             SET "LastName" = $1, "FirstName" = $2, "MiddleName" = $3, "AddressLineOne" = $4, "AddressLineTwo" = $5, 
                                 "City" = $6, "StateProvince" = $7, "PostalCode" = $8, "CountryID" = $9, "EmailAddress" = $10, 
@@ -182,22 +182,22 @@ router.put('/details/:id', rejectUnauthenticated, rejectNonCheckIn, async (req, 
         res.sendStatus(200);
     } catch(error) {
         await connection.query('ROLLBACK');
-        console.log('error in attendee PUT route', error);
+        // console.log('error in attendee PUT route', error);
         res.sendStatus(500);
     } finally {
         connection.release();
     }
 });
 
-//PUT route for check-in, SINGLE or MUTLI check-in. data will come as an array of IDs, even if it's 1 id (because of the table)
+//PUT route for check-in, SINGLE or MUTLI check-in. data will come as an array of IDs, even if it's 1 id (because of the client side table)
 router.put('/checkIn', rejectUnauthenticated, rejectNonCheckIn, async (req, res) => {
-    console.log('in attendee checkIn PUT route');
+    // console.log('in attendee checkIn PUT route');
     const connection = await pool.connect();
     try {
         await connection.query('BEGIN');
         //assign the array we get to a variable
         const attendees = req.body.attendeesToCheckIn;
-        console.log(attendees);
+        // console.log(attendees);
 
         const queryText = `UPDATE "Attendee"
                             SET "CheckInDate" = NOW()
@@ -205,7 +205,7 @@ router.put('/checkIn', rejectUnauthenticated, rejectNonCheckIn, async (req, res)
 
         //loop over the array and update checkin where we have an ID = a value in that array
         for (let i = 0; i < attendees.length; i++) {
-            console.log('in checkin PUT LOOOOOOP');
+            // console.log('in checkin PUT LOOOOOOP');
             await connection.query(queryText, [attendees[i]])
         }
 
@@ -213,7 +213,7 @@ router.put('/checkIn', rejectUnauthenticated, rejectNonCheckIn, async (req, res)
         res.sendStatus(200);
     } catch(err) {
         await connection.query('ROLLBACK');
-        console.log('error in attendee checkIn PUT route', err);
+        // console.log('error in attendee checkIn PUT route', err);
         res.sendStatus(500);
     } finally {
         connection.release();
@@ -222,15 +222,15 @@ router.put('/checkIn', rejectUnauthenticated, rejectNonCheckIn, async (req, res)
 
 //PUT route for a single walkin attendee AND a payment. basically same as above, also sets payment date.
 router.put('/checkInAndPay', rejectUnauthenticated, rejectNonCheckIn, async (req, res) => {
-    console.log('in attendee checkInAndPay PUT route');
+    // console.log('in attendee checkInAndPay PUT route');
     const connection = await pool.connect();
     try {
         await connection.query('BEGIN');
         //assign the array we get to a variable
-        console.log(req.body);
+        // console.log(req.body);
         
         const attendee = req.body.attendeeToCheckIn;
-        console.log(attendee);
+        // console.log(attendee);
 
         const queryText = `UPDATE "Attendee"
                             SET "CheckInDate" = NOW(), "PaymentDate" = NOW()
@@ -243,23 +243,24 @@ router.put('/checkInAndPay', rejectUnauthenticated, rejectNonCheckIn, async (req
         res.sendStatus(200);
     } catch (err) {
         await connection.query('ROLLBACK');
-        console.log('error in attendee checkInAndPay PUT route', err);
+        // console.log('error in attendee checkInAndPay PUT route', err);
         res.sendStatus(500);
     } finally {
         connection.release();
     }
 });
 
+//this is an "undo" of a check-in of an attendee who was a walkin. sets checkin date and payment date to null (walkins have no payment date)
 router.put('/checkOutWalkIn', rejectUnauthenticated, rejectNonCheckIn, async (req, res) => {
-    console.log('in attendee checkOutWalkIn PUT route');
+    // console.log('in attendee checkOutWalkIn PUT route');
     const connection = await pool.connect();
     try {
         await connection.query('BEGIN');
         //assign the array we get to a variable
-        console.log(req.body);
+        // console.log(req.body);
 
         const attendee = req.body.attendeeToCheckOut;
-        console.log(attendee);
+        // console.log(attendee);
 
         const queryText = `UPDATE "Attendee"
                             SET "CheckInDate" = NULL, "PaymentDate" = NULL
@@ -272,23 +273,24 @@ router.put('/checkOutWalkIn', rejectUnauthenticated, rejectNonCheckIn, async (re
         res.sendStatus(200);
     } catch (err) {
         await connection.query('ROLLBACK');
-        console.log('error in attendee checkOutWalkIn PUT route', err);
+        // console.log('error in attendee checkOutWalkIn PUT route', err);
         res.sendStatus(500);
     } finally {
         connection.release();
     }
 });
 
+//this is an "undo" of a check-in of an attendee who was a pre-registered attendee. sets checkin date to null
 router.put('/checkOut', rejectUnauthenticated, rejectNonCheckIn, async (req, res) => {
-    console.log('in attendee checkOut PUT route');
+    // console.log('in attendee checkOut PUT route');
     const connection = await pool.connect();
     try {
         await connection.query('BEGIN');
         //assign the array we get to a variable
-        console.log(req.body);
+        // console.log(req.body);
 
         const attendee = req.body.attendeeToCheckOut;
-        console.log(attendee);
+        // console.log(attendee);
 
         const queryText = `UPDATE "Attendee"
                             SET "CheckInDate" = NULL
@@ -301,49 +303,26 @@ router.put('/checkOut', rejectUnauthenticated, rejectNonCheckIn, async (req, res
         res.sendStatus(200);
     } catch (err) {
         await connection.query('ROLLBACK');
-        console.log('error in attendee checkOut PUT route', err);
+        // console.log('error in attendee checkOut PUT route', err);
         res.sendStatus(500);
     } finally {
         connection.release();
     }
 });
-/**
- * POST route template
- */
-router.post('/', (req, res) => {
-
-});
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/**
- * DELETE route template
- */
-//Delete route for the Attendee Detail page
+//Delete route for the Attendee Detail page. in case an admin needs to fully delete an attendee.
 router.delete('/delete/:id', rejectUnauthenticated, rejectNonAdmin, (req, res) => {
     const id = req.params.id
     const queryText = 'DELETE FROM  "Attendee" WHERE "AttendeeID" = $1;';
-    console.log('in attendee specific detail delete id', id);
+    // console.log('in attendee specific detail delete id', id);
     pool.query(queryText, [id])
         .then((result) => {
-            console.log('in Delete router for specific attendee details', result);
+            // console.log('in Delete router for specific attendee details', result);
             res.sendStatus(200); 
         })
         .catch((error) => {
-            console.log('in Delete router for specific attendee details', error);
+            // console.log('in Delete router for specific attendee details', error);
             res.sendStatus(500);
         })
     

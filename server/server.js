@@ -1,11 +1,11 @@
-
+// setup of express and dotenv
 const express = require('express');
 require('dotenv').config();
-
+// declare app and session middleware
 const app = express();
 const bodyParser = require('body-parser');
 const sessionMiddleware = require('./modules/session-middleware');
-
+// passport
 const passport = require('./strategies/user.strategy');
 
 // Route includes
