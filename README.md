@@ -1,7 +1,7 @@
 # Con Ops
-Con Ops is the behind the scenes application of 2D Con. It allows the staff and volunteers at 2D con to check in attendees, schedule and plan events, and cordinate and keep track of information from previous conventions. 
+Con Ops is the behind the scenes application of 2D Con. It allows the staff and volunteers at 2D Con to check in attendees, schedule and plan events, and cordinate and keep track of information from previous conventions. 
 
-You can see how the app works here: Heroku:
+You can see how the app works here. Heroku:
 
 ## Built With
 React, Redux, Express, Passport, and PostgreSQL, Material-UI, (a full list of dependencies can be found in `package.json`).
