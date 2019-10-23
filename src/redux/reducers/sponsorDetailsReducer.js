@@ -1,3 +1,4 @@
+// holds onto a single sponsors details and updates each item based off of whats changed
 const sponsorDetailsReducer = (state = { SponsorIsActive: true }, action) => {
     switch (action.type) {
         case 'SET_SPONSOR_DETAILS':

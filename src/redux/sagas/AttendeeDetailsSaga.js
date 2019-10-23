@@ -1,6 +1,7 @@
 import { put, takeLatest } from 'redux-saga/effects';
 import axios from 'axios';
 
+// fetches the attendees info
 function* fetchAttendeePersonalInfo(action) {
     try {
         const config = {
@@ -20,6 +21,7 @@ function* fetchAttendeePersonalInfo(action) {
     }
 }
 
+// updates the attendees info
 function* updateAttendeePersonalInfo(action) {
     try{
         const config = {
@@ -39,6 +41,7 @@ function* updateAttendeePersonalInfo(action) {
     }
 }
 
+// deletes the attendee from the database
 function * deleteAttendeeInfo(action){
     try{
         const config = {

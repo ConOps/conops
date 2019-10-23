@@ -1,4 +1,6 @@
 --DATABASE is named ConOps--
+
+--The user table holds encripted password and username and authorization level-- 
 CREATE TABLE "user"
 
 (
@@ -14,7 +16,7 @@ CREATE TABLE "user"
 );
 
 
-
+--Attendees table holds all of these attendees info--
 CREATE TABLE "Attendee"
 
 (
@@ -78,7 +80,7 @@ WITH(
 );
 
 
-
+-- holds all the conventions info--
 CREATE TABLE "Convention"
 
 (
@@ -106,7 +108,7 @@ WITH (
 );
 
 
-
+-- holds all the events information--
 CREATE TABLE "Event"
 
 (
@@ -154,7 +156,7 @@ CREATE TABLE "Event"
 );
 
 
-
+-- a joint table between events and tags -- 
     CREATE TABLE "EventTags"
 
     (
@@ -176,7 +178,7 @@ CREATE TABLE "Event"
 );
 
 
-
+-- holds all the tags information -- 
     CREATE TABLE "Tags"
 
     (
@@ -198,7 +200,7 @@ CREATE TABLE "Event"
 );
 
 
-
+-- holds all  the badge type info--
     CREATE TABLE "BadgeType"
 
     (
@@ -220,7 +222,7 @@ CREATE TABLE "Event"
 );
 
 
-
+-- holds all  the location information -- 
     CREATE TABLE "Location"
 
     (
@@ -266,7 +268,7 @@ CREATE TABLE "Event"
 );
 
 
-
+-- holds all sponsor information-- 
     CREATE TABLE "Sponsor"
 
     (
@@ -294,7 +296,7 @@ CREATE TABLE "Event"
 );
 
 
-
+-- holds the order id probably connects to one of there existing database tables that hold important attendee info--
     CREATE TABLE "Order"
 
     (
@@ -304,7 +306,7 @@ CREATE TABLE "Event"
     );
 
 
-
+-- Organization table holds all information regarding Organizations--
     CREATE TABLE "Organization"
 
     (
@@ -323,7 +325,7 @@ CREATE TABLE "Event"
 
 );
 
-
+-- all the commands to connect all tables that need to be connected--
 
     ALTER TABLE "Attendee" ADD CONSTRAINT "Attendee_fk0" FOREIGN KEY ("ConventionID") REFERENCES "Convention"("ConventionID");
 

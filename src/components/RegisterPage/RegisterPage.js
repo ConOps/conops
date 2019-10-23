@@ -47,6 +47,7 @@ class RegisterPage extends Component {
             <label htmlFor="username">
               Username:
               <input
+                autoComplete="off"
                 type="text"
                 name="username"
                 value={this.state.username}

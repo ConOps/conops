@@ -1,6 +1,7 @@
 import { put, takeLatest } from 'redux-saga/effects';
 import axios from 'axios';
 
+// fetches locations details and sends them to reducer
 function* fetchDetails(action) {
     try {
         const config = {
@@ -20,6 +21,7 @@ function* fetchDetails(action) {
     }
 }
 
+// sends payload with updated location details to the server
 function* updateDetails (action) {
     try {
         const config = {

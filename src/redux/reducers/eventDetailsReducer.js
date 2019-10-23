@@ -1,3 +1,4 @@
+// hangs on to one event at a time and changes its details while you change it
 const eventDetailsReducer = (state = { Tags: [], TagObjects: [], LocationName: '', EventName: '', EventStartTime: '', EventEndTime: '', EventModifiedNotes: '', EventDescription: ''}, action) => {
     switch (action.type) {
         case 'SET_EVENT_DETAILS':
