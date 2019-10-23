@@ -21,17 +21,17 @@ const styles = ({
 });
 
 class Locations extends Component {
-  // fetches all the locations in the database when the page loads
+    // fetches all the locations in the database when the page loads
     componentDidMount() {
         this.props.dispatch({ type: 'FETCH_LOCATIONS' })
     }
 
-  // when you click the plus icon it takes you to the create location page
+    // when you click the plus icon it takes you to the create location page
     handleClick = () => {
         this.props.history.push('/locations/create')
     }
 
-  // this is how the information is passed into the material-ui table, search this: columns={this.state.columns}, data={this.props.reduxStore.LocationReducer}
+    // this is how the information is passed into the material-ui table, search this: columns={this.state.columns}, data={this.props.reduxStore.LocationReducer}
     state = {
         columns:  [
             { title: "LocationID", field: "LocationID", hidden: true},

@@ -33,7 +33,7 @@ const styles = ({
     }  
 });
 
-// adds dialog box to comfirm location details edit
+// adds dialog box to confirm location details edit
 function PaperComponent(props) {
   return (
     <Draggable>
@@ -47,7 +47,7 @@ class LocationDetails extends Component {
     componentDidMount() {
       this.fetchLocationDetails();
     }
-  // fetching all the location details for the selected location
+  // fetches all the location details for the selected location
     fetchLocationDetails = () => {
       let id = this.props.match.params.id;
       this.props.dispatch({
@@ -56,24 +56,23 @@ class LocationDetails extends Component {
       });
     }
 
-  // local state
     state = {
         LocationIsActive: true,
         openSave: false,
         details: {},
     }
 
-// this will close the dialog box when click cancel, confirm, or outside the dialog box
-  handleCloseSave = () => {
-    this.setState({ openSave: false });
-  };
+    // this will close the dialog box when click cancel, confirm, or outside the dialog box
+    handleCloseSave = () => {
+      this.setState({ openSave: false });
+    };
 
-  // this will return you to the location page if you click cancel while creating a new event
+    // this will return you to the location page if you click cancel while creating a new event
     handleBack = () => {
         this.props.history.push("/locations");
     };
 
-  // this sends the updated information to the database
+    // this sends the updated information to the database
     saveLocation = () => {
       this.props.dispatch({
         type: "UPDATE_LOCATION_DETAILS",
@@ -83,7 +82,7 @@ class LocationDetails extends Component {
       this.props.history.push('/locations');
     }
 
-  // this triggers the dialog box to open, and sets local state to modified details
+    // this triggers the dialog box to open, and sets local state to modified details
     handleSave = () => {
       this.setState({
         openSave: !this.state.openSave,
@@ -91,7 +90,7 @@ class LocationDetails extends Component {
       })
     };
 
-  // sends active status update to the database
+    // sends active status update to the database
     handleChange = () => {
         this.props.dispatch({
             type: "EDIT_LOCATION_STATUS",

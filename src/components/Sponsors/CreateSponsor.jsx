@@ -25,6 +25,7 @@ const styles = ({
     },
 });
 
+// adds dialog box to confirm a new location
 function PaperComponent(props) {
     return (
         <Draggable>
@@ -34,24 +35,29 @@ function PaperComponent(props) {
 }
 
 class CreateSponsor extends Component {
+    // dialog box is closed when the page loads, until select save
     state = {
         openSave: false,
     }
 
+    // this will return you to the sponsor page if you click cancel while creating a new sponsor
     handleCancel = () => {
         this.props.history.push('/sponsors');
     }
 
+    // this will close the dialog box when click cancel, confirm, or outside the dialog box
     handleCloseSave = () => {
         this.setState({ openSave: false });
     };
 
+    // this triggers the dialog box to open when you click save
     handleSave = () => {
         this.setState({
             openSave: !this.state.openSave,
         })
     }
 
+    // sends the new sponsor information to the database
     saveSponsor = () => {
         this.props.dispatch({
             type: "ADD_SPONSOR",
@@ -64,33 +70,31 @@ class CreateSponsor extends Component {
     render() {
         return (
             <div style={{margin: '20px'}}>
-
-                <Dialog
-                    open={this.state.openSave}
-                    onClose={this.handleCloseSave}
-                    PaperComponent={PaperComponent}
-                    aria-labelledby="draggable-dialog-title"
-                >
-                    <DialogTitle style={{ cursor: 'move', color: 'white' }} id="draggable-dialog-title" className="Dialog">
-                        Create Sponsor?
-        </DialogTitle>
-                    <DialogContent>
-                        <DialogContentText style={{ color: 'black' }}>
-                            Are you sure that you would like to create this Sponsor?
-          </DialogContentText>
-                    </DialogContent>
-                    <DialogActions>
-                        <Button onClick={this.handleCloseSave} variant="contained" color="secondary">
-                            Cancel
-          </Button>
-                        <ThemeProvider theme={theme}>
+            <Dialog
+                open={this.state.openSave}
+                onClose={this.handleCloseSave}
+                PaperComponent={PaperComponent}
+                aria-labelledby="draggable-dialog-title"
+            >
+                <DialogTitle style={{ cursor: 'move', color: 'white' }} id="draggable-dialog-title" className="Dialog">
+                    Create Sponsor?
+                </DialogTitle>
+                <DialogContent>
+                    <DialogContentText style={{ color: 'black' }}>
+                        Are you sure that you would like to create this Sponsor?
+                    </DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                    <Button onClick={this.handleCloseSave} variant="contained" color="secondary">
+                        Cancel
+                    </Button>
+                    <ThemeProvider theme={theme}>
                         <Button onClick={this.saveSponsor} variant="contained" color="primary">
                             Confirm
-          </Button>
-                        </ThemeProvider>
-                    </DialogActions>
-                </Dialog>
-                
+                        </Button>
+                    </ThemeProvider>
+                </DialogActions>
+            </Dialog>     
                 <h1>Create Sponsor</h1>
                 <TextField
                     label="Name"
@@ -138,7 +142,7 @@ class CreateSponsor extends Component {
                 <Button onClick={this.handleCancel} variant="contained" color="secondary" style={{ margin: '5px' }}>Cancel</Button>
                 {this.props.user.authorization === 4 && (
                     <ThemeProvider theme={theme}>
-                    <Button onClick={this.handleSave} variant="contained" color="primary" style={{margin:'5px'}}>Save</Button>
+                        <Button onClick={this.handleSave} variant="contained" color="primary" style={{margin:'5px'}}>Save</Button>
                     </ThemeProvider>
                 )}
             </div>

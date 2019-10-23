@@ -33,6 +33,7 @@ const styles = ({
     } 
 });
 
+// adds dialog box to confirm sponsor details edit
 function PaperComponent(props) {
     return (
         <Draggable>
@@ -42,10 +43,12 @@ function PaperComponent(props) {
 }
 
 class SponsorDetails extends Component {
+    // calls the fucntion to get all the sponsor details on page load
     componentDidMount() {
         this.fetchSponsorDetails();
     }
 
+    // fetches all the sponsor details for the selected sponsor
     fetchSponsorDetails = () => {
         let id = this.props.match.params.id;
         this.props.dispatch({
@@ -60,14 +63,17 @@ class SponsorDetails extends Component {
         details: {},
     }
 
+    // this will close the dialog box on click cancel, confirm, or outside the dialog box
     handleCloseSave = () => {
         this.setState({ openSave: false });
     };
 
+    // this will return you to the location page if you click cancel while creating a new sponsor 
     handleBack = () => {
         this.props.history.push("/sponsors");
     };
 
+    // this triggers the dialog box to open, and sets local state to the modified details
     handleSave = () => {
         this.setState({
             openSave: !this.state.openSave,
@@ -75,6 +81,7 @@ class SponsorDetails extends Component {
         })
     };
 
+    // this sends the updated information to the database  
     saveSponsor = () => {
         this.props.dispatch({
             type: "UPDATE_SPONSOR_DETAILS",
@@ -83,6 +90,7 @@ class SponsorDetails extends Component {
         this.handleCloseSave();
     }
 
+    // send active status to the database
     handleChange = () => {
         this.props.dispatch({
             type: "EDIT_SPONSOR_STATUS",
