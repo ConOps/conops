@@ -21,6 +21,7 @@ import Draggable from 'react-draggable';
 import { createMuiTheme } from '@material-ui/core/styles';
 import { ThemeProvider } from '@material-ui/styles';
 
+// mui styles and theme.. these could likely be combined. they were likely added/edited at same time, hence doubling up of same idea.
 const styles = ({
     root: {
         margin: '15px',
@@ -34,7 +35,6 @@ const theme = createMuiTheme({
     multiline: {
         margin: '0px',
         maxWidth: '80%'
-        // width: '300'
     },
 });
 
@@ -47,6 +47,8 @@ function PaperComponent(props) {
 }
 
 class CreateEvent extends Component {
+
+    // component mount loads: clears event details (since we create in the same reducer), fetches all locations, tags, current convention, and sponsors
     componentDidMount() {
         this.props.dispatch({ 
             type: 'CLEAR_EVENT_DETAILS' 
@@ -65,6 +67,7 @@ class CreateEvent extends Component {
         });
     }
 
+    // if cancel is clicked, navigates user back to events page.
     handleCancel = () => {
         this.props.history.push('/events');
     }
@@ -77,16 +80,19 @@ class CreateEvent extends Component {
             openAlert: false,
     }
 
+    // closes the save dialog box
     handleCloseSave = () => {
         this.setState({ openSave: false });
     };
 
+    // closes the alert dialog box
     handleCloseAlert = () => {
         this.setState({ openAlert: false });
     };
 
+    // handler for changing the selected location
     handleLocationChange = (event) => {
-        console.log('SELECTED LOCATION:', event.target.value)
+        // console.log('SELECTED LOCATION:', event.target.value)
         this.setState({ LocationID: event.target.value })    
         this.props.dispatch({
             type: 'CREATE_EVENT_LOCATION',
@@ -94,8 +100,9 @@ class CreateEvent extends Component {
         })
     }
 
+    // handler for changing the selected tags. will only select one at a time, but display whatever has been selected
     handleTagChange = (event) => {
-        console.log('SELECTED TAG(S):', event.target.value)
+        // console.log('SELECTED TAG(S):', event.target.value)
         this.setState({ TagID: event.target.value })
         this.props.dispatch({
             type: 'CREATE_EVENT_TAGS',
@@ -103,8 +110,9 @@ class CreateEvent extends Component {
         })
     }
 
+    // handler for changing the selected sponsor
     handleSponsorChange = (event) => {
-        console.log('SELECTED SPONSOR:', event.target.value)
+        // console.log('SELECTED SPONSOR:', event.target.value)
         this.setState({ SponsorID: event.target.value })
         this.props.dispatch({
             type: 'CREATE_EVENT_SPONSOR',
@@ -112,6 +120,7 @@ class CreateEvent extends Component {
         })
     }
 
+    // handler function to check if any critical details are missing: event name, description, start time, and end time. if all have data, proceed to the save function 
     handleSave = () => {
         if(this.props.details.EventName === null ||
             this.props.details.EventName === '' ||
@@ -132,6 +141,7 @@ class CreateEvent extends Component {
             }
     }
 
+    // dispatches the event details to the server (via the saga), closes dialog box, and pushes user to events page
     saveEvent = () => {
         this.props.dispatch({
             type: 'ADD_EVENT',
@@ -141,14 +151,17 @@ class CreateEvent extends Component {
         this.props.history.push(`/events`);
     }
 
-    createYogaEventForDemo = () => {
-        this.props.dispatch({
-            type: 'ADD_YOGA_EVENT_FOR_DEMO'
-        })
-    }
+    // this was dummy data for an event creation during live demo.
+    // createYogaEventForDemo = () => {
+    //     this.props.dispatch({
+    //         type: 'ADD_YOGA_EVENT_FOR_DEMO'
+    //     })
+    // }
 
 
     render() {
+
+        // maps through locations in reducer and only displays locations that are set as active
         let locationsInSelector = this.props.locations.map((location) => {
             if (location.LocationIsActive === true) {
                 return (
@@ -160,14 +173,13 @@ class CreateEvent extends Component {
             
         });
 
+        // maps through tags in reducer and should display tags selected. this was not functioning as intended in final version. needs to be looked into (should appear as the blue tags as in the edit events page)
         let eventTags = this.props.details.Tags.map((tag) => {
             return (
                 <Grid item key={tag}>
                     <Chip
                         key={tag}
                         label={tag}
-                        // onDelete={() => this.handleTagDelete(tag.id)}
-                        // onClick={() => this.handleTagClick(tag)}
                         className={this.props.classes.chip}
                         color="primary"
                     />
@@ -175,6 +187,7 @@ class CreateEvent extends Component {
             )
         });
 
+        // maps through tags in reducer and only displays tags that are set as active
         let allTags = this.props.tags.map((tag) => {
             if (tag.TagIsActive === true) {
                 return (
@@ -185,6 +198,7 @@ class CreateEvent extends Component {
             }
         });
 
+        // maps through sponsors in reducer and only displays sponsors that are set as active
         let sponsorsInSelector = this.props.sponsors.map((sponsor) => {
             if (sponsor.SponsorIsActive === true) {
                 return (
@@ -198,7 +212,7 @@ class CreateEvent extends Component {
 
         return (
             <div style={{margin: '20px'}}>
-                
+                {/* dialog box for confirming creation of event */}
                 <Dialog
                     open={this.state.openSave}
                     onClose={this.handleCloseSave}
@@ -224,7 +238,7 @@ class CreateEvent extends Component {
                         </ThemeProvider>
                     </DialogActions>
                 </Dialog>
-
+                    {/* dialog to check on critical fields that need to have data: name, description, event start and end times */}
                 <Dialog
                     open={this.state.openAlert}
                     onClose={this.handleCloseAlert}
@@ -360,7 +374,6 @@ class CreateEvent extends Component {
                     <Button onClick={this.handleSave} variant="contained" color="primary" style={{ margin: '5px' }}>Save</Button>
                 </ThemeProvider>
             </div>
-            
         )
     }
 }
