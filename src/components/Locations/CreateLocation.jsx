@@ -25,6 +25,7 @@ const styles = ({
     },
 });
 
+// adds dialog box to confirm a new location
 function PaperComponent(props) {
   return (
     <Draggable>
@@ -34,19 +35,22 @@ function PaperComponent(props) {
 }
 
 class CreateLocation extends Component {
+  // dialog box is closed when the page loads, until select save
   state ={
     openSave: false,
   }
 
-
+  // this will close the dialog box when click cancel, confirm, or outside the dialog box
   handleCloseSave = () => {
     this.setState({ openSave: false });
   };
 
-    handleCancel = () => {
-        this.props.history.push('/locations');
-    }
+  // this will return you to the location page if you click cancel while creating a new event
+  handleCancel = () => {
+      this.props.history.push('/locations');
+  }
 
+  // sends the new location information to the database
   saveLocation = () => {
     this.props.dispatch({
       type: "ADD_LOCATION",
@@ -56,16 +60,17 @@ class CreateLocation extends Component {
     this.props.history.push('/locations');
   }
 
-    handleSave = () => {
-      this.setState({
-        openSave: !this.state.openSave,
-       
-      })
-    }
+  // this triggers the dialog box to open when you click save
+  handleSave = () => {
+    this.setState({
+      openSave: !this.state.openSave,
+    })
+  }
+
     render() {
         return (
+          // sets margin for the input fields
           <div style={{margin:'20px'}}>
-
             <Dialog
               open={this.state.openSave}
               onClose={this.handleCloseSave}
@@ -74,20 +79,20 @@ class CreateLocation extends Component {
             >
               <DialogTitle style={{ cursor: 'move', color: 'white' }} id="draggable-dialog-title" className="Dialog">
                 Create Location?
-        </DialogTitle>
+              </DialogTitle>
               <DialogContent>
                 <DialogContentText style={{ color: 'black' }}>
                   Are you sure that you would like to create this location?
-          </DialogContentText>
+                </DialogContentText>
               </DialogContent>
               <DialogActions>
                 <Button onClick={this.handleCloseSave} variant="contained" color="secondary">
                   Cancel
-          </Button>
+                </Button>
                 <ThemeProvider theme={theme}>
-                <Button onClick={this.saveLocation} variant="contained" color="primary">
-                  Confirm
-          </Button>
+                  <Button onClick={this.saveLocation} variant="contained" color="primary">
+                    Confirm
+                  </Button>
                 </ThemeProvider>
               </DialogActions>
             </Dialog>

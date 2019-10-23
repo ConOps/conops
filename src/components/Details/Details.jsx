@@ -24,20 +24,20 @@ import Draggable from 'react-draggable';
 import { createMuiTheme } from '@material-ui/core/styles';
 import { ThemeProvider } from '@material-ui/styles';
 
+//changes the color where primary is used 
 const theme = createMuiTheme({
   palette: {
     primary: {main: "#19375f"}
   }
 });
-
-
-
+// adds these styles to anything with a class name of root
 const styles = {
   root: {
     margin: "15px"
   }
 };
 
+// makes the dialog boxes draggable
 function PaperComponent(props) {
   return (
     <Draggable>
@@ -58,47 +58,52 @@ class Details extends Component {
     id: {},
   };
 
+  // on page load it gets all the attendees info 
   componentDidMount() {
     this.fetchAttendeeInformation();
   }
 
- 
-
+  // closes dialog box
   handleCloseDelete = () => {
     this.setState({ openDelete: false });
   };
 
-  
-
+  // closes dialog box
   handleClosePaid = () => {
     this.setState({ openPaid: false });
   };
 
-
+  // closes dialog box
   handleCloseCheckIn = () => {
     this.setState({ openCheckIn: false });
   };
 
+  // closes dialog box
   handleCloseCheckOutWalkIn = () => {
     this.setState({ openCheckOutWalkIn: false });
   };
 
+  // closes dialog box
   handleCloseCheckOut = () => {
     this.setState({ openCheckOut: false });
   };
 
+  // closes dialog box
   handleCloseSave = () => {
     this.setState({ openSave: false });
   };
 
+  // closes dialog box
   handleClosePromptTwo = () => {
     this.setState({ openPromptTwo: false });
   };
 
+  // opens dialog box
   handleOpenPromptTwo = () => {
     this.setState({ openPromptTwo: true });
   };
 
+  // sends off id of the attendee you wish to delete
   deleteAttendee = () => {
     this.props.dispatch({
       type: "DELETE_ATTENDEE_INFO",
@@ -107,6 +112,7 @@ class Details extends Component {
     this.props.history.push(`/check-in`)
   }
 
+  // checks in the attendee if they are a walk up
   handlePaid = () => {
     this.props.dispatch({
              type: "CHECK_IN_AND_PAY_ATTENDEE",
@@ -116,6 +122,7 @@ class Details extends Component {
     this.handleClosePromptTwo(); 
   }
 
+  // checks in the attendee if they are not a walk up
   checkIn = () => {
     this.props.dispatch({
            type: "CHECK_IN_FROM_DETAILS",
@@ -124,6 +131,7 @@ class Details extends Component {
     this.handleCloseCheckIn();
   }
 
+  //this function checks out the walk in attendee and removes there check in and payment date
   checkOutWalkIn = () => {
     this.props.dispatch({
       type: "CHECK_OUT_WALK_IN",
@@ -132,6 +140,7 @@ class Details extends Component {
     this.handleCloseCheckOutWalkIn();
   }
 
+  // this function checkouts a normal attendee and just removes there checking time 
   checkOut = () => {
     this.props.dispatch({
       type: "CHECK_OUT",
@@ -140,6 +149,7 @@ class Details extends Component {
     this.handleCloseCheckOut();
   }
 
+  // this function sends off the changes to be put into the database and over write the old data
   save = () => {
     this.props.dispatch({
       type: "UPDATE_ATTENDEE_INFO",
@@ -148,6 +158,7 @@ class Details extends Component {
     this.handleCloseSave();
   }
 
+  // tells the app get the specific attendees information
   fetchAttendeeInformation = () => {
     let id = this.props.match.params.id;
     this.props.dispatch({
@@ -157,16 +168,19 @@ class Details extends Component {
 
   }
 
+  // changes the value of the badge
   handleChange = event => {
     this.setState({
       Badge: event.target.value
     });
   };
 
+  // brings you back to the check in page
   handleBack = () => {
     this.props.history.push("/check-in");
   };
 
+  // sends the order id to find everyone in that group and to a diffrent page
   handleFind = id => {
     // this.props.dispatch({
     //   type: "FETCH_ORDER_INFO",
@@ -175,16 +189,15 @@ class Details extends Component {
     this.props.history.push(`/OrderID/${id}`);
   };
 
+  // opens the delete dialog box
   handleDelete = id => {
     this.setState({
       openDelete: !this.state.openDelete,
       ...this.state.id, id: id
     })
-    // if(window.confirm('are you sure that you would like to delete this attendee??'))
-   
-  
 };
 
+// opens the check in payment dialog box
   handleCheckIn = (id, payment) => {
     if(payment){
       this.setState({
@@ -202,6 +215,7 @@ class Details extends Component {
     
   };
 
+  // opens the checkout dialog box
   handleCheckOut = (id, order) => {
     if(order == null){
       this.setState({
@@ -217,6 +231,7 @@ class Details extends Component {
     
   };
 
+  // opens the save dialog box
   handleSave = () => {
     this.setState({
       openSave: !this.state.openSave,

@@ -33,6 +33,7 @@ const styles = ({
     }  
 });
 
+// adds dialog box to confirm location details edit
 function PaperComponent(props) {
   return (
     <Draggable>
@@ -42,10 +43,11 @@ function PaperComponent(props) {
 }
 
 class LocationDetails extends Component {
+  // calls the function to get all the location details on page load  
     componentDidMount() {
       this.fetchLocationDetails();
     }
-
+  // fetches all the location details for the selected location
     fetchLocationDetails = () => {
       let id = this.props.match.params.id;
       this.props.dispatch({
@@ -60,15 +62,17 @@ class LocationDetails extends Component {
         details: {},
     }
 
+    // this will close the dialog box when click cancel, confirm, or outside the dialog box
+    handleCloseSave = () => {
+      this.setState({ openSave: false });
+    };
 
-  handleCloseSave = () => {
-    this.setState({ openSave: false });
-  };
-
+    // this will return you to the location page if you click cancel while creating a new event
     handleBack = () => {
         this.props.history.push("/locations");
     };
 
+    // this sends the updated information to the database
     saveLocation = () => {
       this.props.dispatch({
         type: "UPDATE_LOCATION_DETAILS",
@@ -78,6 +82,7 @@ class LocationDetails extends Component {
       this.props.history.push('/locations');
     }
 
+    // this triggers the dialog box to open, and sets local state to modified details
     handleSave = () => {
       this.setState({
         openSave: !this.state.openSave,
@@ -85,6 +90,7 @@ class LocationDetails extends Component {
       })
     };
 
+    // sends active status update to the database
     handleChange = () => {
         this.props.dispatch({
             type: "EDIT_LOCATION_STATUS",
@@ -95,7 +101,6 @@ class LocationDetails extends Component {
     render() {
         return (
           <div style={{margin: '20px'}}>
-
             <Dialog
               open={this.state.openSave}
               onClose={this.handleCloseSave}
@@ -104,24 +109,23 @@ class LocationDetails extends Component {
             >
               <DialogTitle style={{ cursor: 'move', color: 'white' }} id="draggable-dialog-title" className="Dialog"> 
                 Edit Location?
-        </DialogTitle>
-              <DialogContent>
-                <DialogContentText style={{ color: 'black' }}>
-                  Are you sure that you would like to edit this location?
-          </DialogContentText>
+              </DialogTitle>
+                <DialogContent>
+                  <DialogContentText style={{ color: 'black' }}>
+                    Are you sure that you would like to edit this location?
+                </DialogContentText>
               </DialogContent>
               <DialogActions>
                 <Button onClick={this.handleCloseSave} variant="contained" color="secondary">
                   Cancel
-          </Button>
+                </Button>
                 <ThemeProvider theme={theme}>
-                <Button onClick={this.saveLocation} variant="contained" color="primary">
-                  Confirm
-          </Button>
+                  <Button onClick={this.saveLocation} variant="contained" color="primary">
+                    Confirm
+                  </Button>
                 </ThemeProvider>
               </DialogActions>
             </Dialog>
-
             <h1>2D Con 2020: Remaster</h1>
             <h1>Manage Location: {this.props.details.LocationName}</h1>
             <TextField
@@ -163,7 +167,7 @@ class LocationDetails extends Component {
             {this.props.user.authorization === 4 && (
             <ThemeProvider theme={theme}>
                 <Button onClick={this.handleSave} variant="contained" color="primary" style={{ margin: '5px' }}>Save</Button>
-              </ThemeProvider>
+            </ThemeProvider>
             )}
           </div>
         );
