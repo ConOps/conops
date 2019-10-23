@@ -14,12 +14,14 @@ import { isFlowBaseAnnotation } from "@babel/types";
 import { createMuiTheme } from '@material-ui/core/styles';
 import { ThemeProvider } from '@material-ui/styles';
 
+//this deals with the color of the confirm buttons
 const theme = createMuiTheme({
   palette: {
     primary: { main: "#19375f" }
   }
 }); 
 
+//makes the dialog alerts draggable
 function PaperComponent(props) {
   return (
     <Draggable>
@@ -56,41 +58,49 @@ class CheckIn extends Component {
     all: true
   };
 
+  //calls these functions on page load
   componentDidMount() {
     this.fetchAllAttendees();
   }
 
-
+  //Sends a GET request to saga
   fetchAllAttendees = () => {
     this.props.dispatch({
       type: "FETCH_ALL_ATTENDEES"
     });
   }
 
+  //opens the payment check dialog alert
   handleClickOpen = () => {
     this.setState({ open: true });
   };
 
+  //closes the payment check dialog alert
   handleClose = () => {
     this.setState({ open: false });
   };
 
+  //opens the checkin dialog alert
   handleClickOpenPaid = () => {
     this.setState({ openPaid: true });
   };
 
+  //closes the checkin dialog alert
   handleClosePaid = () => {
     this.setState({ openPaid: false });
   };
 
+  //opens the alert that asks you if you want to checkin and pay for the attendee
   checkInPromptTwo = () => {
     this.setState({ openTwo: true });
   };
 
+  //closes the alert that asks you if you want to checkin and pay for the attendee
   handleClosePromptTwo = () => {
     this.setState({ openTwo: false });
   };
 
+  //this sends the PUT to the saga for checking in and paying for an attendee
   paymentCheckInPrompt = () => {
     this.props.dispatch({
       type: "CHECK_IN_AND_PAY_ATTENDEE",
@@ -100,8 +110,9 @@ class CheckIn extends Component {
       this.handleClose()
   }
 
+  //this sends the PUT to the saga for checking in an attendee
   checkInPrompt = () => {
-    console.log('this is the check in only', this.state.rowData);
+    //console.log('this is the check in only', this.state.rowData);
     
     this.props.dispatch({
       type: "CHECK_IN_ALL_SELECTED",
