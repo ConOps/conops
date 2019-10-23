@@ -7,14 +7,12 @@ import AddIcon from '@material-ui/icons/Add';
 import { createMuiTheme } from '@material-ui/core/styles';
 import { ThemeProvider } from '@material-ui/styles';
 
-// sets the color for the button, according to to 2D-Cons branding guide lines
 const theme = createMuiTheme({
   palette: {
     primary: { main: "#19375f" }
   }
 }); 
 
-// adds a margin to the plus icon
 const styles = ({
     fab: {
         margin: '15px',

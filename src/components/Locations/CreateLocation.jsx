@@ -13,14 +13,12 @@ import Draggable from 'react-draggable';
 import { createMuiTheme } from '@material-ui/core/styles';
 import { ThemeProvider } from '@material-ui/styles';
 
-// sets the color for the button, according to to 2D-Cons branding guide lines
 const theme = createMuiTheme({
   palette: {
     primary: { main: "#19375f" }
   }
 }); 
 
-// adds margins to text fields
 const styles = ({
     root: {
         margin: '15px',
@@ -91,11 +89,11 @@ class CreateLocation extends Component {
                 <Button onClick={this.handleCloseSave} variant="contained" color="secondary">
                   Cancel
                 </Button>
-                      <ThemeProvider theme={theme}>
-                      <Button onClick={this.saveLocation} variant="contained" color="primary">
-                        Confirm
-                </Button>
-                      </ThemeProvider>
+                <ThemeProvider theme={theme}>
+                  <Button onClick={this.saveLocation} variant="contained" color="primary">
+                    Confirm
+                  </Button>
+                </ThemeProvider>
               </DialogActions>
             </Dialog>
 
