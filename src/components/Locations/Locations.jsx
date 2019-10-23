@@ -7,41 +7,40 @@ import AddIcon from '@material-ui/icons/Add';
 import { createMuiTheme } from '@material-ui/core/styles';
 import { ThemeProvider } from '@material-ui/styles';
 
+// sets the color for the button, according to to 2D-Cons branding guide lines
 const theme = createMuiTheme({
   palette: {
     primary: { main: "#19375f" }
   }
 }); 
 
+// adds a margin to the plus icon
 const styles = ({
-    root: {
-        margin: '15px',
-    },
     fab: {
         margin: '15px',
         marginRight: '0px',
     }
 });
 
-
-
 class Locations extends Component {
+  // fetches all the locations in the database when the page loads
     componentDidMount() {
         this.props.dispatch({ type: 'FETCH_LOCATIONS' })
     }
 
+  // when you click the plus icon it takes you to the create location page
     handleClick = () => {
         this.props.history.push('/locations/create')
     }
 
+  // this is how the information is passed into the material-ui table, search this: columns={this.state.columns}, data={this.props.reduxStore.LocationReducer}
     state = {
         columns:  [
             { title: "LocationID", field: "LocationID", hidden: true},
             { title: "Location Name", field: "LocationName", hidden: false },
             { title: "Location Description", field: "LocationDescription", hidden: false},
             { title: "Active Status", field: "LocationIsActive", hidden: false, render: (rowData) => <p>{JSON.stringify(rowData.LocationIsActive)}</p>},
-        ],
-        data: []
+        ], 
     }
 
     render() {
@@ -50,14 +49,14 @@ class Locations extends Component {
             <h1 style={{textAlign:'center'}}>Locations</h1>
             {this.props.reduxStore.user.authorization === 4 && (
               <ThemeProvider theme={theme}>
-              <Fab
-                color="primary"
-                aria-label="add"
-                className={this.props.classes.fab}
-                onClick={this.handleClick} 
-              >
-                <AddIcon />
-              </Fab>
+                <Fab
+                  color="primary"
+                  aria-label="add"
+                  className={this.props.classes.fab}
+                  onClick={this.handleClick} 
+                >
+                  <AddIcon />
+                </Fab>
               </ThemeProvider>
             )}
             {this.props.reduxStore.user.authorization === 4 && (
@@ -72,6 +71,7 @@ class Locations extends Component {
                   searchFieldAlignment: "left",
                   showTitle: false
                 }}
+              // 
                 data={this.props.reduxStore.LocationReducer}
                 editable={{}}
                 actions={[
@@ -86,6 +86,7 @@ class Locations extends Component {
               />
             )}
             {this.props.reduxStore.user.authorization !== 4 && (
+            // see README for details on the MaterialTable
               <MaterialTable
                 title="Locations"
                 columns={this.state.columns}
@@ -97,8 +98,8 @@ class Locations extends Component {
                   searchFieldAlignment: "left",
                   showTitle: false
                 }}
+              // this gets the information the reducer to put into local state
                 data={this.props.reduxStore.LocationReducer}
-                editable={{}}
               />
             )}
           </div>
