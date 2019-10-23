@@ -5,6 +5,7 @@ import Button from "@material-ui/core/Button";
 import { createMuiTheme } from '@material-ui/core/styles';
 import { ThemeProvider } from '@material-ui/styles';
 
+//this deals with the color of the confirm buttons
 const theme = createMuiTheme({
   palette: {
     primary: { main: "#19375f" }
@@ -23,10 +24,12 @@ class Tags extends Component {
         data: []
     };
 
+    //calls these functions on page load
     componentDidMount() {
         this.fetchAllTags();
     };
 
+    //sends a GET request to the saga to grab the tags
     fetchAllTags() {
         this.props.dispatch({
             type: 'FETCH_TAG_LIST'
@@ -61,7 +64,6 @@ class Tags extends Component {
                 options={{
                   columnsButton: true,
                   pageSize: 10,
-                  // headerStyle: { backgroundColor: 'blue', color: 'white' },
                   pageSizeOptions: [10, 20, 50],
                   toolbarButtonAlignment: "right",
                   searchFieldAlignment: "left",
@@ -77,18 +79,6 @@ class Tags extends Component {
                       this.props.history.push(`/edittag/${rowData.TagID}`);
                     }
                   }
-                  // {
-                  //     icon: "delete",
-                  //     tooltip: "Delete",
-                  //     onClick: (event, rowData) => {
-                  //         console.log(rowData.orderID);
-                  //         this.props.dispatch({
-                  //             type: "DELETE_TAG_INFO",
-                  //             payload: rowData.TagID
-                  //         });
-                  //     },
-
-                  // },
                 ]}
               />
             ) : (
@@ -98,7 +88,6 @@ class Tags extends Component {
                 options={{
                   columnsButton: true,
                   pageSize: 10,
-                  // headerStyle: { backgroundColor: 'blue', color: 'white' },
                   pageSizeOptions: [10, 20, 50],
                   toolbarButtonAlignment: "right",
                   searchFieldAlignment: "left",
