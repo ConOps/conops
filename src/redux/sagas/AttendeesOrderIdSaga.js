@@ -14,6 +14,7 @@ function * fetchOrderInfo(action){  // find all the personal information of all 
     }
 }
 
+// fetches all attendees 
 function * oneCheckInToRuleThemAll(action){
     try{
         const config = {
@@ -52,6 +53,7 @@ function * checkInFromDetails(action){
     }
 }
 
+// updates them to show they have payed and have checked in
 function * checkInAndPay(action){
     try {
         const config = {
@@ -73,6 +75,7 @@ console.log('error in checkInAndPay', error);
 }
 }
 
+// updates the attendee to check them out of the convention
 function * checkOutWalkIn(action){
     try {
         const config = {
@@ -92,6 +95,8 @@ function * checkOutWalkIn(action){
         console.log('error in checkInAndPay', error);
     }  
 }
+
+// updates the attendee to check them out of the convention
 function * checkOut(action){
     try {
         const config = {

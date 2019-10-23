@@ -18,6 +18,7 @@ function* postNewConvention(action) {  // find all the personal information of a
     }
 }
 
+//  receives all the conventions from the database 
 function* getConvention() {
     try{
         const config = {
@@ -31,6 +32,7 @@ function* getConvention() {
 }
 }
 
+// sends updates made to the convention to the server to be updated
 function* updateConvention(action) {
     try{
         const config = {

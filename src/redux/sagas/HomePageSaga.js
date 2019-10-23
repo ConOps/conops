@@ -1,6 +1,7 @@
 import { put, takeLatest } from 'redux-saga/effects';
 import axios from 'axios';
 
+// gets news from the server and database
 function * fetchNews(){
     try {
         const config = {
@@ -18,6 +19,7 @@ function * fetchNews(){
 }
 }
 
+// updates and sends new data to the server and the data base
 function * saveConventionNews(action){
     try {
         const config = {

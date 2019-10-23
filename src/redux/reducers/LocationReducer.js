@@ -1,3 +1,4 @@
+// holds on to the locations coming from the database
 const LocationReducer = (state = [], action) => {
     switch (action.type) {
         case 'SET_LOCATIONS':

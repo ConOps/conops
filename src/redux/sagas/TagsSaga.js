@@ -27,9 +27,9 @@ function* fetchTagDetails(action) {  //this will give the Tag reducer the detail
     }
 }
 
-function * editTag(action){
+function * editTag(action){ // this will send the edit to the specific tag that is being edited
     try {
-        console.log("in edit Tag", action.payload);
+        //console.log("in edit Tag", action.payload);
         
         const config = {
             headers: { 'Content-Type': 'application/json' },
@@ -45,9 +45,9 @@ function * editTag(action){
     }
 }
 
-function * createTag(action){
+function * createTag(action){ // will create a new tag in the data base based off the info in action.payload
     try {
-        console.log("in create Tag", action.payload);
+        //console.log("in create Tag", action.payload);
 
         const config = {
             headers: { 'Content-Type': 'application/json' },
@@ -78,6 +78,7 @@ yield put({
 //     }
 // }
 
+// this sends all the sagas to the index.js in the saga folder
 function * TagsSaga() {
     yield takeLatest('FETCH_TAG_LIST', fetchTagsInfo)
     // yield takeLatest('DELETE_TAG_INFO', deleteTagInfo)
