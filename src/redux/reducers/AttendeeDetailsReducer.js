@@ -1,3 +1,5 @@
+// holds one attendee and allows you to edit that attendees details 
+
 const attendeeDetailsReducer = (state = {}, action) => {
     switch (action.type) {
         case 'SET_ATTENDEE_DETAILS':

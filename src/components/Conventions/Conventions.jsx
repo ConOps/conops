@@ -38,6 +38,9 @@ class Conventions extends Component {
     openEdit: false,
     openSave: false,
     info: {},
+    ConventionStartTime: '2021-08-18T00:00:00.000Z',
+    ConventionEndTime: '2021-08-22T00:00:00.000Z',
+    ConventionName: ''
   };
 
   handleCloseEdit = () => {
@@ -122,6 +125,15 @@ class Conventions extends Component {
     this.handleCloseEdit();
   }
 
+  addNewConventionForDemo = () => {
+    this.setState({
+      ...this.state,
+      ConventionStartTime: '2021-08-18T00:00:00.000Z',
+      ConventionEndTime: '2021-08-22T00:00:00.000Z',
+      ConventionName: '2dCon 2021: Back To The Future'
+    })
+  }
+
   render() {
     return (
       <div style={{ margin: '20px'}}>
@@ -179,14 +191,16 @@ class Conventions extends Component {
         </Dialog>
 
         <h1>The Active Convention is: {this.props.info.ConventionName} </h1>
+        {/* {JSON.stringify(this.state)} */}
         <hr></hr>
-        <h3>Create New Convention:</h3>
+        <h3 onClick={() => this.addNewConventionForDemo()}>Create New Convention:</h3>
         <TextField
           id="standard-full-width"
           label="New Convention Name:"
           style={{ margin: 8 }}
           placeholder="Convention Name"
           fullWidth
+          value={this.state.ConventionName}
           margin="normal"
           InputLabelProps={{
             shrink: true
@@ -196,7 +210,8 @@ class Conventions extends Component {
         <MuiPickersUtilsProvider utils={DateFnsUtils}>
           <Grid container justify="space-around">
             <KeyboardDatePicker
-              value={this.state.ConventionStartTime}
+              value={this.state.ConventionStartTime || this.props.info.ConventionStartTime}
+              InputLabelProps={{ shrink: this.state.ConventionStartTime }}
               margin="normal"
               id="date-picker-dialog"
               label="Convention Start Date"
@@ -207,7 +222,8 @@ class Conventions extends Component {
               onChange={date => this.conventionStartDate(date)}
             />
             <KeyboardDatePicker
-              value={this.state.ConventionEndTime}
+              value={this.state.ConventionEndTime || this.props.info.ConventionEndTime}
+              InputLabelProps={{ shrink: this.state.ConventionEndTime }}
               margin="normal"
               id="date-picker-dialog"
               label="Convention End Date"

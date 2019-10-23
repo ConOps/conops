@@ -21,3 +21,5 @@ module.exports = {
   badSecret,
   exampleBadSecret,
 };
+
+//this is just an error log in the server that will show if you have no .env file setup with a SERVER_SESSION_SECRET key. check the readme

@@ -20,6 +20,7 @@ class LoginPage extends Component {
           password: this.state.password,
         },
       });
+      this.props.history.push('/home')
     } else {
       this.props.dispatch({ type: 'LOGIN_INPUT_ERROR' });
     }
@@ -49,6 +50,7 @@ class LoginPage extends Component {
               <div>
               <TextField
               style={{ marginTop: 'px', backgroundColor: 'white', paddingLeft: '5px'}}
+                  autoComplete="off"
               label="username"
                 type="text"
                 name="username"
@@ -60,6 +62,7 @@ class LoginPage extends Component {
             <div>
               <TextField
               style={{ margin: '10px', backgroundColor: 'white', paddingLeft: '5px' }}
+                  autoComplete="off"
                 label="password"
                 type="password"
                 name="password"

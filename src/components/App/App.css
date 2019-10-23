@@ -60,7 +60,7 @@ body {
     padding-top: 0px;
 }
 
-.form {}
+/* .form {} */
     /* background-position: center;
     background-image: url(https://raw.githubusercontent.com/ConOps/conops/master/LogoBlackedOut.png);
     background-size: 700px;
@@ -101,3 +101,6 @@ body {
 
 }
 
+.eventsForNonAdmins {
+    margin-top: 8%;
+}

@@ -15,6 +15,7 @@ import FormGroup from '@material-ui/core/FormGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Switch from '@material-ui/core/Switch';
 
+//this deals with the color of the confirm buttons
 const theme = createMuiTheme({
   palette: {
     primary: { main: "#19375f" }
@@ -22,7 +23,7 @@ const theme = createMuiTheme({
 });
 
 
-
+//makes the dialog alerts draggable
 function PaperComponent(props) {
   return (
     <Draggable>
@@ -37,14 +38,17 @@ class EditTag extends Component {
     info: {}
   };
 
+  //calls these functions on page load
   componentDidMount() {
     this.fetchTagInformation();
   }
 
+  //closes the edit tag alert
   handleCloseSave = () => {
     this.setState({ openSave: false });
   };
 
+  //holds the id passed over from the tags page then sends it to the get saga 
   fetchTagInformation = () => {
     let id = this.props.match.params.id;
     this.props.dispatch({
@@ -71,6 +75,7 @@ class EditTag extends Component {
     this.props.history.push(`/tags`);
   };
 
+  //opens the dialog alert asking if you are sure you want to edit the tag
   edit = event => {
     event.preventDefault();
     this.setState({
@@ -80,6 +85,7 @@ class EditTag extends Component {
     });
   };
 
+  //able to toggle the tag active or inactive then sends the information to the saga
   handleChange = () => {
     this.props.dispatch({
       type: "UPDATE_PROPERTY",

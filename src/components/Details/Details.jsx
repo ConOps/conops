@@ -91,6 +91,14 @@ class Details extends Component {
     this.setState({ openSave: false });
   };
 
+  handleClosePromptTwo = () => {
+    this.setState({ openPromptTwo: false });
+  };
+
+  handleOpenPromptTwo = () => {
+    this.setState({ openPromptTwo: true });
+  };
+
   deleteAttendee = () => {
     this.props.dispatch({
       type: "DELETE_ATTENDEE_INFO",
@@ -105,6 +113,7 @@ class Details extends Component {
              payload: this.state.id
            });
     this.handleClosePaid();
+    this.handleClosePromptTwo(); 
   }
 
   checkIn = () => {
@@ -190,31 +199,7 @@ class Details extends Component {
       });
       
     }
-    // if (payment == null) {
-    //   if (window.confirm("get their money!")) {
-    //     if (
-    //       window.confirm("Are you sure that you want to check this person in?")
-    //     ) {
-    //       this.props.dispatch({
-    //         type: "CHECK_IN_AND_PAY_ATTENDEE",
-    //         payload: id
-    //       });
-    //     } else {
-    //       return false;
-    //     }
-    //   } else {
-    //     return false;
-    //   }
-    // } else {
-    //   if (
-    //     window.confirm("Are you sure that you want to check this person in?")
-    //   ) {
-    //     this.props.dispatch({
-    //       type: "CHECK_IN_FROM_DETAILS",
-    //       payload: [id]
-    //     });
-    //   }
-    // }
+    
   };
 
   handleCheckOut = (id, order) => {
@@ -229,29 +214,7 @@ class Details extends Component {
         ...this.state.id, id: id
       })
     }
-    // if (order == null) {
-    //   if (
-    //     window.confirm("Are you sure that you want to check this person OUT?")
-    //   ) {
-    //     this.props.dispatch({
-    //       type: "CHECK_OUT_WALK_IN",
-    //       payload: id
-    //     });
-    //   } else {
-    //     return false;
-    //   }
-    // } else {
-    //   if (
-    //     window.confirm("Are you sure that you want to check this person OUT?")
-    //   ) {
-    //     this.props.dispatch({
-    //       type: "CHECK_OUT",
-    //       payload: id
-    //     });
-    //   } else {
-    //     return false;
-    //   }
-    // }
+    
   };
 
   handleSave = () => {
@@ -259,11 +222,7 @@ class Details extends Component {
       openSave: !this.state.openSave,
       ...this.state.info, info: this.props.info
     })
-    // alert("Info has been updated");
-    // this.props.dispatch({
-    //   type: "UPDATE_ATTENDEE_INFO",
-    //   payload: this.props.info
-    // });
+    
   };
 
   render() {
@@ -314,11 +273,37 @@ class Details extends Component {
               Cancel
           </Button>
             <ThemeProvider theme={theme}>
-            <Button onClick={this.handlePaid} variant="contained" color="primary">
+            <Button onClick={this.handleOpenPromptTwo} variant="contained" color="primary">
               Confirm
           </Button>
             </ThemeProvider>
           </DialogActions>
+        </Dialog>
+
+        <Dialog
+          open={this.state.openPromptTwo}
+          onClose={this.handleClosePromptTwo}
+          PaperComponent={PaperComponent}
+          aria-labelledby="draggable-dialog-title"
+        >
+        <DialogTitle style={{ cursor: 'move', color: 'white' }} id="draggable-dialog-title" className="Dialog">
+          Check In
+        </DialogTitle>
+        <DialogContent>
+          <DialogContentText style={{ color: 'black' }}>
+            Are you sure you want to check this attendee in!
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={this.handleClosePromptTwo} variant="contained" color="secondary">
+            Cancel
+          </Button>
+          <ThemeProvider theme={theme}>
+            <Button onClick={this.handlePaid} variant="contained" color="primary">
+              Confirm
+          </Button>
+          </ThemeProvider>
+        </DialogActions>
         </Dialog>
 
         <Dialog

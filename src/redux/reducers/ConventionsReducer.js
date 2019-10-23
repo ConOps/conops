@@ -1,5 +1,4 @@
-
-
+// hangs on to the conventions and allows it to be updated when you change it
 const conventionsReducer = (state = [], action) => {
     switch (action.type) {
         case 'SET_CONVENTION_INFO':

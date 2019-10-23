@@ -12,13 +12,14 @@ import Draggable from 'react-draggable';
 import { createMuiTheme } from '@material-ui/core/styles';
 import { ThemeProvider } from '@material-ui/styles';
 
+//this deals with the color of the confirm buttons
 const theme = createMuiTheme({
   palette: {
     primary: { main: "#19375f" }
   }
 });
 
-
+// this give the dialog box the ability to be moved around the page
 function PaperComponent(props) {
   return (
     <Draggable>
@@ -33,12 +34,19 @@ class CreateTag extends Component {
 
     state={
         openSave: false,
+        openAlert: false,
+        TagName: ''
     }
-
+  //when this is called it closes the dialog alert for making a tag
   handleCloseSave = () => {
     this.setState({ openSave: false });
   };
+  //when this is closed it closes the dialog alert saying you are missing information
+  handleCloseAlert = () => {
+    this.setState({ openAlert: false });
+  };
 
+  //this sends the data for the tag you just created to the saga then closes the dialog and sends you back to the tags page
   saveTag = () => {
     this.props.dispatch({
       type: 'CREATE_TAG',
@@ -49,11 +57,19 @@ class CreateTag extends Component {
     this.props.history.push(`/tags`)
   }
 
+    //if TagName is empty then the missing information alert pops up. otherwise the alert asking if you want to create a new tag will pop up
     createTag = (event) => {
+      if(this.state.TagName === ''){
+        this.setState({
+          openAlert: !this.state.openAlert,
+        })
+      } else {
         event.preventDefault();
         this.setState({
           openSave: !this.state.openSave,
         })
+      }
+        
     }
 
 
@@ -62,7 +78,7 @@ class CreateTag extends Component {
         return (
           <>
             <div style={{ textAlign: "center" }}>
-
+              {/*Alert asking if you want to create a new tag */}
               <Dialog
                 open={this.state.openSave}
                 onClose={this.handleCloseSave}
@@ -84,6 +100,29 @@ class CreateTag extends Component {
                   <ThemeProvider theme={theme}>
                   <Button onClick={this.saveTag} variant="contained" color="primary">
                     Confirm
+          </Button>
+                  </ThemeProvider>
+                </DialogActions>
+              </Dialog>
+              {/*Alert telling you that you are missing information in the input field */}
+              <Dialog
+                open={this.state.openAlert}
+                onClose={this.handleCloseAlert}
+                PaperComponent={PaperComponent}
+                aria-labelledby="draggable-dialog-title"
+              >
+                <DialogTitle style={{ cursor: 'move', color: 'white' }} id="draggable-dialog-title" className="Dialog">
+                  Missing Information?
+        </DialogTitle>
+                <DialogContent>
+                  <DialogContentText style={{ color: 'black' }}>
+                    Please make sure tag name is filled out!
+          </DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                  <ThemeProvider theme={theme}>
+                    <Button onClick={this.handleCloseAlert} variant="contained" color="primary">
+                      Confirm
           </Button>
                   </ThemeProvider>
                 </DialogActions>

@@ -1,3 +1,4 @@
+// holds on to the news coming from the reducer
 const homePageReducer = (state = {ConventionNews: 'p'}, action) => {
 
     switch (action.type) {
