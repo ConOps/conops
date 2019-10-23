@@ -24,14 +24,17 @@ const styles = ({
 });
 
 class Sponsors extends Component {
+    // fetches all the sponsors in the database when the page loads
     componentDidMount() {
         this.props.dispatch({ type: 'FETCH_SPONSORS' })
     }
 
+    // when you click the plus icon, it takes you to the create sponsors page
     handleClick = () => {
         this.props.history.push('/sponsors/create')
     }
 
+    // this is how th einformation is passed into the material-ui table, search this: columns={this.state.columns}, data={this.props.reduxStore.LocationReducer}
     state = {
         columns: [
             { title: "SponsorID", field: "SponsorID", hidden: true },
@@ -40,8 +43,7 @@ class Sponsors extends Component {
             { title: "Website", field: "Website", hidden: false },
             { title: "Notes", field: "Notes", false: false },
             { title: "Active Status", field: "SponsorIsActive", hidden: false, render: (rowData) => <p>{JSON.stringify(rowData.SponsorIsActive)}</p>}
-        ], 
-        data: []
+        ]
     }
 
     render() {
@@ -50,16 +52,17 @@ class Sponsors extends Component {
                 <h1 style={{textAlign: 'center'}}>Sponsors</h1>
             {this.props.reduxStore.user.authorization === 4 ? (
                 <div>
-                        <ThemeProvider theme={theme}>
-                <Fab
-                    color="primary"
-                    aria-label="add"
-                    className={this.props.classes.fab}
-                    onClick={this.handleClick}
-                >
-                    <AddIcon />
-                </Fab>
-                        </ThemeProvider>
+                <ThemeProvider theme={theme}>
+                    <Fab
+                        color="primary"
+                        aria-label="add"
+                        className={this.props.classes.fab}
+                        onClick={this.handleClick}
+                    >
+                        <AddIcon />
+                    </Fab>
+                </ThemeProvider>
+                {/* see README for details on the MaterialTable */}
                 <MaterialTable
                     title="Sponsors"
                     columns={this.state.columns}
@@ -71,8 +74,8 @@ class Sponsors extends Component {
                         searchFieldAlignment: "left",
                         showTitle: false
                     }}
+                    // this gets the information from the reducer to put into local state
                     data={this.props.reduxStore.sponsorReducer}
-                    editable={{}}
                     actions={[
                         {
                         icon: "edit",
