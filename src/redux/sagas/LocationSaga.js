@@ -1,6 +1,7 @@
 import { put, takeLatest } from 'redux-saga/effects';
 import axios from 'axios';
 
+// gets locations from database
 function* fetchLocations() {
     try {
         const config = {
@@ -14,6 +15,7 @@ function* fetchLocations() {
     }
 }
 
+// sends a post request to add a location to the database
 function* addLocation(action) {
     try {
         const config = {

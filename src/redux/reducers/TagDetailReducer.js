@@ -1,3 +1,4 @@
+// holds a single tags details and changes it when you change it
 const TagDetailReducer = (state = [], action) => {
     switch (action.type) {
         case 'SET_TAG':

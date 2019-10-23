@@ -1,6 +1,7 @@
 import { put, takeLatest } from 'redux-saga/effects';
 import axios from 'axios';
 
+// fetches the sponsors from the database
 function* fetchSponsors() {
     try {
         const config = {
@@ -14,6 +15,7 @@ function* fetchSponsors() {
     }
 }
 
+// posts a new sponsor to the database
 function* addSponsor(action) {
     try{
         const config = {
@@ -28,7 +30,7 @@ function* addSponsor(action) {
 }
 
 
-
+// goes to index.js in saga folder
 function* sponsorSaga() {
     yield takeLatest('FETCH_SPONSORS', fetchSponsors)
     yield takeLatest('ADD_SPONSOR', addSponsor)

@@ -1,6 +1,7 @@
 import { put, takeLatest } from 'redux-saga/effects';
 import axios from 'axios';
 
+// fetches all event details for that page.
 function* fetchDetails(action) {
     try {
         const config = {
@@ -20,6 +21,7 @@ function* fetchDetails(action) {
     }
 }
 
+// send a update that toggles the event
 function* uncancelEvent(action) {
     try {
         const config = {
@@ -39,6 +41,7 @@ function* uncancelEvent(action) {
     }
 }
 
+// sends a toggle that cancels the event. 
 function* cancelEvent(action) {
     try {
         const config = {
@@ -58,6 +61,7 @@ function* cancelEvent(action) {
     }
 }
 
+// updates info from the event
 function* updateEventInfo(action) {
     try {
         const config = {
@@ -78,6 +82,7 @@ function* updateEventInfo(action) {
     }
 }
 
+// sends a event to add to the server
 function* addEvent(action) {
     try {
         const config = {

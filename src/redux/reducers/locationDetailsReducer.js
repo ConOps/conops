@@ -1,3 +1,4 @@
+// hold on and changes a specific locations details when you change it in the input field
 const locationDetailsReducer = (state = {LocationIsActive: true}, action) => {
     switch (action.type) {
         case 'SET_LOCATION_DETAILS':
