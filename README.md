@@ -32,7 +32,7 @@ These instructions will get you a copy of the project up and running on your loc
 
 ### Next Steps
 - [] Create and add games to a game Library 
-- [] Pre Registure for the next convention 
+- [] Pre Register for the next convention 
 - [] Testing and bug fixing the application
 
 ## Deployment 
