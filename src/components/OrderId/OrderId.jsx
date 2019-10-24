@@ -11,6 +11,8 @@ import Paper from '@material-ui/core/Paper';
 import Draggable from 'react-draggable';
 
 
+//this component is for displaying all attendees under a single order ID
+
 function PaperComponent(props) {
   return (
     <Draggable>
@@ -20,6 +22,7 @@ function PaperComponent(props) {
 }
 
 class OrderID extends Component {
+  //table for columns in order table
   state = {
     columns: [
       { title: "AttendeeID", field: "AttendeeID", hidden: true },
@@ -52,6 +55,9 @@ class OrderID extends Component {
   };
 
   componentDidMount() {
+    this.props.dispatch({
+      type: 'FETCH_CONVENTION'
+    });
     this.fetchOrderInformation();
   }
 
@@ -62,7 +68,6 @@ class OrderID extends Component {
       type: 'FETCH_ORDER_INFO',
       payload: id
     });
-
   }
 
   handleClose = () => {
@@ -70,7 +75,6 @@ class OrderID extends Component {
   };
 
   checkInPrompt = () => {
-
     this.props.dispatch({
       type: "CHECK_IN_ALL_SELECTED",
       payload: this.state.data
@@ -107,7 +111,7 @@ class OrderID extends Component {
           </DialogActions>
         </Dialog>
 
-        <h1 style={{ textAlign: "center" }}>Current Convention: 2DCON 2020</h1>
+        <h1 style={{ textAlign: "center" }}>Current Convention: {this.props.convention.ConventionName}</h1>
         {this.props.reduxStore.user.authorization === 4 ||
         this.props.reduxStore.user.authorization === 1 ? (
           <MaterialTable className = "under"
@@ -181,7 +185,8 @@ class OrderID extends Component {
 
 const mapStateToProps = reduxStore => {
   return {
-    reduxStore
+    reduxStore,
+    convention: reduxStore.ConventionsReducer,
   };
 };
 export default connect(mapStateToProps)(OrderID);
