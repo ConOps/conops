@@ -60,6 +60,9 @@ class CheckIn extends Component {
 
   //calls these functions on page load
   componentDidMount() {
+    this.props.dispatch({
+      type: 'FETCH_CONVENTION'
+    });
     this.fetchAllAttendees();
   }
 
@@ -201,7 +204,7 @@ class CheckIn extends Component {
             </ThemeProvider>
           </DialogActions>
         </Dialog>
-        <h1 style={{ textAlign: "center" }}>Current Convention: 2DCON 2020</h1>
+        <h1 style={{ textAlign: "center" }}>Current Convention: {this.props.convention.ConventionName}</h1>
         <p style={{ textAlign: "center" }}>FILTER</p>
         <div style={{ textAlign: "center" }}>
           {this.state.checkedIn ?
@@ -443,7 +446,8 @@ class CheckIn extends Component {
 
 const mapStateToProps = reduxStore => {
   return {
-    reduxStore
+    reduxStore,
+    convention: reduxStore.ConventionsReducer,
   };
 };
 export default connect(mapStateToProps)(CheckIn);
