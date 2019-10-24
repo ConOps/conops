@@ -1,43 +1,38 @@
 import React, {Component} from 'react';
-import {
-  HashRouter as Router,
-  Route,
-  Redirect,
-  Switch,
-} from 'react-router-dom';
-
+import { HashRouter as Router, Route, Redirect, Switch } from 'react-router-dom';
 import {connect} from 'react-redux';
-
 import Nav from '../Nav/Nav';
-import Footer from '../Footer/Footer';
-
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute'
-
 import Home from '../Home/Home';
 
 import CheckIn from '../CheckIn/CheckIn';
+import Details from '../Details/Details';
+
+import OrderId from '../OrderId/OrderId';
 import PreRegister from '../PreRegister/PreRegister';
 
 import Events from '../Events/Events';
-import Locations from '../Locations/Locations';
+import EventDetails from '../EventDetails/EventDetails';
+import CreateEvent from '../Events/CreateEvent';
 
-import SponsorDetails from '../Sponsors/SponsorDetails';
-import CreateSponsor from  '../Sponsors/CreateSponsor';
+import Locations from '../Locations/Locations';
+import LocationDetails from '../LocationDetails/LocationDetails';
+import CreateLocation from '../Locations/CreateLocation';
 
 import Tags from '../Tags/Tags';
 import EditTag from '../Tags/EditTag';
 import CreateTag from '../Tags/CreateTag';
+
 import Conventions from '../Conventions/Conventions';
 import GameLibrary from '../GameLibrary/GameLibrary';
-import News from  '../News/News';
+import News from '../News/News';
+
 import Sponsors from '../Sponsors/Sponsors';
-import Details from '../Details/Details';
-import OrderId from '../OrderId/OrderId';
-import EventDetails from '../EventDetails/EventDetails';
-import LocationDetails from '../LocationDetails/LocationDetails';
+import SponsorDetails from '../Sponsors/SponsorDetails';
+import CreateSponsor from  '../Sponsors/CreateSponsor';
+
 import RegisterPage from '../RegisterPage/RegisterPage';
-import CreateLocation from '../Locations/CreateLocation';
-import CreateEvent from '../Events/CreateEvent';
+
 import './App.css';
 
 class App extends Component {
@@ -64,7 +59,6 @@ class App extends Component {
             Visiting localhost:3000/home will show the UserPage if the user is logged in.
             If the user is not logged in, the ProtectedRoute will show the 'Login' or 'Register' page.
             Even though it seems like they are different pages, the user is always on localhost:3000/home */}
-           
            {/* Need to attach to logo */}
             <ProtectedRoute
               exact
